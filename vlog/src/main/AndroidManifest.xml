@@ -1,0 +1,13 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        package="com.android.girish.vlog">
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"></uses-permission>
+
+    <application>
+        <service android:name="com.android.girish.vlog.chatheads.chatheads.OverlayService"
+            android:exported="true"/>
+
+        <!--TODO: @girish remove later-->
+        <activity android:name=".chatheads.chatheads.expand.ExpandActivity">
+        </activity>
+    </application>
+</manifest>

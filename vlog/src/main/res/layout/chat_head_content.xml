@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:theme="@style/Theme.AppCompat.Light"
+        android:orientation="vertical">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_marginTop="80dp"
+                android:background="@drawable/layout_bg"
+                android:layout_height="match_parent">
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/layout_bg"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal">
+                <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Aa"
+                        android:textColor="#fff"
+                        android:padding="8dp"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="0dp"
+                        android:layout_weight="1"
+                        android:textSize="14sp"
+                        android:textColorHint="#8Cffffff"
+                        android:id="@+id/editText"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/input_rounded" />
+                <LinearLayout
+                        android:id="@+id/chat_send"
+                        android:layout_width="44dp"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?android:attr/selectableItemBackground">
+
+                    <ImageView
+                            android:layout_width="36dp"
+                            android:layout_marginLeft="2dp"
+                            android:layout_height="match_parent"
+                            android:src="@android:drawable/ic_menu_send"
+                            />
+                </LinearLayout>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/messages"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+        </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,2 @@
+include ':app', ':vlog', ':expandablerecyclerview'
+rootProject.name='VlogSample'

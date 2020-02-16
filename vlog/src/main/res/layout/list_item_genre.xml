@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:padding="5dp"
+  android:layout_marginBottom="8dp"
+  android:layout_marginTop="8dp">
+
+  <TextView
+      android:id="@+id/list_item_genre_name"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginLeft="10dp"
+      android:textStyle="bold"
+      android:gravity="center_vertical"
+      android:textSize="15dp"
+      tools:text="Genre" />
+
+  <ImageView
+    android:id="@+id/list_item_genre_arrow"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical|end"
+    android:layout_marginRight="10dp"
+    android:src="@drawable/ic_arrow_down" />
+
+</FrameLayout>
+
