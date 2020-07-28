@@ -29,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
         addBubble.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //OverlayService.instance.addChat();
-                startActivity();
+                OverlayService.instance.addChat();
+                //startActivity();
             }
         });
 

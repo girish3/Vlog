@@ -19,14 +19,14 @@
                 <EditText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="Aa"
-                        android:textColor="#fff"
+                        android:hint="search events"
+                        android:textColor="@color/editTextColor"
                         android:padding="8dp"
                         android:paddingStart="12dp"
                         android:paddingEnd="0dp"
                         android:layout_weight="1"
                         android:textSize="14sp"
-                        android:textColorHint="#8Cffffff"
+                        android:textColorHint="@color/editTextColorHint"
                         android:id="@+id/editText"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
@@ -52,7 +52,7 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/messages"
+                    android:id="@+id/events"
                     android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />

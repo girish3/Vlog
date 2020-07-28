@@ -19,12 +19,24 @@ public class ExpandableList {
   public boolean[] expandedGroupIndexes;
 
   public ExpandableList(List<? extends ExpandableGroup> groups) {
+    init(groups);
+  }
+
+  private void init(List<? extends ExpandableGroup> groups) {
     this.groups = groups;
 
     expandedGroupIndexes = new boolean[groups.size()];
     for (int i = 0; i < groups.size(); i++) {
       expandedGroupIndexes[i] = false;
     }
+  }
+
+  public void addGroup(List<? extends ExpandableGroup> groups) {
+    this.groups.addAll(groups);
+  }
+
+  public void refreshGroups(List<? extends ExpandableGroup> groups) {
+    init(groups);
   }
 
   /**

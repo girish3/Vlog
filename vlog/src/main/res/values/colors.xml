@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="background">#35383F</color>
+    <color name="editTextColorHint">#7735383F</color>
+    <color name="editTextColor">#35383F</color>
+    <color name="white_bg">#ffffff</color>
 </resources>

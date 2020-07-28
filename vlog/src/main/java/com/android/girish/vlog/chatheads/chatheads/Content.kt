@@ -11,6 +11,7 @@ import android.content.pm.PackageManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.girish.vlog.R
+import com.android.girish.vlog.chatheads.chatheads.expand.GenreAdapter
 
 class Content(context: Context): LinearLayout(context) {
     private val springSystem = SpringSystem.create()
@@ -20,9 +21,6 @@ class Content(context: Context): LinearLayout(context) {
     var layoutManager = LinearLayoutManager(context)
     lateinit var messagesAdapter: ChatAdapter
 
-    val idToChannelIdMap = mutableMapOf<Int, String>()
-    val channelIdToMenuIdMap = mutableMapOf<String, Int>()
-
     init {
         inflate(context, R.layout.chat_head_content, this)
 
@@ -31,12 +29,10 @@ class Content(context: Context): LinearLayout(context) {
         list.add("girish")
         var messagesAdapter = ChatAdapter(this.context, list)
 
-        messagesView = findViewById(R.id.messages)
-
-        layoutManager.stackFromEnd = true
+        messagesView = findViewById(R.id.events)
 
         messagesView.layoutManager = layoutManager
-        messagesView.adapter = messagesAdapter
+        messagesView.adapter = GenreAdapter(GenreDataFactory.makeGenres())
 
         val editText: EditText = findViewById(R.id.editText)
 

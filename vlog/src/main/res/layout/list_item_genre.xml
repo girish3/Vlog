@@ -4,8 +4,8 @@
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:padding="5dp"
-  android:layout_marginBottom="8dp"
-  android:layout_marginTop="8dp">
+  android:layout_marginBottom="4dp"
+  android:layout_marginTop="4dp">
 
   <TextView
       android:id="@+id/list_item_genre_name"
@@ -14,7 +14,7 @@
       android:layout_marginLeft="10dp"
       android:textStyle="bold"
       android:gravity="center_vertical"
-      android:textSize="15dp"
+      android:textSize="17sp"
       tools:text="Genre" />
 
   <ImageView
