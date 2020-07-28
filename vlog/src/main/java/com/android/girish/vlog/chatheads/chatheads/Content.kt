@@ -41,11 +41,9 @@ class Content(context: Context): LinearLayout(context) {
         val editText: EditText = findViewById(R.id.editText)
         editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                TODO("Not yet implemented")
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                TODO("Not yet implemented")
             }
 
             override fun onTextChanged(constraint: CharSequence?, start: Int, before: Int, count: Int) {

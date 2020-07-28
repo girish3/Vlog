@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.girish.vlog.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder> implements Filterable {
@@ -29,6 +30,8 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
 
     public VLogAdapter(List<VLog> vLogList) {
         this.mVLogList = vLogList;
+        mPriorityVLogList = new ArrayList<>();
+        mPriorityVLogList.addAll(mVLogList);
     }
 
     @Override
@@ -39,7 +42,7 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
 
     @Override
     public void onBindViewHolder(final VLogViewHolder holder, final int position) {
-        final VLog model = mVLogList.get(position);
+        final VLog model = mPriorityVLogList.get(position);
 
         holder.logTag.setText(getLogPriorityInitials(model.getLogPriority()) + "/" + model.getTag() + ": ");
         final boolean isExpanded = model == mExpandedModel;
@@ -85,7 +88,7 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
 
     @Override
     public int getItemCount() {
-        return mVLogList != null ? mVLogList.size() : 0;
+        return mPriorityVLogList != null ? mPriorityVLogList.size() : 0;
     }
 
     @Override
@@ -181,6 +184,8 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
                     if (item != null && item.getLogMessage() != null) {
                         //if image title name starts with constraint, add it to filtered list
                         if (item.getLogMessage().toLowerCase().trim().contains(
+                                constraint.toString().toLowerCase().trim())
+                                || item.getTag().toLowerCase().trim().contains(
                                 constraint.toString().toLowerCase().trim())) {
                             mPriorityVLogList.add(item);
                         }
