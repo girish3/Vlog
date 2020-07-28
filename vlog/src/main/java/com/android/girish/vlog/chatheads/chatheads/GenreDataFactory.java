@@ -1,9 +1,73 @@
 package com.android.girish.vlog.chatheads.chatheads;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class GenreDataFactory {
+
+
+  public static List<VLog> generateLogs() {
+    ArrayList<VLog> logDataList = new ArrayList<>();
+    int priority = VLog.UNKNOWN;
+    String tag = "";
+    String logMessage = "";
+    for (int i = 0; i < 30; i++) {
+      if (i % 5 == 0) {
+        priority = VLog.INFO;
+        tag = "##5##" + i;
+        logMessage = "We are adding this info log for " + i + "th index "
+                + "......................"
+                + "......................"
+                + "......................"
+                + "......................"
+                + "......................"
+                + "......................"
+                + "......................"
+                + "......................";
+      } else if (i % 3 == 0) {
+        priority = VLog.ERROR;
+        tag = "##3##" + i;
+        logMessage = "We are adding this error log for " + i + "th index "
+                + "......................"
+                + "......................"
+                + "......................"
+                + "......................"
+                + "......................"
+                + "......................"
+                + "......................"
+                + "......................";
+      } else if (i % 2 == 0) {
+        priority = VLog.DEBUG;
+        tag = "##2##" + i;
+        logMessage = "We are adding this debug log for " + i + "th index "
+                + "......................"
+                + "......................"
+                + "......................"
+                + "......................"
+                + "......................"
+                + "......................"
+                + "......................"
+                + "......................";
+      } else {
+        priority = VLog.VERBOSE;
+        tag = "#####" + i;
+        logMessage = "We are adding this verbose log for " + i + "th index "
+                + "......................"
+                + "......................"
+                + "......................"
+                + "......................"
+                + "......................"
+                + "......................"
+                + "......................"
+                + "......................";
+      }
+      VLog vlog = new VLog(priority, tag, logMessage);
+      logDataList.add(vlog);
+    }
+    return logDataList;
+  }
+
 
   public static List<Genre> makeGenres() {
     return Arrays.asList(makeRockGenre(),

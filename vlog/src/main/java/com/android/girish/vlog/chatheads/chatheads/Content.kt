@@ -1,17 +1,19 @@
 package com.android.girish.vlog.chatheads.chatheads
 
 import android.content.Context
+import android.content.pm.PackageManager
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import android.widget.*
-import com.facebook.rebound.SimpleSpringListener
-import com.facebook.rebound.Spring
-import com.facebook.rebound.SpringSystem
-import android.content.pm.PackageManager
+import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.girish.vlog.R
-import com.android.girish.vlog.chatheads.chatheads.expand.GenreAdapter
+import com.facebook.rebound.SimpleSpringListener
+import com.facebook.rebound.Spring
+import com.facebook.rebound.SpringSystem
 
 class Content(context: Context): LinearLayout(context) {
     private val springSystem = SpringSystem.create()
@@ -20,6 +22,7 @@ class Content(context: Context): LinearLayout(context) {
     var messagesView: RecyclerView
     var layoutManager = LinearLayoutManager(context)
     lateinit var messagesAdapter: ChatAdapter
+    lateinit var vLogAdapter: VLogAdapter
 
     init {
         inflate(context, R.layout.chat_head_content, this)
@@ -32,9 +35,25 @@ class Content(context: Context): LinearLayout(context) {
         messagesView = findViewById(R.id.events)
 
         messagesView.layoutManager = layoutManager
-        messagesView.adapter = GenreAdapter(GenreDataFactory.makeGenres())
+        vLogAdapter = VLogAdapter(GenreDataFactory.generateLogs())
+        messagesView.adapter = vLogAdapter
 
         val editText: EditText = findViewById(R.id.editText)
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onTextChanged(constraint: CharSequence?, start: Int, before: Int, count: Int) {
+                vLogAdapter.setFilteringOn(VLogAdapter.FILTERING_ON_TAG_KEYWORD)
+                vLogAdapter.filter.filter(constraint)
+            }
+
+        })
 
         scaleSpring.addListener(object : SimpleSpringListener() {
             override fun onSpringUpdate(spring: Spring) {
