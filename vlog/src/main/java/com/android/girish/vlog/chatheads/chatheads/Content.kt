@@ -1,11 +1,12 @@
 package com.android.girish.vlog.chatheads.chatheads
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.pm.PackageManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.View
+import android.view.WindowManager
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.*
@@ -15,6 +16,7 @@ import com.android.girish.vlog.R
 import com.facebook.rebound.SimpleSpringListener
 import com.facebook.rebound.Spring
 import com.facebook.rebound.SpringSystem
+
 
 class Content(context: Context): LinearLayout(context) {
     private val springSystem = SpringSystem.create()
@@ -29,37 +31,17 @@ class Content(context: Context): LinearLayout(context) {
     init {
         inflate(context, R.layout.chat_head_content, this)
 
-        val logPrioritDropDown: Spinner = findViewById(R.id.log_priority_spinner)
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter.createFromResource(
-                context,
-                R.array.log_priority_names,
-                android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
-            logPrioritDropDown.adapter = adapter
-        }
-
-        logPrioritDropDown.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                Log.d("AVINASH", "AVINASH: Nothing has been selected in spinner");
-            }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                Log.d("AVINASH", String.format("AVINASH: %s has been selected in spinner.",
-                        parent?.getItemAtPosition(position).toString()))
-            }
-        }
-
         messagesView = findViewById(R.id.events)
         messagesView.layoutManager = layoutManager
 
-        //vLogAdapter = VLogAdapter(GenreDataFactory.generateLogs())
         vLogAdapter = VLogAdapter(mutableListOf())
 
         messagesView.adapter = vLogAdapter
+
+        val logPriorityTxtVw: TextView = findViewById(R.id.log_priority_txtvw)
+        logPriorityTxtVw.setOnClickListener {
+            showPriorityOptions(context, logPriorityTxtVw, vLogAdapter);
+        }
 
         val editText: EditText = findViewById(R.id.editText)
         editText.addTextChangedListener(object : TextWatcher {
@@ -85,6 +67,27 @@ class Content(context: Context): LinearLayout(context) {
         scaleSpring.springConfig = SpringConfigs.CONTENT_SCALE
 
         scaleSpring.currentValue = 0.0
+    }
+
+    private fun showPriorityOptions(context: Context, logPriorityTxtVw: TextView, vLogAdapter: VLogAdapter) {
+
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+        builder.setTitle("Select Log priority");
+        val priorityList: List<String> = resources.getStringArray(R.array.log_priority_names).toMutableList()
+        val arrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(context,
+                android.R.layout.simple_list_item_1, priorityList);
+        builder.setAdapter(arrayAdapter) { _, which ->
+            Log.d("AVINASH", String.format("AVINASH: %s has been selected in spinner.",
+                    priorityList[which]))
+            logPriorityTxtVw.text = priorityList[which]
+            vLogAdapter.setFilteringOn(VLogAdapter.FILTERING_ON_PRIORITY)
+            vLogAdapter.filter.filter(which.toString())
+        }
+        builder.setPositiveButton("Cancel"
+        ) { dialog, _ -> dialog?.dismiss() }
+        val dialog: AlertDialog = builder.create()
+        dialog.window?.setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY)
+        dialog.show()
     }
 
     fun setInfo(chatHead: ChatHead) {

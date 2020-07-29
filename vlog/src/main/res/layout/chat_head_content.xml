@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:focusableInTouchMode="false"
     android:theme="@style/Theme.AppCompat.Light">
 
     <LinearLayout
@@ -19,12 +20,20 @@
             android:clipToPadding="false"
             android:orientation="horizontal">
 
-            <Spinner
-                android:id="@+id/log_priority_spinner"
+            <TextView
+                android:id="@+id/log_priority_txtvw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="7dp"
+                android:paddingBottom="7dp"
+                android:textStyle="bold"
+                android:paddingLeft="7dp"
+                android:textColor="#000"
                 android:layout_gravity="center_vertical"
-                android:prompt="@string/select" />
+                android:drawablePadding="2dp"
+                android:gravity="center_vertical"
+                android:text="@string/select_priority"
+                android:drawableRight="@drawable/ic_arrow_down" />
 
             <EditText
                 android:id="@+id/editText"

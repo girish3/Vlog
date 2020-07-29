@@ -16,7 +16,7 @@ public class GenreDataFactory {
       if (i % 7 == 0) {
         priority = VLogModel.WARN;
         tag = "##7##" + i;
-        logMessage = "We are adding this info log for " + i + "th index "
+        logMessage = "We are adding this warning log for " + i + "th index "
                 + "......................"
                 + "......................"
                 + "......................"
