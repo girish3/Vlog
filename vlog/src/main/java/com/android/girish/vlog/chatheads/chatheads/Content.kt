@@ -4,10 +4,11 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
+import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import android.widget.EditText
-import android.widget.LinearLayout
+import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.girish.vlog.R
@@ -21,21 +22,40 @@ class Content(context: Context): LinearLayout(context) {
 
     var messagesView: RecyclerView
     var layoutManager = LinearLayoutManager(context)
+
     lateinit var messagesAdapter: ChatAdapter
-    lateinit var vLogAdapter: VLogAdapter
 
     init {
         inflate(context, R.layout.chat_head_content, this)
 
-        val list = ArrayList<String>()
-        list.add("hello")
-        list.add("girish")
-        var messagesAdapter = ChatAdapter(this.context, list)
+        val logPrioritDropDown: Spinner = findViewById(R.id.log_priority_spinner)
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter.createFromResource(
+                context,
+                R.array.log_priority_names,
+                android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            logPrioritDropDown.adapter = adapter
+        }
+
+        logPrioritDropDown.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                Log.d("AVINASH", "AVINASH: Nothing has been selected in spinner");
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                Log.d("AVINASH", String.format("AVINASH: %s has been selected in spinner.",
+                        parent?.getItemAtPosition(position).toString()))
+            }
+        }
 
         messagesView = findViewById(R.id.events)
-
         messagesView.layoutManager = layoutManager
-        vLogAdapter = VLogAdapter(GenreDataFactory.generateLogs())
+
+        val vLogAdapter = VLogAdapter(GenreDataFactory.generateLogs())
         messagesView.adapter = vLogAdapter
 
         val editText: EditText = findViewById(R.id.editText)

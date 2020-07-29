@@ -139,7 +139,7 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
                 results.values = mPriorityVLogList;
                 results.count = mPriorityVLogList.size();
             } else {
-                int priority = Integer.parseInt(constraint.toString());
+                int priority = Integer.parseInt(constraint.toString()) + 2;
                 for (VLog item : mVLogList) {
                     if (item != null && item.getLogPriority() != VLog.UNKNOWN) {
                         if (item.getLogPriority() == priority) {

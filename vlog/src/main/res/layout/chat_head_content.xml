@@ -1,61 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:theme="@style/Theme.AppCompat.Light">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:theme="@style/Theme.AppCompat.Light"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/layout_bg"
         android:orientation="vertical">
+
         <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_marginTop="80dp"
-                android:background="@drawable/layout_bg"
-                android:layout_height="match_parent">
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/layout_bg"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal">
-                <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="search events"
-                        android:textColor="@color/editTextColor"
-                        android:padding="8dp"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="0dp"
-                        android:layout_weight="1"
-                        android:textSize="14sp"
-                        android:textColorHint="@color/editTextColorHint"
-                        android:id="@+id/editText"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:background="@drawable/input_rounded" />
-                <LinearLayout
-                        android:id="@+id/chat_send"
-                        android:layout_width="44dp"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:background="?android:attr/selectableItemBackground">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout_bg"
+            android:clipToPadding="false"
+            android:orientation="horizontal">
 
-                    <ImageView
-                            android:layout_width="36dp"
-                            android:layout_marginLeft="2dp"
-                            android:layout_height="match_parent"
-                            android:src="@android:drawable/ic_menu_send"
-                            />
-                </LinearLayout>
-            </LinearLayout>
+            <Spinner
+                android:id="@+id/log_priority_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:prompt="@string/select" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/events"
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/input_rounded"
+                android:hint="search events"
+                android:padding="8dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="0dp"
+                android:textColor="@color/editTextColor"
+                android:textColorHint="@color/editTextColorHint"
+                android:textSize="14sp" />
         </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/events"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
 </LinearLayout>
