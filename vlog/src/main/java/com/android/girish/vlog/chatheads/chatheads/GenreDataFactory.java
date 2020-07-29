@@ -26,7 +26,7 @@ public class GenreDataFactory {
                 + "......................"
                 + "......................";
       } else if (i % 5 == 0) {
-        priority = VLogModel.INFO;
+        priority = VLogModel.ASSERT;
         tag = "##5##" + i;
         logMessage = "We are adding this info log for " + i + "th index "
                 + "......................"
@@ -62,7 +62,7 @@ public class GenreDataFactory {
                 + "......................"
                 + "......................";
       } else {
-        priority = VLogModel.VERBOSE;
+        priority = VLogModel.INFO;
         tag = "#####" + i;
         logMessage = "We are adding this verbose log for " + i + "th index "
                 + "......................"

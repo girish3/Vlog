@@ -23,6 +23,7 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
     public static final int FILTERING_ON_TAG_KEYWORD = 2;
     private List<VLogModel> mVLogList;
     private List<VLogModel> mPriorityVLogList;
+    private List<VLogModel> mResultantVLogList;
     private VLogModel mExpandedModel = null;
     private IVLogPriorityFilterListener mIVLogPriorityFilterListener;
     private int mFilteringOn = FILTERING_ON_PRIORITY;
@@ -33,6 +34,8 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
         this.mVLogList = vLogList;
         mPriorityVLogList = new ArrayList<>();
         mPriorityVLogList.addAll(mVLogList);
+        mResultantVLogList = new ArrayList<>();
+        mResultantVLogList.addAll(mPriorityVLogList);
     }
 
     @Override
@@ -43,7 +46,7 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
 
     @Override
     public void onBindViewHolder(final VLogViewHolder holder, final int position) {
-        final VLogModel model = mPriorityVLogList.get(position);
+        final VLogModel model = mResultantVLogList.get(position);
 
         int priority = model.getLogPriority();
         switch (priority) {
@@ -104,7 +107,7 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
 
     @Override
     public int getItemCount() {
-        return mPriorityVLogList != null ? mPriorityVLogList.size() : 0;
+        return mResultantVLogList != null ? mResultantVLogList.size() : 0;
     }
 
     @Override
@@ -146,6 +149,7 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
         // TODO: add this log and refresh the list
         mVLogList.add(model);
         mPriorityVLogList.add(model);
+        mResultantVLogList.add(model);
         notifyDataSetChanged();
     }
 
@@ -153,10 +157,10 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             mPriorityVLogList.clear();
+            mResultantVLogList.clear();
             FilterResults results = new FilterResults();
             if (constraint == null || constraint.length() == 0) {
                 // No filter implemented we return all the list
-                mPriorityVLogList.clear();
                 mPriorityVLogList.addAll(mVLogList);
                 results.values = mPriorityVLogList;
                 results.count = mPriorityVLogList.size();
@@ -164,7 +168,7 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
                 int priority = Integer.parseInt(constraint.toString()) + 2;
                 for (VLogModel item : mVLogList) {
                     if (item != null && item.getLogPriority() != VLogModel.UNKNOWN) {
-                        if (item.getLogPriority() == priority) {
+                        if (item.getLogPriority() >= priority) {
                             mPriorityVLogList.add(item);
                         }
                     }
@@ -172,6 +176,7 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
                 results.values = mPriorityVLogList;
                 results.count = mPriorityVLogList.size();
             }
+            mResultantVLogList.addAll(mPriorityVLogList);
             return results;
         }
 
@@ -193,28 +198,27 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
     private class TagOrKeywordFilter extends Filter {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            mPriorityVLogList.clear();
+            mResultantVLogList.clear();
             FilterResults results = new FilterResults();
             if (constraint == null || constraint.length() == 0) {
                 // No filter implemented we return all the list
-                mPriorityVLogList.clear();
-                mPriorityVLogList.addAll(mVLogList);
-                results.values = mPriorityVLogList;
-                results.count = mPriorityVLogList.size();
+                mResultantVLogList.addAll(mPriorityVLogList);
+                results.values = mResultantVLogList;
+                results.count = mResultantVLogList.size();
             } else {
-                for (VLogModel item : mVLogList) {
+                for (VLogModel item : mPriorityVLogList) {
                     if (item != null && item.getLogMessage() != null) {
                         //if image title name starts with constraint, add it to filtered list
                         if (item.getLogMessage().toLowerCase().trim().contains(
                                 constraint.toString().toLowerCase().trim())
                                 || item.getTag().toLowerCase().trim().contains(
                                 constraint.toString().toLowerCase().trim())) {
-                            mPriorityVLogList.add(item);
+                            mResultantVLogList.add(item);
                         }
                     }
                 }
-                results.values = mPriorityVLogList;
-                results.count = mPriorityVLogList.size();
+                results.values = mResultantVLogList;
+                results.count = mResultantVLogList.size();
             }
             return results;
         }
