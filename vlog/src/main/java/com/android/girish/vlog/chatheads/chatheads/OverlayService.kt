@@ -8,6 +8,7 @@ import android.os.IBinder
 import android.view.*
 import android.content.IntentFilter
 import android.graphics.Color
+import android.os.Binder
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.view.isEmpty
@@ -22,6 +23,18 @@ class OverlayService : Service() {
     lateinit var chatHeads: ChatHeads
 
     private lateinit var innerReceiver: InnerReceiver
+
+    // Binder given to clients
+    private val binder = LocalBinder()
+
+    /**
+     * Class used for the client Binder.  Because we know this service always
+     * runs in the same process as its clients, we don't need to deal with IPC.
+     */
+    inner class LocalBinder : Binder() {
+        // Return this instance of LocalService so clients can call public methods
+        fun getService(): OverlayService = this@OverlayService
+    }
 
     fun addChat() {
         chatHeads.add()
@@ -101,7 +114,7 @@ class OverlayService : Service() {
     }
 
     override fun onBind(intent: Intent?): IBinder? {
-        return null
+        return binder
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
