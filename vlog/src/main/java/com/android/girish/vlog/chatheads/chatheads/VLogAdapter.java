@@ -20,15 +20,15 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
     private static final String TAG = VLogAdapter.class.getSimpleName();
     public static final int FILTERING_ON_PRIORITY = 1;
     public static final int FILTERING_ON_TAG_KEYWORD = 2;
-    private List<VLog> mVLogList;
-    private List<VLog> mPriorityVLogList;
-    private VLog mExpandedModel = null;
+    private List<VLogModel> mVLogList;
+    private List<VLogModel> mPriorityVLogList;
+    private VLogModel mExpandedModel = null;
     private IVLogPriorityFilterListener mIVLogPriorityFilterListener;
     private int mFilteringOn = FILTERING_ON_PRIORITY;
     private PriorityFilter mPriorityFilter;
     private TagOrKeywordFilter mTagOrKeywordFilter;
 
-    public VLogAdapter(List<VLog> vLogList) {
+    public VLogAdapter(List<VLogModel> vLogList) {
         this.mVLogList = vLogList;
         mPriorityVLogList = new ArrayList<>();
         mPriorityVLogList.addAll(mVLogList);
@@ -42,7 +42,7 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
 
     @Override
     public void onBindViewHolder(final VLogViewHolder holder, final int position) {
-        final VLog model = mPriorityVLogList.get(position);
+        final VLogModel model = mPriorityVLogList.get(position);
 
         holder.logTag.setText(getLogPriorityInitials(model.getLogPriority()) + "/" + model.getTag() + ": ");
         final boolean isExpanded = model == mExpandedModel;
@@ -60,24 +60,24 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
 
     private String getLogPriorityInitials(int logPriority) {
         switch (logPriority) {
-            case VLog.ASSERT:
+            case VLogModel.ASSERT:
                 return "A";
-            case VLog.DEBUG:
+            case VLogModel.DEBUG:
                 return "D";
-            case VLog.ERROR:
+            case VLogModel.ERROR:
                 return "E";
-            case VLog.INFO:
+            case VLogModel.INFO:
                 return "I";
-            case VLog.VERBOSE:
+            case VLogModel.VERBOSE:
                 return "V";
-            case VLog.WARN:
+            case VLogModel.WARN:
                 return "W";
             default:
                 return "";
         }
     }
 
-    public void setVLogList(List<VLog> vLogModels) {
+    public void setVLogList(List<VLogModel> vLogModels) {
         mVLogList = vLogModels;
         notifyDataSetChanged();
     }
@@ -126,6 +126,12 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
         }
     }
 
+    public void addLog(VLogModel model) {
+        // TODO: add this log and refresh the list
+        mVLogList.add(model);
+        mPriorityVLogList.add(model);
+        notifyDataSetChanged();
+    }
 
     private class PriorityFilter extends Filter {
         @Override
@@ -140,8 +146,8 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
                 results.count = mPriorityVLogList.size();
             } else {
                 int priority = Integer.parseInt(constraint.toString());
-                for (VLog item : mVLogList) {
-                    if (item != null && item.getLogPriority() != VLog.UNKNOWN) {
+                for (VLogModel item : mVLogList) {
+                    if (item != null && item.getLogPriority() != VLogModel.UNKNOWN) {
                         if (item.getLogPriority() == priority) {
                             mPriorityVLogList.add(item);
                         }
@@ -180,7 +186,7 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
                 results.values = mPriorityVLogList;
                 results.count = mPriorityVLogList.size();
             } else {
-                for (VLog item : mVLogList) {
+                for (VLogModel item : mVLogList) {
                     if (item != null && item.getLogMessage() != null) {
                         //if image title name starts with constraint, add it to filtered list
                         if (item.getLogMessage().toLowerCase().trim().contains(

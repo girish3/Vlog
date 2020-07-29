@@ -7,14 +7,14 @@ import java.util.List;
 public class GenreDataFactory {
 
 
-  public static List<VLog> generateLogs() {
-    ArrayList<VLog> logDataList = new ArrayList<>();
-    int priority = VLog.UNKNOWN;
+  public static List<VLogModel> generateLogs() {
+    ArrayList<VLogModel> logDataList = new ArrayList<>();
+    int priority = VLogModel.UNKNOWN;
     String tag = "";
     String logMessage = "";
     for (int i = 0; i < 30; i++) {
       if (i % 5 == 0) {
-        priority = VLog.INFO;
+        priority = VLogModel.INFO;
         tag = "##5##" + i;
         logMessage = "We are adding this info log for " + i + "th index "
                 + "......................"
@@ -26,7 +26,7 @@ public class GenreDataFactory {
                 + "......................"
                 + "......................";
       } else if (i % 3 == 0) {
-        priority = VLog.ERROR;
+        priority = VLogModel.ERROR;
         tag = "##3##" + i;
         logMessage = "We are adding this error log for " + i + "th index "
                 + "......................"
@@ -38,7 +38,7 @@ public class GenreDataFactory {
                 + "......................"
                 + "......................";
       } else if (i % 2 == 0) {
-        priority = VLog.DEBUG;
+        priority = VLogModel.DEBUG;
         tag = "##2##" + i;
         logMessage = "We are adding this debug log for " + i + "th index "
                 + "......................"
@@ -50,7 +50,7 @@ public class GenreDataFactory {
                 + "......................"
                 + "......................";
       } else {
-        priority = VLog.VERBOSE;
+        priority = VLogModel.VERBOSE;
         tag = "#####" + i;
         logMessage = "We are adding this verbose log for " + i + "th index "
                 + "......................"
@@ -62,11 +62,12 @@ public class GenreDataFactory {
                 + "......................"
                 + "......................";
       }
-      VLog vlog = new VLog(priority, tag, logMessage);
+      VLogModel vlog = new VLogModel(priority, tag, logMessage);
       logDataList.add(vlog);
     }
     return logDataList;
   }
+
 
 
   public static List<Genre> makeGenres() {

@@ -22,7 +22,7 @@ class Content(context: Context): LinearLayout(context) {
     var messagesView: RecyclerView
     var layoutManager = LinearLayoutManager(context)
     lateinit var messagesAdapter: ChatAdapter
-    lateinit var vLogAdapter: VLogAdapter
+    var vLogAdapter: VLogAdapter
 
     init {
         inflate(context, R.layout.chat_head_content, this)
@@ -35,7 +35,8 @@ class Content(context: Context): LinearLayout(context) {
         messagesView = findViewById(R.id.events)
 
         messagesView.layoutManager = layoutManager
-        vLogAdapter = VLogAdapter(GenreDataFactory.generateLogs())
+        //vLogAdapter = VLogAdapter(GenreDataFactory.generateLogs())
+        vLogAdapter = VLogAdapter(mutableListOf())
         messagesView.adapter = vLogAdapter
 
         val editText: EditText = findViewById(R.id.editText)
@@ -117,5 +118,9 @@ class Content(context: Context): LinearLayout(context) {
         anim.duration = 100
         anim.repeatMode = Animation.RELATIVE_TO_SELF
         startAnimation(anim)
+    }
+
+    fun addLog(vlog: VLogModel) {
+        vLogAdapter.addLog(vlog)
     }
 }

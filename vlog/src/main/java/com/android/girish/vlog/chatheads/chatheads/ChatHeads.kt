@@ -232,6 +232,10 @@ class ChatHeads(context: Context) : View.OnTouchListener, FrameLayout(context) {
         resetSpringChains()
     }
 
+    fun addLog(vlog: VLogModel) {
+        content.addLog(vlog)
+    }
+
     private fun destroySpringChains() {
         if (horizontalSpringChain != null) {
             for (spring in horizontalSpringChain!!.allSprings) {

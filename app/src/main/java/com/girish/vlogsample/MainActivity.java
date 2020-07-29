@@ -11,9 +11,13 @@ import android.view.View;
 import android.widget.Button;
 
 import com.android.girish.vlog.chatheads.chatheads.OverlayService;
+import com.android.girish.vlog.chatheads.chatheads.VLogModel;
+import com.android.girish.vlog.chatheads.chatheads.Vlog;
 import com.android.girish.vlog.chatheads.chatheads.expand.ExpandActivity;
 
 public class MainActivity extends AppCompatActivity {
+
+    private Vlog mVlog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,15 +25,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         manageDrawOverOtherApps();
 
-        startService();
+        mVlog = Vlog.getInstance();
+        mVlog.initialize(getApplicationContext());
 
         Button addBubble = findViewById(R.id.addBubble);
         Button addNotification = findViewById(R.id.addNotification);
+        Button addFeed = findViewById(R.id.addFeed);
 
         addBubble.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                OverlayService.instance.addChat();
+                mVlog.showBubble();
                 //startActivity();
             }
         });
@@ -40,6 +46,20 @@ public class MainActivity extends AppCompatActivity {
                 OverlayService.instance.updateNotification();
             }
         });
+
+        addFeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VLogModel model = getRandomLog();
+                mVlog.feed(model);
+            }
+        });
+    }
+
+    private VLogModel getRandomLog() {
+        VLogModel model = new VLogModel(VLogModel.ERROR, "MainActivity", "error priority message");
+
+        return model;
     }
 
     private void startActivity() {
@@ -57,11 +77,5 @@ public class MainActivity extends AppCompatActivity {
         if (!Settings.canDrawOverlays(this)) {
             startActivityForResult(intent, REQUEST_CODE);
         }
-    }
-
-    void startService() {
-        Intent intent = new Intent(this, OverlayService.class);
-        // TODO: is there a need to pass token as an extra?
-        startService(intent);
     }
 }

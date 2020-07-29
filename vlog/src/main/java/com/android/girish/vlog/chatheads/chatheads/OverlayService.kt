@@ -27,6 +27,10 @@ class OverlayService : Service() {
         chatHeads.add()
     }
 
+    fun addLog(vlog: VLogModel) {
+        chatHeads.addLog(vlog)
+    }
+
     fun updateNotification() {
         if (chatHeads == null || chatHeads.isEmpty()) {
             return

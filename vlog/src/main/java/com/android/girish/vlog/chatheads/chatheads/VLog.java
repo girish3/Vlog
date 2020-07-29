@@ -1,106 +1,52 @@
 package com.android.girish.vlog.chatheads.chatheads;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
 
-public class VLog implements Parcelable {
+public class Vlog {
 
-    /**
-     * Priority constant for the println method.
-     */
-    public static final int UNKNOWN = -1;
-    /**
-     * Priority constant for the println method; use Log.v.
-     */
-    public static final int VERBOSE = 2;
+    private static Vlog vlog;
+    private Context mApplicationContext;
+    private boolean isEnabled = false;
 
-    /**
-     * Priority constant for the println method; use Log.d.
-     */
-    public static final int DEBUG = 3;
-
-    /**
-     * Priority constant for the println method; use Log.i.
-     */
-    public static final int INFO = 4;
-
-    /**
-     * Priority constant for the println method; use Log.w.
-     */
-    public static final int WARN = 5;
-
-    /**
-     * Priority constant for the println method; use Log.e.
-     */
-    public static final int ERROR = 6;
-
-    /**
-     * Priority constant for the println method.
-     */
-    public static final int ASSERT = 7;
-
-    private int mLogPriority = UNKNOWN;
-    private String mTag;
-    private String mLogMessage;
-
-
-    public VLog(int priority, String tag, String logMessage) {
-        mLogPriority = priority;
-        mTag = tag;
-        mLogMessage = logMessage;
-    }
-
-    protected VLog(Parcel in) {
-        mLogPriority = in.readInt();
-        mTag = in.readString();
-        mLogMessage = in.readString();
-    }
-
-    public int getLogPriority() {
-        return mLogPriority;
-    }
-
-    public void setLogPriority(int mLogPriority) {
-        this.mLogPriority = mLogPriority;
-    }
-
-    public String getTag() {
-        return mTag;
-    }
-
-    public void setTag(String mTag) {
-        this.mTag = mTag;
-    }
-
-    public String getLogMessage() {
-        return mLogMessage;
-    }
-
-    public void setLogMessage(String mLogMessage) {
-        this.mLogMessage = mLogMessage;
-    }
-
-    public static final Creator<VLog> CREATOR = new Creator<VLog>() {
-        @Override
-        public VLog createFromParcel(Parcel in) {
-            return new VLog(in);
+    public static Vlog getInstance() {
+        // TODO: make it thread safe.
+        if (vlog == null) {
+            vlog = new Vlog();
         }
-
-        @Override
-        public VLog[] newArray(int size) {
-            return new VLog[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
+        return vlog;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(mLogPriority);
-        dest.writeString(mTag);
-        dest.writeString(mLogMessage);
+    private Vlog() {
+    }
+
+    public void initialize(Context context) {
+        mApplicationContext = context;
+        startService();
+
+        // initialize other resources if any
+    }
+
+    public void feed(VLogModel model) {
+        if (!isEnabled) return;
+
+        OverlayService.instance.addLog(model);
+    }
+
+    public void showBubble() {
+        isEnabled = true;
+        OverlayService.instance.addChat();
+    }
+
+    public void hideBubble() {
+        isEnabled = false;
+        // hide bubble
+    }
+
+    void startService() {
+        Intent intent = new Intent(mApplicationContext, OverlayService.class);
+        // TODO: is there a need to pass token as an extra?
+        mApplicationContext.startService(intent);
     }
 }

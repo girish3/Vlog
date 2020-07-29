@@ -31,9 +31,9 @@ public class ExpandableList {
     }
   }
 
-  public void addGroup(List<? extends ExpandableGroup> groups) {
+  /*public void addGroup(List<? extends ExpandableGroup> groups) {
     this.groups.addAll(groups);
-  }
+  }*/
 
   public void refreshGroups(List<? extends ExpandableGroup> groups) {
     init(groups);
