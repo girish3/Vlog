@@ -1,2 +1,2 @@
-include ':app', ':vlog', ':expandablerecyclerview'
+include ':app', ':vlog'
 rootProject.name='VlogSample'

@@ -5,9 +5,5 @@
     <application>
         <service android:name="com.android.girish.vlog.chatheads.chatheads.OverlayService"
             android:exported="true"/>
-
-        <!--TODO: @girish remove later-->
-        <activity android:name=".chatheads.chatheads.expand.ExpandActivity">
-        </activity>
     </application>
 </manifest>

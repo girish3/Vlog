@@ -13,7 +13,6 @@ import android.widget.Button;
 import com.android.girish.vlog.chatheads.chatheads.OverlayService;
 import com.android.girish.vlog.chatheads.chatheads.VLogModel;
 import com.android.girish.vlog.chatheads.chatheads.Vlog;
-import com.android.girish.vlog.chatheads.chatheads.expand.ExpandActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -60,11 +59,6 @@ public class MainActivity extends AppCompatActivity {
         VLogModel model = new VLogModel(VLogModel.ERROR, "MainActivity", "error priority message");
 
         return model;
-    }
-
-    private void startActivity() {
-        Intent intent = new Intent(this, ExpandActivity.class);
-        startActivity(intent);
     }
 
     private void manageDrawOverOtherApps() {
