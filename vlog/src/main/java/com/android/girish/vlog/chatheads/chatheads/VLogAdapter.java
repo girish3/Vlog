@@ -1,5 +1,6 @@
 package com.android.girish.vlog.chatheads.chatheads;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,21 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
     public void onBindViewHolder(final VLogViewHolder holder, final int position) {
         final VLogModel model = mPriorityVLogList.get(position);
 
+        int priority = model.getLogPriority();
+        switch (priority) {
+            case VLogModel.ERROR:
+                holder.logTag.setTextColor(Color.RED);
+                holder.logMessage.setTextColor(Color.RED);
+                break;
+            case VLogModel.WARN:
+                holder.logTag.setTextColor(Color.parseColor("#ff9966"));
+                holder.logMessage.setTextColor(Color.parseColor("#ff9966"));
+                break;
+            default:
+                holder.logTag.setTextColor(Color.BLACK);
+                holder.logMessage.setTextColor(Color.BLACK);
+                break;
+        }
         holder.logTag.setText(getLogPriorityInitials(model.getLogPriority()) + "/" + model.getTag() + ": ");
         final boolean isExpanded = model == mExpandedModel;
         holder.logMessage.setText(isExpanded ? model.getLogMessage() : model.getLogMessage().length() > 30

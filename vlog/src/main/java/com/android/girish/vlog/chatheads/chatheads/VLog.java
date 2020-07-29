@@ -1,24 +1,23 @@
 package com.android.girish.vlog.chatheads.chatheads;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 
-public class Vlog {
+public class VLog {
 
-    private static Vlog vlog;
+    private static VLog vlog;
     private Context mApplicationContext;
-    private boolean isEnabled = false;
+    private boolean isEnabled = true;
 
-    public static Vlog getInstance() {
+    public static VLog getInstance() {
         // TODO: make it thread safe.
         if (vlog == null) {
-            vlog = new Vlog();
+            vlog = new VLog();
         }
         return vlog;
     }
 
-    private Vlog() {
+    private VLog() {
     }
 
     public void initialize(Context context) {
