@@ -12,5 +12,3 @@ This can be useful in many scenarios :
     - Validate telemetry events are correctly fired on any user action (for PMs)
     - Delegate the issue to the right team (for Support Eng.)
     - Exposing selected logs, it can also be useful for 3p app developers to debug.
-
-Please do share your thoughts! Thanks.
