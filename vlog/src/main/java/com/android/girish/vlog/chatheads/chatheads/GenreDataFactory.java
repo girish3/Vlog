@@ -13,7 +13,19 @@ public class GenreDataFactory {
     String tag = "";
     String logMessage = "";
     for (int i = 0; i < 30; i++) {
-      if (i % 5 == 0) {
+      if (i % 7 == 0) {
+        priority = VLogModel.WARN;
+        tag = "##7##" + i;
+        logMessage = "We are adding this info log for " + i + "th index "
+                + "......................"
+                + "......................"
+                + "......................"
+                + "......................"
+                + "......................"
+                + "......................"
+                + "......................"
+                + "......................";
+      } else if (i % 5 == 0) {
         priority = VLogModel.INFO;
         tag = "##5##" + i;
         logMessage = "We are adding this info log for " + i + "th index "

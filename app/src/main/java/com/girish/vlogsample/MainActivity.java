@@ -1,23 +1,27 @@
 package com.girish.vlogsample;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.girish.vlog.chatheads.chatheads.GenreDataFactory;
 import com.android.girish.vlog.chatheads.chatheads.OverlayService;
+import com.android.girish.vlog.chatheads.chatheads.VLog;
 import com.android.girish.vlog.chatheads.chatheads.VLogModel;
-import com.android.girish.vlog.chatheads.chatheads.Vlog;
 import com.android.girish.vlog.chatheads.chatheads.expand.ExpandActivity;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Vlog mVlog;
+    private VLog mVlog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +29,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         manageDrawOverOtherApps();
 
-        mVlog = Vlog.getInstance();
+        mVlog = VLog.getInstance();
         mVlog.initialize(getApplicationContext());
 
         Button addBubble = findViewById(R.id.addBubble);
         Button addNotification = findViewById(R.id.addNotification);
-        Button addFeed = findViewById(R.id.addFeed);
+        final Button addFeed = findViewById(R.id.addFeed);
 
         addBubble.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,16 +54,25 @@ public class MainActivity extends AppCompatActivity {
         addFeed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VLogModel model = getRandomLog();
-                mVlog.feed(model);
+                addFeed.setClickable(false);
+                addFeed.setEnabled(false);
+                List<VLogModel> vLogModels = getRandomLogs();
+                for (VLogModel model : vLogModels) {
+                    final VLogModel vLogModel = model;
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mVlog.feed(vLogModel);
+                        }
+                    }, 80);
+                }
             }
         });
     }
 
-    private VLogModel getRandomLog() {
-        VLogModel model = new VLogModel(VLogModel.ERROR, "MainActivity", "error priority message");
-
-        return model;
+    private List<VLogModel> getRandomLogs() {
+        List<VLogModel> logModelList = GenreDataFactory.generateLogs();
+        return logModelList;
     }
 
     private void startActivity() {
