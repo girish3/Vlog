@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.view.WindowManager
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
@@ -44,6 +45,8 @@ class Content(context: Context): LinearLayout(context) {
         }
 
         val editText: EditText = findViewById(R.id.editText)
+        val clearButton: View = findViewById(R.id.clear_logs)
+
         editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
@@ -67,6 +70,10 @@ class Content(context: Context): LinearLayout(context) {
         scaleSpring.springConfig = SpringConfigs.CONTENT_SCALE
 
         scaleSpring.currentValue = 0.0
+
+        clearButton.setOnClickListener {
+            vLogAdapter.clearLogs();
+        }
     }
 
     private fun showPriorityOptions(context: Context, logPriorityTxtVw: TextView, vLogAdapter: VLogAdapter) {

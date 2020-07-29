@@ -26,7 +26,7 @@ public class GenreDataFactory {
                 + "......................"
                 + "......................";
       } else if (i % 5 == 0) {
-        priority = VLogModel.ASSERT;
+        priority = VLogModel.DEBUG;
         tag = "##5##" + i;
         logMessage = "We are adding this info log for " + i + "th index "
                 + "......................"

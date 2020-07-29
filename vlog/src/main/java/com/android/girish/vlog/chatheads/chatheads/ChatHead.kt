@@ -1,12 +1,22 @@
 package com.android.girish.vlog.chatheads.chatheads
 
-import android.view.*
-import android.widget.*
-import com.facebook.rebound.*
-import com.android.girish.vlog.chatheads.chatheads.utils.*
-import kotlin.math.pow
 import android.graphics.*
+import android.view.Gravity
+import android.view.MotionEvent
+import android.view.View
+import android.view.WindowManager
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import com.android.girish.vlog.R
+import com.android.girish.vlog.chatheads.chatheads.utils.*
+import com.facebook.rebound.SimpleSpringListener
+import com.facebook.rebound.Spring
+import com.facebook.rebound.SpringListener
+import com.facebook.rebound.SpringSystem
+import kotlin.math.pow
 
 
 class ChatHead(var chatHeads: ChatHeads): FrameLayout(chatHeads.context), View.OnTouchListener, SpringListener {
@@ -90,20 +100,25 @@ class ChatHead(var chatHeads: ChatHeads): FrameLayout(chatHeads.context), View.O
 
         // placeholder (appropriate bitmap for chat head)
         var chatHeadBitmap: Bitmap = Bitmap.createBitmap(ChatHeads.CHAT_HEAD_SIZE, ChatHeads.CHAT_HEAD_SIZE, Bitmap.Config.ARGB_8888)
-            .addBackground(Color.GRAY)
+            .addBackground(R.drawable.teams_icon)
             .makeCircular()
             .scaleToSize(ChatHeads.CHAT_HEAD_SIZE)
             .addShadow()
 
         // TODO: @girish unable to add background color for the custom png bitmap (figure it out!)
-        val localBitmap = BitmapFactory.decodeResource(getResources(), android.R.drawable.ic_menu_compass)
+        val localBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.teams_icon2)
         localBitmap
             .addBackground(Color.BLACK)
             .makeCircular()
             .scaleToSize(ChatHeads.CHAT_HEAD_SIZE)
             .addShadow()
 
-        imageView.setImageBitmap(chatHeadBitmap)
+        val imageBitmap = BitmapFactory.decodeResource(resources, R.drawable.teams_icon3)
+        val roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(resources, imageBitmap)
+        roundedBitmapDrawable.setCornerRadius(50.0f);
+        roundedBitmapDrawable.setAntiAlias(true);
+
+        imageView.setImageDrawable(roundedBitmapDrawable)
     }
 
     fun updateNotifications(value: Int) {

@@ -130,6 +130,13 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
         mIVLogPriorityFilterListener = vLogPriorityFilterListener;
     }
 
+    public void clearLogs() {
+        mVLogList.clear();
+        mPriorityVLogList.clear();
+        mResultantVLogList.clear();
+        notifyDataSetChanged();
+    }
+
     public class VLogViewHolder extends RecyclerView.ViewHolder {
 
 
