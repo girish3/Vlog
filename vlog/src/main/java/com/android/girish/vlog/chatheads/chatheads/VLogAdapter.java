@@ -72,6 +72,7 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
             @Override
             public void onClick(View v) {
                 mExpandedModel = isExpanded ? null : model;
+                // TODO: @girish optimize if required -> update the item rather than the whole list.
                 notifyDataSetChanged();
             }
         });
