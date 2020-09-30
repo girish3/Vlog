@@ -22,12 +22,23 @@ import com.facebook.rebound.SpringSystem
 class Content(context: Context): LinearLayout(context) {
     private val springSystem = SpringSystem.create()
     private val scaleSpring = springSystem.createSpring()
+    private var mItemCountChangeListener: ItemCountChangeListener? = null
 
     var messagesView: RecyclerView
     var layoutManager = LinearLayoutManager(context)
 
     lateinit var messagesAdapter: ChatAdapter
-    var vLogAdapter: VLogAdapter
+    val vLogAdapter: VLogAdapter = VLogAdapter(mutableListOf())
+
+    val dataChangeObserver = object: RecyclerView.AdapterDataObserver() {
+        override fun onChanged() {
+            mItemCountChangeListener?.onItemCountChange(vLogAdapter.itemCount)
+        }
+    }
+
+    interface ItemCountChangeListener {
+        fun onItemCountChange(itemCount: Int)
+    }
 
     init {
         inflate(context, R.layout.chat_head_content, this)
@@ -35,9 +46,8 @@ class Content(context: Context): LinearLayout(context) {
         messagesView = findViewById(R.id.events)
         messagesView.layoutManager = layoutManager
 
-        vLogAdapter = VLogAdapter(mutableListOf())
-
         messagesView.adapter = vLogAdapter
+        vLogAdapter.registerAdapterDataObserver(dataChangeObserver)
 
         val logPriorityTxtVw: TextView = findViewById(R.id.log_priority_txtvw)
         logPriorityTxtVw.setOnClickListener {
@@ -97,15 +107,6 @@ class Content(context: Context): LinearLayout(context) {
         dialog.show()
     }
 
-    fun setInfo(chatHead: ChatHead) {
-        val list = ArrayList<String>()
-        list.add("new list")
-        list.add("girish")
-        messagesAdapter.messages = list
-        messagesAdapter.notifyDataSetChanged()
-        messagesView.scrollToPosition(messagesAdapter.messages.lastIndex)
-    }
-
     private fun isAppInstalled(context: Context, packageName: String): Boolean {
         val pm = context.packageManager
         try {
@@ -129,6 +130,19 @@ class Content(context: Context): LinearLayout(context) {
         }
 
         return appStatus
+    }
+
+    fun setItemCountChangeListener(listener: ItemCountChangeListener) {
+        mItemCountChangeListener = listener
+    }
+
+    fun setInfo(chatHead: ChatHead) {
+        val list = ArrayList<String>()
+        list.add("new list")
+        list.add("girish")
+        messagesAdapter.messages = list
+        messagesAdapter.notifyDataSetChanged()
+        messagesView.scrollToPosition(messagesAdapter.messages.lastIndex)
     }
 
     fun hideContent() {

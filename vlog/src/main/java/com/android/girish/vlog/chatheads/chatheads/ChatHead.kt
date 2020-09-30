@@ -19,7 +19,8 @@ import com.facebook.rebound.SpringSystem
 import kotlin.math.pow
 
 
-class ChatHead(var chatHeads: ChatHeads): FrameLayout(chatHeads.context), View.OnTouchListener, SpringListener {
+class ChatHead(var chatHeads: ChatHeads): FrameLayout(chatHeads.context),
+        View.OnTouchListener, SpringListener, Content.ItemCountChangeListener {
     var params: WindowManager.LayoutParams = WindowManager.LayoutParams(
         WindowManager.LayoutParams.WRAP_CONTENT,
         WindowManager.LayoutParams.WRAP_CONTENT,
@@ -119,10 +120,12 @@ class ChatHead(var chatHeads: ChatHeads): FrameLayout(chatHeads.context), View.O
         roundedBitmapDrawable.setAntiAlias(true);
 
         imageView.setImageDrawable(roundedBitmapDrawable)
+
+        chatHeads.content.setItemCountChangeListener(this)
     }
 
     fun updateNotifications(value: Int) {
-        notifications += value
+        notifications = value
     }
 
     override fun onSpringUpdate(spring: Spring) {
@@ -185,5 +188,9 @@ class ChatHead(var chatHeads: ChatHeads): FrameLayout(chatHeads.context), View.O
         }
 
         return true
+    }
+
+    override fun onItemCountChange(itemCount: Int) {
+        updateNotifications(itemCount)
     }
 }
