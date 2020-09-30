@@ -62,7 +62,6 @@ public class VLog {
     public void feed(VLogModel model) {
         if (!allowLogging()) return;
 
-        OverlayService.instance.updateNotification();
         if (total > MAX) {
             return;
         }

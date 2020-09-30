@@ -18,16 +18,6 @@
         android:text="Add bubble"/>
 
     <Button
-        android:id="@+id/addNotification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@android:color/darker_gray"
-        android:layout_margin="10dp"
-        android:padding="20dp"
-        android:text="Add notification"/>
-
-    <Button
         android:id="@+id/addFeed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -44,15 +44,6 @@ class OverlayService : Service() {
         chatHeads.addLog(vlog)
     }
 
-    fun updateNotification() {
-        if (chatHeads == null || chatHeads.isEmpty()) {
-            return
-        }
-
-        val bubble = chatHeads.chatHeads[0]
-        bubble?.updateNotifications(1)
-    }
-
     override fun onCreate() {
         super.onCreate()
 

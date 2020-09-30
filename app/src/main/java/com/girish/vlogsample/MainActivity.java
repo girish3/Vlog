@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         mVlog.initialize(getApplicationContext());
 
         Button addBubble = findViewById(R.id.addBubble);
-        Button addNotification = findViewById(R.id.addNotification);
         final Button addFeed = findViewById(R.id.addFeed);
 
         addBubble.setOnClickListener(new View.OnClickListener() {
@@ -40,13 +39,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 mVlog.showBubble();
                 //startActivity();
-            }
-        });
-
-        addNotification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                OverlayService.instance.updateNotification();
             }
         });
 
