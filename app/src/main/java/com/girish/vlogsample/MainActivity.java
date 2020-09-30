@@ -53,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
         addFeed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addFeed.setClickable(false);
-                addFeed.setEnabled(false);
                 List<VLogModel> vLogModels = getRandomLogs();
                 for (VLogModel model : vLogModels) {
                     final VLogModel vLogModel = model;
