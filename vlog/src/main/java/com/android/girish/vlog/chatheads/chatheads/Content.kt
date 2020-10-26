@@ -11,6 +11,7 @@ import android.view.WindowManager
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.*
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.girish.vlog.R
@@ -83,6 +84,11 @@ class Content(context: Context): LinearLayout(context) {
 
         clearButton.setOnClickListener {
             vLogAdapter.clearLogs();
+        }
+
+        val viewModel = ContentViewModel()
+        viewModel.resultObserver.observeForever {
+
         }
     }
 

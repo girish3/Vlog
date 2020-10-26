@@ -3,11 +3,22 @@ package com.android.girish.vlog.chatheads.chatheads;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
+
 public class VLogModel implements Parcelable {
+
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({UNKNOWN, VERBOSE, DEBUG, INFO, WARN, ERROR, ASSERT})
+    public @interface LogPriority {}
 
     /**
      * Priority constant for the println method.
      */
+    // TODO: @girish do we need unknown? can we set verbose by default?
     public static final int UNKNOWN = -1;
     /**
      * Priority constant for the println method; use Log.v.
@@ -64,6 +75,7 @@ public class VLogModel implements Parcelable {
         this.mLogPriority = mLogPriority;
     }
 
+    @NonNull
     public String getTag() {
         return mTag;
     }
@@ -72,6 +84,7 @@ public class VLogModel implements Parcelable {
         this.mTag = mTag;
     }
 
+    @NonNull
     public String getLogMessage() {
         return mLogMessage;
     }
