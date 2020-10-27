@@ -153,11 +153,8 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
         }
     }
 
-    public void addLog(VLogModel model) {
-        // TODO: add this log and refresh the list
-        mLogList.add(model);
-        mPriorityVLogList.add(model);
-        mFilteredLogList.add(model);
+    public void addLogs(List<VLogModel> logs) {
+        mFilteredLogList = logs;
         notifyDataSetChanged();
     }
 

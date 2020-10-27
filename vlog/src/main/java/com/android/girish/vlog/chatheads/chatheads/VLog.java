@@ -6,6 +6,10 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 
+import com.android.girish.vlog.chatheads.chatheads.filter.FilterManager;
+
+import org.jetbrains.annotations.NotNull;
+
 public class VLog {
 
     private static VLog vlog;
@@ -15,6 +19,7 @@ public class VLog {
     private int total = 0;
     private int MAX = 1000;
     private OverlayService mService;
+    private FilterManager mFilterManager;
     private boolean mBound;
 
     ServiceConnection mServerConn = new ServiceConnection() {
@@ -41,9 +46,16 @@ public class VLog {
             vlog = new VLog();
         }
         return vlog;
+
     }
 
     private VLog() {
+        // TODO: use DI, isolating the dependency for now
+        injectFilterManager();
+    }
+
+    private void injectFilterManager() {
+        mFilterManager = new FilterManager();
     }
 
     public void initialize(Context context) {
@@ -67,7 +79,7 @@ public class VLog {
         }
 
         total++;
-        OverlayService.instance.addLog(model);
+        mFilterManager.feedLog(model);
     }
 
     public void showBubble() {
@@ -87,5 +99,10 @@ public class VLog {
         // TODO: is there a need to pass token as an extra?
         mApplicationContext.bindService(mServiceIntent, mServerConn, Context.BIND_AUTO_CREATE);
         mApplicationContext.startService(mServiceIntent);
+    }
+
+    @NotNull
+    public FilterManager getFilterManager() {
+        return mFilterManager;
     }
 }

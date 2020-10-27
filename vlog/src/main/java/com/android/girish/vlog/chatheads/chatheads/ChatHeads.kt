@@ -89,7 +89,7 @@ class Line(val x1: Double, val y1: Double, var x2: Double, var y2: Double) {
     }
 }
 
-class ChatHeads(context: Context) : View.OnTouchListener, FrameLayout(context) {
+class ChatHeads(context: Context, val mContentViewModel: ContentViewModel) : View.OnTouchListener, FrameLayout(context) {
     companion object {
         val CHAT_HEAD_OUT_OF_SCREEN_X: Int = dpToPx(10f)
         val CHAT_HEAD_SIZE: Int = dpToPx(62f)
@@ -161,7 +161,7 @@ class ChatHeads(context: Context) : View.OnTouchListener, FrameLayout(context) {
     var topChatHead: ChatHead? = null
     var activeChatHead: ChatHead? = null
 
-    var content = Content(context)
+    var content = Content(context, mContentViewModel)
     private var close = Close(this)
 
     private var motionTrackerParams = WindowManager.LayoutParams(
@@ -230,10 +230,6 @@ class ChatHeads(context: Context) : View.OnTouchListener, FrameLayout(context) {
         topChatHead = chatHead
 
         resetSpringChains()
-    }
-
-    fun addLog(vlog: VLogModel) {
-        content.addLog(vlog)
     }
 
     private fun destroySpringChains() {
@@ -319,7 +315,7 @@ class ChatHeads(context: Context) : View.OnTouchListener, FrameLayout(context) {
                 it.visibility = View.VISIBLE
             }
 
-            chatHead = ChatHead(this)
+            chatHead = ChatHead(this, mContentViewModel)
             chatHeads.add(chatHead)
         }
 

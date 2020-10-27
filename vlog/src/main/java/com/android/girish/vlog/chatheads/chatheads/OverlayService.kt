@@ -11,7 +11,6 @@ import android.graphics.Color
 import android.os.Binder
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.core.view.isEmpty
 
 class OverlayService : Service() {
     companion object {
@@ -21,6 +20,7 @@ class OverlayService : Service() {
 
     lateinit var windowManager: WindowManager
     lateinit var chatHeads: ChatHeads
+    private lateinit var mContentViewModel: ContentViewModel
 
     private lateinit var innerReceiver: InnerReceiver
 
@@ -40,19 +40,18 @@ class OverlayService : Service() {
         chatHeads.add()
     }
 
-    fun addLog(vlog: VLogModel) {
-        chatHeads.addLog(vlog)
-    }
-
     override fun onCreate() {
         super.onCreate()
+
+        // TODO: use DI, isolating dependencies for now
+        injectDependencies()
 
         instance = this
         initialized = true
 
         windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
-        chatHeads = ChatHeads(this)
+        chatHeads = ChatHeads(this, mContentViewModel)
 
         innerReceiver = InnerReceiver()
         val intentFilter = IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
@@ -60,6 +59,11 @@ class OverlayService : Service() {
 
         /* If you wanna keep showing foreground notifications then uncomment the below method */
         // CreateForegroundNotification()
+
+    }
+
+    private fun injectDependencies() {
+        mContentViewModel = ContentViewModel()
     }
 
     private fun CreateForegroundNotification() {

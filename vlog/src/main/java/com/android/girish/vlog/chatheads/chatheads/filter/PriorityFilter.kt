@@ -7,7 +7,7 @@ import com.android.girish.vlog.chatheads.chatheads.VLogModel
  *
  * @constructor Create empty Priority filter
  */
-private class PriorityFilter: Criteria<VLogModel> {
+class PriorityFilter: Criteria<VLogModel> {
 
     @LogPriority private var mPriority: Int = VLogModel.VERBOSE
 

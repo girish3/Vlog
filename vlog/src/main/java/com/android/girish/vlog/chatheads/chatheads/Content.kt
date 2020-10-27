@@ -20,26 +20,15 @@ import com.facebook.rebound.Spring
 import com.facebook.rebound.SpringSystem
 
 
-class Content(context: Context): LinearLayout(context) {
+class Content(context: Context, val mContentViewModel: ContentViewModel): LinearLayout(context) {
     private val springSystem = SpringSystem.create()
     private val scaleSpring = springSystem.createSpring()
-    private var mItemCountChangeListener: ItemCountChangeListener? = null
 
     var messagesView: RecyclerView
     var layoutManager = LinearLayoutManager(context)
 
     lateinit var messagesAdapter: ChatAdapter
     val vLogAdapter: VLogAdapter = VLogAdapter(mutableListOf())
-
-    val dataChangeObserver = object: RecyclerView.AdapterDataObserver() {
-        override fun onChanged() {
-            mItemCountChangeListener?.onItemCountChange(vLogAdapter.itemCount)
-        }
-    }
-
-    interface ItemCountChangeListener {
-        fun onItemCountChange(itemCount: Int)
-    }
 
     init {
         inflate(context, R.layout.chat_head_content, this)
@@ -48,7 +37,6 @@ class Content(context: Context): LinearLayout(context) {
         messagesView.layoutManager = layoutManager
 
         messagesView.adapter = vLogAdapter
-        vLogAdapter.registerAdapterDataObserver(dataChangeObserver)
 
         val logPriorityTxtVw: TextView = findViewById(R.id.log_priority_txtvw)
         logPriorityTxtVw.setOnClickListener {
@@ -67,7 +55,7 @@ class Content(context: Context): LinearLayout(context) {
 
             override fun onTextChanged(constraint: CharSequence?, start: Int, before: Int, count: Int) {
                 vLogAdapter.setFilteringOn(VLogAdapter.FILTERING_ON_TAG_KEYWORD)
-                vLogAdapter.filter.filter(constraint)
+                mContentViewModel.onKeywordEnter(constraint.toString())
             }
 
         })
@@ -83,12 +71,11 @@ class Content(context: Context): LinearLayout(context) {
         scaleSpring.currentValue = 0.0
 
         clearButton.setOnClickListener {
-            vLogAdapter.clearLogs();
+            mContentViewModel.onClearLogs()
         }
 
-        val viewModel = ContentViewModel()
-        viewModel.resultObserver.observeForever {
-
+        mContentViewModel.resultObserver.observeForever {
+            vLogAdapter.addLogs(it)
         }
     }
 
@@ -104,7 +91,7 @@ class Content(context: Context): LinearLayout(context) {
                     priorityList[which]))
             logPriorityTxtVw.text = priorityList[which]
             vLogAdapter.setFilteringOn(VLogAdapter.FILTERING_ON_PRIORITY)
-            vLogAdapter.filter.filter(which.toString())
+            mContentViewModel.onPrioritySet(which)
         }
         builder.setPositiveButton("Cancel"
         ) { dialog, _ -> dialog?.dismiss() }
@@ -138,10 +125,6 @@ class Content(context: Context): LinearLayout(context) {
         return appStatus
     }
 
-    fun setItemCountChangeListener(listener: ItemCountChangeListener) {
-        mItemCountChangeListener = listener
-    }
-
     fun setInfo(chatHead: ChatHead) {
         val list = ArrayList<String>()
         list.add("new list")
@@ -170,9 +153,5 @@ class Content(context: Context): LinearLayout(context) {
         anim.duration = 100
         anim.repeatMode = Animation.RELATIVE_TO_SELF
         startAnimation(anim)
-    }
-
-    fun addLog(vlog: VLogModel) {
-        vLogAdapter.addLog(vlog)
     }
 }
