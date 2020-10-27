@@ -16,26 +16,14 @@ import com.android.girish.vlog.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder> implements Filterable {
+public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder> {
 
     private static final String TAG = VLogAdapter.class.getSimpleName();
-    public static final int FILTERING_ON_PRIORITY = 1;
-    public static final int FILTERING_ON_TAG_KEYWORD = 2;
-    private List<VLogModel> mLogList;
-    private List<VLogModel> mPriorityVLogList;
     private List<VLogModel> mFilteredLogList;
     private VLogModel mExpandedModel = null;
-    private IVLogPriorityFilterListener mIVLogPriorityFilterListener;
-    private int mFilteringOn = FILTERING_ON_PRIORITY;
-    private PriorityFilter mPriorityFilter;
-    private TagOrKeywordFilter mTagOrKeywordFilter;
 
-    public VLogAdapter(List<VLogModel> vLogList) {
-        mLogList = vLogList;
-        mPriorityVLogList = new ArrayList<>();
-        mPriorityVLogList.addAll(mLogList);
+    public VLogAdapter() {
         mFilteredLogList = new ArrayList<>();
-        mFilteredLogList.addAll(mPriorityVLogList);
     }
 
     @Override
@@ -97,45 +85,9 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
         }
     }
 
-    public void setLogList(List<VLogModel> vLogModels) {
-        mLogList = vLogModels;
-        notifyDataSetChanged();
-    }
-
-    public void setFilteringOn(int filteringOn) {
-        mFilteringOn = filteringOn;
-    }
-
     @Override
     public int getItemCount() {
         return mFilteredLogList != null ? mFilteredLogList.size() : 0;
-    }
-
-    @Override
-    public Filter getFilter() {
-        if (mFilteringOn == FILTERING_ON_PRIORITY) {
-            if (mPriorityFilter == null) {
-                mPriorityFilter = new PriorityFilter();
-            }
-            return mPriorityFilter;
-        } else if (mFilteringOn == FILTERING_ON_TAG_KEYWORD) {
-            if (mTagOrKeywordFilter == null) {
-                mTagOrKeywordFilter = new TagOrKeywordFilter();
-            }
-            return mTagOrKeywordFilter;
-        }
-        return null;
-    }
-
-    public void setPriorityFilterListener(IVLogPriorityFilterListener vLogPriorityFilterListener) {
-        mIVLogPriorityFilterListener = vLogPriorityFilterListener;
-    }
-
-    public void clearLogs() {
-        mLogList.clear();
-        mPriorityVLogList.clear();
-        mFilteredLogList.clear();
-        notifyDataSetChanged();
     }
 
     public class VLogViewHolder extends RecyclerView.ViewHolder {
@@ -156,94 +108,5 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
     public void addLogs(List<VLogModel> logs) {
         mFilteredLogList = logs;
         notifyDataSetChanged();
-    }
-
-    private class PriorityFilter extends Filter {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            mPriorityVLogList.clear();
-            mFilteredLogList.clear();
-            FilterResults results = new FilterResults();
-            if (constraint == null || constraint.length() == 0) {
-                // No filter implemented we return all the list
-                mPriorityVLogList.addAll(mLogList);
-                results.values = mPriorityVLogList;
-                results.count = mPriorityVLogList.size();
-            } else {
-                int priority = Integer.parseInt(constraint.toString()) + 2;
-                for (VLogModel item : mLogList) {
-                    if (item != null && item.getLogPriority() != VLogModel.UNKNOWN) {
-                        if (item.getLogPriority() >= priority) {
-                            mPriorityVLogList.add(item);
-                        }
-                    }
-                }
-                results.values = mPriorityVLogList;
-                results.count = mPriorityVLogList.size();
-            }
-            mFilteredLogList.addAll(mPriorityVLogList);
-            return results;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        protected void publishResults(CharSequence constraint,
-                                      FilterResults results) {
-            if (mIVLogPriorityFilterListener != null) {
-                if (results.count > 0) {
-                    mIVLogPriorityFilterListener.updateFilteredDataOnUI(false);
-                } else {
-                    mIVLogPriorityFilterListener.updateFilteredDataOnUI(true);
-                }
-            }
-            notifyDataSetChanged();
-        }
-    }
-
-    private class TagOrKeywordFilter extends Filter {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            mFilteredLogList.clear();
-            FilterResults results = new FilterResults();
-            if (constraint == null || constraint.length() == 0) {
-                // No filter implemented we return all the list
-                mFilteredLogList.addAll(mPriorityVLogList);
-                results.values = mFilteredLogList;
-                results.count = mFilteredLogList.size();
-            } else {
-                for (VLogModel item : mPriorityVLogList) {
-                    if (item != null && item.getLogMessage() != null) {
-                        //if image title name starts with constraint, add it to filtered list
-                        if (item.getLogMessage().toLowerCase().trim().contains(
-                                constraint.toString().toLowerCase().trim())
-                                || item.getTag().toLowerCase().trim().contains(
-                                constraint.toString().toLowerCase().trim())) {
-                            mFilteredLogList.add(item);
-                        }
-                    }
-                }
-                results.values = mFilteredLogList;
-                results.count = mFilteredLogList.size();
-            }
-            return results;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        protected void publishResults(CharSequence constraint,
-                                      FilterResults results) {
-            if (mIVLogPriorityFilterListener != null) {
-                if (results.count > 0) {
-                    mIVLogPriorityFilterListener.updateFilteredDataOnUI(false);
-                } else {
-                    mIVLogPriorityFilterListener.updateFilteredDataOnUI(true);
-                }
-            }
-            notifyDataSetChanged();
-        }
-    }
-
-    public interface IVLogPriorityFilterListener {
-        void updateFilteredDataOnUI(boolean show);
     }
 }

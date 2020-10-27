@@ -28,7 +28,7 @@ class Content(context: Context, val mContentViewModel: ContentViewModel): Linear
     var layoutManager = LinearLayoutManager(context)
 
     lateinit var messagesAdapter: ChatAdapter
-    val vLogAdapter: VLogAdapter = VLogAdapter(mutableListOf())
+    val vLogAdapter: VLogAdapter = VLogAdapter()
 
     init {
         inflate(context, R.layout.chat_head_content, this)
@@ -54,7 +54,6 @@ class Content(context: Context, val mContentViewModel: ContentViewModel): Linear
             }
 
             override fun onTextChanged(constraint: CharSequence?, start: Int, before: Int, count: Int) {
-                vLogAdapter.setFilteringOn(VLogAdapter.FILTERING_ON_TAG_KEYWORD)
                 mContentViewModel.onKeywordEnter(constraint.toString())
             }
 
@@ -90,7 +89,6 @@ class Content(context: Context, val mContentViewModel: ContentViewModel): Linear
             Log.d("AVINASH", String.format("AVINASH: %s has been selected in spinner.",
                     priorityList[which]))
             logPriorityTxtVw.text = priorityList[which]
-            vLogAdapter.setFilteringOn(VLogAdapter.FILTERING_ON_PRIORITY)
             mContentViewModel.onPrioritySet(which)
         }
         builder.setPositiveButton("Cancel"
