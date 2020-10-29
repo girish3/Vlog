@@ -55,7 +55,7 @@ public class VLogModel implements Parcelable {
     private String mLogMessage;
 
 
-    public VLogModel(int priority, String tag, String logMessage) {
+    public VLogModel(@LogPriority int priority, String tag, String logMessage) {
         mLogPriority = priority;
         mTag = tag;
         mLogMessage = logMessage;

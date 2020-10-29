@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.girish.vlog.R
+import com.android.girish.vlog.chatheads.chatheads.VLogModel.*
 import com.facebook.rebound.SimpleSpringListener
 import com.facebook.rebound.Spring
 import com.facebook.rebound.SpringSystem
@@ -85,17 +86,30 @@ class Content(context: Context, val mContentViewModel: ContentViewModel): Linear
         val priorityList: List<String> = resources.getStringArray(R.array.log_priority_names).toMutableList()
         val arrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(context,
                 android.R.layout.simple_list_item_1, priorityList);
-        builder.setAdapter(arrayAdapter) { _, which ->
-            Log.d("AVINASH", String.format("AVINASH: %s has been selected in spinner.",
-                    priorityList[which]))
-            logPriorityTxtVw.text = priorityList[which]
-            mContentViewModel.onPrioritySet(which)
+        builder.setAdapter(arrayAdapter) { _, selectedIndex ->
+            logPriorityTxtVw.text = priorityList[selectedIndex]
+            mContentViewModel.onPrioritySet(getLogPriority(selectedIndex))
         }
         builder.setPositiveButton("Cancel"
         ) { dialog, _ -> dialog?.dismiss() }
         val dialog: AlertDialog = builder.create()
         dialog.window?.setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY)
         dialog.show()
+    }
+
+    private fun getLogPriority(selectedIndex: Int): Int {
+        @VLogModel.LogPriority var priority: Int = VERBOSE
+
+        when (selectedIndex) {
+            0 -> priority = VERBOSE
+            1 -> priority = DEBUG
+            2 -> priority = INFO
+            3 -> priority = WARN
+            4 -> priority = ERROR
+            5 -> priority = ASSERT
+        }
+
+        return priority
     }
 
     private fun isAppInstalled(context: Context, packageName: String): Boolean {

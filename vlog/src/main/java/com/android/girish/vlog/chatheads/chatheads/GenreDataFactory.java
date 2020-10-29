@@ -9,7 +9,7 @@ public class GenreDataFactory {
 
   public static List<VLogModel> generateLogs() {
     ArrayList<VLogModel> logDataList = new ArrayList<>();
-    int priority = VLogModel.UNKNOWN;
+    int priority = VLogModel.VERBOSE;
     String tag = "";
     String logMessage = "";
     for (int i = 0; i < 30; i++) {
@@ -26,7 +26,7 @@ public class GenreDataFactory {
                 + "......................"
                 + "......................";
       } else if (i % 5 == 0) {
-        priority = VLogModel.DEBUG;
+        priority = VLogModel.INFO;
         tag = "##5##" + i;
         logMessage = "We are adding this info log for " + i + "th index "
                 + "......................"
@@ -62,9 +62,9 @@ public class GenreDataFactory {
                 + "......................"
                 + "......................";
       } else {
-        priority = VLogModel.INFO;
+        priority = VLogModel.VERBOSE;
         tag = "#####" + i;
-        logMessage = "We are adding this verbose log for " + i + "th index "
+        logMessage = "We are adding this Verbose log for " + i + "th index "
                 + "......................"
                 + "......................"
                 + "......................"
