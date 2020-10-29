@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 
-import com.android.girish.vlog.chatheads.chatheads.filter.FilterManager;
+import com.android.girish.vlog.chatheads.chatheads.filter.VlogRepository;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -19,7 +19,7 @@ public class VLog {
     private int total = 0;
     private int MAX = 1000;
     private OverlayService mService;
-    private FilterManager mFilterManager;
+    private VlogRepository mVlogRepository;
     private boolean mBound;
 
     ServiceConnection mServerConn = new ServiceConnection() {
@@ -55,7 +55,7 @@ public class VLog {
     }
 
     private void injectFilterManager() {
-        mFilterManager = new FilterManager();
+        mVlogRepository = new VlogRepository();
     }
 
     public void initialize(Context context) {
@@ -79,7 +79,7 @@ public class VLog {
         }
 
         total++;
-        mFilterManager.feedLog(model);
+        mVlogRepository.feedLog(model);
     }
 
     public void showBubble() {
@@ -102,7 +102,7 @@ public class VLog {
     }
 
     @NotNull
-    public FilterManager getFilterManager() {
-        return mFilterManager;
+    public VlogRepository getVlogRepository() {
+        return mVlogRepository;
     }
 }

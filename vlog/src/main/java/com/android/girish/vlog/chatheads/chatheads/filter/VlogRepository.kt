@@ -11,16 +11,16 @@ import com.android.girish.vlog.chatheads.chatheads.VLogModel
 /**
  * Filter manager
  *
- * @property mDelay The amount of delay (in ms) before the filter process starts
+ * @property mFilterDelay The amount of delay (in ms) before the filter process starts
  * @constructor Create empty Filter manager
  */
-open class FilterManager(val mDelay: Long = 100): Filter() {
+open class VlogRepository(private val mFilterDelay: Long = 100): Filter() {
 
-    val handler: Handler
-    val mKeywordFilter = KeywordFilter()
-    val mPriorityFilter = PriorityFilter()
-    val mFilters: List<Criteria<VLogModel>>
-    val mVlogs: MutableList<VLogModel>
+    private val handler: Handler
+    private val mKeywordFilter = KeywordFilter()
+    private val mPriorityFilter = PriorityFilter()
+    private val mFilters: List<Criteria<VLogModel>>
+    private val mVlogs: MutableList<VLogModel>
     private var mResultListener: ResultListener? = null
 
     init {
@@ -41,9 +41,9 @@ open class FilterManager(val mDelay: Long = 100): Filter() {
         handler.removeCallbacksAndMessages(null)
         handler.postDelayed(object : Runnable {
             override fun run() {
-                this@FilterManager.filter(null)
+                this@VlogRepository.filter(null)
             }
-        }, mDelay)
+        }, mFilterDelay)
     }
 
 

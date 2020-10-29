@@ -2,18 +2,18 @@ package com.android.girish.vlog.chatheads.chatheads
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.android.girish.vlog.chatheads.chatheads.filter.FilterManager
+import com.android.girish.vlog.chatheads.chatheads.filter.VlogRepository
 import com.android.girish.vlog.chatheads.chatheads.VLogModel.LogPriority
 
-class ContentViewModel: ViewModel(), FilterManager.ResultListener {
+class ContentViewModel: ViewModel(), VlogRepository.ResultListener {
 
     val resultObserver = MutableLiveData<List<VLogModel>>()
-    val mFilterManager: FilterManager
+    val mVlogRepository: VlogRepository
 
     init {
         // TODO: use DI, isolating the dependency for now
-        mFilterManager = VLog.getInstance().filterManager
-        mFilterManager.setResultListener(this)
+        mVlogRepository = VLog.getInstance().vlogRepository
+        mVlogRepository.setResultListener(this)
     }
 
     override fun onFilterResults(filterResults: List<VLogModel>) {
@@ -27,7 +27,7 @@ class ContentViewModel: ViewModel(), FilterManager.ResultListener {
      * @param keyword
      */
     fun onKeywordEnter(keyword: String) {
-        mFilterManager.setKeywordFilter(keyword)
+        mVlogRepository.setKeywordFilter(keyword)
     }
 
 
@@ -37,11 +37,11 @@ class ContentViewModel: ViewModel(), FilterManager.ResultListener {
      * @param priority
      */
     fun onPrioritySet(@LogPriority priority: Int) {
-        mFilterManager.setLogPriority(priority)
+        mVlogRepository.setLogPriority(priority)
     }
 
     fun onClearLogs() {
-        mFilterManager.clearLogs()
+        mVlogRepository.clearLogs()
     }
 
 }
