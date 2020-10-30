@@ -54,13 +54,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 List<VLogModel> vLogModels = getRandomLogs();
                 for (VLogModel model : vLogModels) {
-                    final VLogModel vLogModel = model;
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            mVlog.feed(vLogModel);
-                        }
-                    }, 80);
+                    if (mVlog.isEnabled()) {
+                        mVlog.feed(model);
+                    }
                 }
             }
         });
