@@ -11,6 +11,7 @@ import android.graphics.Color
 import android.os.Binder
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
 
 class OverlayService : Service() {
     companion object {
@@ -58,41 +59,40 @@ class OverlayService : Service() {
         registerReceiver(innerReceiver, intentFilter)
 
         /* If you wanna keep showing foreground notifications then uncomment the below method */
-        // CreateForegroundNotification()
-
+        createForegroundNotification()
     }
 
     private fun injectDependencies() {
         mContentViewModel = ContentViewModel()
     }
 
-    private fun CreateForegroundNotification() {
-        /*val channelId =
+    private fun createForegroundNotification() {
+        val channelId =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                createNotificationChannel("overlay_service", "Discord Chat Heads service")
+                createNotificationChannel("Vlog", "Vlog service")
             } else {
                 ""
             }
 
-        val notificationIntent = Intent(this, MainActivity::class.java)
-
+        /*val notificationIntent = Intent(this, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(
             this, 0,
             notificationIntent, 0
-        )
+        )*/
 
         val notification = NotificationCompat.Builder(this, channelId)
-            .setOngoing(true)
-            .setContentTitle("Discord chat heads are active")
-            .setSmallIcon(R.mipmap.ic_launcher)
+            //.setOngoing(true)
+            .setContentTitle("Vlog bubble is active")
+            //.setSmallIcon(R.mipmap.ic_launcher)
             .setCategory(Notification.CATEGORY_SERVICE)
-            .setContentIntent(pendingIntent).build()
+            .build()
+            //.setContentIntent(pendingIntent).build()
 
-        startForeground(101, notification)*/
+        startForeground(101, notification)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun createNotificationChannel(channelId: String, channelName: String): String{
+    private fun createNotificationChannel(channelId: String, channelName: String): String {
         val chan = NotificationChannel(channelId,
             channelName, NotificationManager.IMPORTANCE_NONE)
         chan.lightColor = Color.BLUE
