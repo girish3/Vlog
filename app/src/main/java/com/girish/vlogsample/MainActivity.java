@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.girish.vlog.chatheads.chatheads.GenreDataFactory;
 import com.android.girish.vlog.chatheads.chatheads.VLog;
-import com.android.girish.vlog.chatheads.chatheads.VLogModel;
+import com.android.girish.vlog.chatheads.chatheads.VlogModel;
 
 import java.util.List;
 
@@ -52,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
         addFeed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<VLogModel> vLogModels = getRandomLogs();
-                for (VLogModel model : vLogModels) {
+                List<VlogModel> vlogModels = getRandomLogs();
+                for (VlogModel model : vlogModels) {
                     if (mVlog.isEnabled()) {
                         mVlog.feed(model);
                     }
@@ -62,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private List<VLogModel> getRandomLogs() {
-        List<VLogModel> logModelList = GenreDataFactory.generateLogs();
+    private List<VlogModel> getRandomLogs() {
+        List<VlogModel> logModelList = GenreDataFactory.generateLogs();
         return logModelList;
     }
 

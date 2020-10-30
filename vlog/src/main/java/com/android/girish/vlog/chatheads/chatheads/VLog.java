@@ -98,7 +98,7 @@ public class VLog {
         // initialize other resources if any
     }
 
-    public void feed(VLogModel model) {
+    public void feed(VlogModel model) {
         if (!allowLogging()) return;
 
         if (total > MAX) {
@@ -134,27 +134,27 @@ public class VLog {
     }
 
     public void v(String tag, String msg) {
-        VLogModel model = new VLogModel(VLogModel.VERBOSE, tag, msg);
+        VlogModel model = new VlogModel(VlogModel.VERBOSE, tag, msg);
         feed(model);
     }
 
     public void d(String tag, String msg) {
-        VLogModel model = new VLogModel(VLogModel.DEBUG, tag, msg);
+        VlogModel model = new VlogModel(VlogModel.DEBUG, tag, msg);
         feed(model);
     }
 
     public void i(String tag, String msg) {
-        VLogModel model = new VLogModel(VLogModel.INFO, tag, msg);
+        VlogModel model = new VlogModel(VlogModel.INFO, tag, msg);
         feed(model);
     }
 
     public void w(String tag, String msg) {
-        VLogModel model = new VLogModel(VLogModel.WARN, tag, msg);
+        VlogModel model = new VlogModel(VlogModel.WARN, tag, msg);
         feed(model);
     }
 
     public void e(String tag, String msg) {
-        VLogModel model = new VLogModel(VLogModel.ERROR, tag, msg);
+        VlogModel model = new VlogModel(VlogModel.ERROR, tag, msg);
         feed(model);
     }
 }

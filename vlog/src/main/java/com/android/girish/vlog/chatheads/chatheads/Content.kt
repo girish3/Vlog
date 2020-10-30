@@ -13,7 +13,7 @@ import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.girish.vlog.R
-import com.android.girish.vlog.chatheads.chatheads.VLogModel.*
+import com.android.girish.vlog.chatheads.chatheads.VlogModel.*
 import com.facebook.rebound.SimpleSpringListener
 import com.facebook.rebound.Spring
 import com.facebook.rebound.SpringSystem
@@ -96,7 +96,7 @@ class Content(context: Context, val mContentViewModel: ContentViewModel): Linear
     }
 
     private fun getLogPriority(selectedIndex: Int): Int {
-        @VLogModel.LogPriority var priority: Int = VERBOSE
+        @VlogModel.LogPriority var priority: Int = VERBOSE
 
         when (selectedIndex) {
             0 -> priority = VERBOSE

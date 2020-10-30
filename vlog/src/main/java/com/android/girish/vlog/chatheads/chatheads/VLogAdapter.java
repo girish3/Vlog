@@ -4,8 +4,6 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,8 +17,8 @@ import java.util.List;
 public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder> {
 
     private static final String TAG = VLogAdapter.class.getSimpleName();
-    private List<VLogModel> mFilteredLogList;
-    private VLogModel mExpandedModel = null;
+    private List<VlogModel> mFilteredLogList;
+    private VlogModel mExpandedModel = null;
 
     public VLogAdapter() {
         mFilteredLogList = new ArrayList<>();
@@ -34,15 +32,15 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
 
     @Override
     public void onBindViewHolder(final VLogViewHolder holder, final int position) {
-        final VLogModel model = mFilteredLogList.get(position);
+        final VlogModel model = mFilteredLogList.get(position);
 
         int priority = model.getLogPriority();
         switch (priority) {
-            case VLogModel.ERROR:
+            case VlogModel.ERROR:
                 holder.logTag.setTextColor(Color.RED);
                 holder.logMessage.setTextColor(Color.RED);
                 break;
-            case VLogModel.WARN:
+            case VlogModel.WARN:
                 holder.logTag.setTextColor(Color.parseColor("#ff9966"));
                 holder.logMessage.setTextColor(Color.parseColor("#ff9966"));
                 break;
@@ -68,17 +66,17 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
 
     private String getLogPriorityInitials(int logPriority) {
         switch (logPriority) {
-            case VLogModel.ASSERT:
+            case VlogModel.ASSERT:
                 return "A";
-            case VLogModel.DEBUG:
+            case VlogModel.DEBUG:
                 return "D";
-            case VLogModel.ERROR:
+            case VlogModel.ERROR:
                 return "E";
-            case VLogModel.INFO:
+            case VlogModel.INFO:
                 return "I";
-            case VLogModel.VERBOSE:
+            case VlogModel.VERBOSE:
                 return "V";
-            case VLogModel.WARN:
+            case VlogModel.WARN:
                 return "W";
             default:
                 return "";
@@ -105,7 +103,7 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
         }
     }
 
-    public void addLogs(List<VLogModel> logs) {
+    public void addLogs(List<VlogModel> logs) {
         mFilteredLogList = logs;
         notifyDataSetChanged();
     }

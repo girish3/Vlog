@@ -1,7 +1,7 @@
 package com.android.girish.vlog.chatheads.chatheads.filter
-import com.android.girish.vlog.chatheads.chatheads.VLogModel
+import com.android.girish.vlog.chatheads.chatheads.VlogModel
 
-class KeywordFilter: Criteria<VLogModel> {
+class KeywordFilter: Criteria<VlogModel> {
 
     var mKeyword: String = ""
 
@@ -9,13 +9,13 @@ class KeywordFilter: Criteria<VLogModel> {
         mKeyword = keyword
     }
 
-    override fun meetCriteria(input: List<VLogModel>): List<VLogModel> {
+    override fun meetCriteria(input: List<VlogModel>): List<VlogModel> {
         if (mKeyword.isEmpty()) {
             return input
         }
 
         val normalizedKeyword = mKeyword.toLowerCase().trim()
-        val filteredLogs = ArrayList<VLogModel>()
+        val filteredLogs = ArrayList<VlogModel>()
 
         for (item in input) {
 

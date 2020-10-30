@@ -3,11 +3,11 @@ package com.android.girish.vlog.chatheads.chatheads
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.android.girish.vlog.chatheads.chatheads.filter.VlogRepository
-import com.android.girish.vlog.chatheads.chatheads.VLogModel.LogPriority
+import com.android.girish.vlog.chatheads.chatheads.VlogModel.LogPriority
 
 class ContentViewModel: ViewModel(), VlogRepository.ResultListener {
 
-    val resultObserver = MutableLiveData<List<VLogModel>>()
+    val resultObserver = MutableLiveData<List<VlogModel>>()
     private val mVlogRepository: VlogRepository
 
     init {
@@ -16,7 +16,7 @@ class ContentViewModel: ViewModel(), VlogRepository.ResultListener {
         mVlogRepository.setResultListener(this)
     }
 
-    override fun onFilterResults(filterResults: List<VLogModel>) {
+    override fun onFilterResults(filterResults: List<VlogModel>) {
         resultObserver.setValue(filterResults)
     }
 

@@ -5,8 +5,8 @@ import android.os.Looper
 import android.widget.Filter
 import androidx.annotation.UiThread
 import androidx.annotation.WorkerThread
-import com.android.girish.vlog.chatheads.chatheads.VLogModel.LogPriority
-import com.android.girish.vlog.chatheads.chatheads.VLogModel
+import com.android.girish.vlog.chatheads.chatheads.VlogModel.LogPriority
+import com.android.girish.vlog.chatheads.chatheads.VlogModel
 
 /**
  * Filter manager
@@ -19,8 +19,8 @@ class VlogRepository(private val mFilterDelay: Long = 100): Filter() {
     private val handler: Handler = Handler(Looper.getMainLooper())
     private val mKeywordFilter = KeywordFilter()
     private val mPriorityFilter = PriorityFilter()
-    private val mFilters: List<Criteria<VLogModel>>
-    private val mVlogs: MutableList<VLogModel>
+    private val mFilters: List<Criteria<VlogModel>>
+    private val mVlogs: MutableList<VlogModel>
     private var mResultListener: ResultListener? = null
 
     init {
@@ -87,12 +87,12 @@ class VlogRepository(private val mFilterDelay: Long = 100): Filter() {
          *
          * @param filterResults
          */
-        fun onFilterResults(filterResults: List<VLogModel>)
+        fun onFilterResults(filterResults: List<VlogModel>)
     }
 
     @WorkerThread
     override fun performFiltering(constraint: CharSequence?): FilterResults {
-        var filteredList: List<VLogModel> = mVlogs
+        var filteredList: List<VlogModel> = mVlogs
         for (filter in mFilters) {
             filteredList = filter.meetCriteria(filteredList)
         }
@@ -105,7 +105,7 @@ class VlogRepository(private val mFilterDelay: Long = 100): Filter() {
 
     @UiThread
     override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-        mResultListener?.onFilterResults(results?.values as List<VLogModel>)
+        mResultListener?.onFilterResults(results?.values as List<VlogModel>)
     }
 
 
@@ -114,7 +114,7 @@ class VlogRepository(private val mFilterDelay: Long = 100): Filter() {
      *
      * @param model
      */
-    fun feedLog(model: VLogModel) {
+    fun feedLog(model: VlogModel) {
         mVlogs.add(model)
         initiateFilter()
     }

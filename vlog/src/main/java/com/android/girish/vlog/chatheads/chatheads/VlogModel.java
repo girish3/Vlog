@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 
-public class VLogModel implements Parcelable {
+public class VlogModel implements Parcelable {
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({UNKNOWN, VERBOSE, DEBUG, INFO, WARN, ERROR, ASSERT})
@@ -55,13 +55,13 @@ public class VLogModel implements Parcelable {
     private String mLogMessage;
 
 
-    public VLogModel(@LogPriority int priority, String tag, String logMessage) {
+    public VlogModel(@LogPriority int priority, String tag, String logMessage) {
         mLogPriority = priority;
         mTag = tag;
         mLogMessage = logMessage;
     }
 
-    protected VLogModel(Parcel in) {
+    protected VlogModel(Parcel in) {
         mLogPriority = in.readInt();
         mTag = in.readString();
         mLogMessage = in.readString();
@@ -93,15 +93,15 @@ public class VLogModel implements Parcelable {
         this.mLogMessage = mLogMessage;
     }
 
-    public static final Creator<VLogModel> CREATOR = new Creator<VLogModel>() {
+    public static final Creator<VlogModel> CREATOR = new Creator<VlogModel>() {
         @Override
-        public VLogModel createFromParcel(Parcel in) {
-            return new VLogModel(in);
+        public VlogModel createFromParcel(Parcel in) {
+            return new VlogModel(in);
         }
 
         @Override
-        public VLogModel[] newArray(int size) {
-            return new VLogModel[size];
+        public VlogModel[] newArray(int size) {
+            return new VlogModel[size];
         }
     };
 
