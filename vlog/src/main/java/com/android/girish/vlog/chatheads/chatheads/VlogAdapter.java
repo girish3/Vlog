@@ -66,8 +66,6 @@ public class VlogAdapter extends RecyclerView.Adapter<VlogAdapter.VlogViewHolder
 
     private String getLogPriorityInitials(int logPriority) {
         switch (logPriority) {
-            case VlogModel.ASSERT:
-                return "A";
             case VlogModel.DEBUG:
                 return "D";
             case VlogModel.ERROR:

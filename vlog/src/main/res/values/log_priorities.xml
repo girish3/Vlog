@@ -6,6 +6,5 @@
         <item>Info</item>
         <item>Warn</item>
         <item>Error</item>
-        <item>Assert</item>
     </string-array>
 </resources>

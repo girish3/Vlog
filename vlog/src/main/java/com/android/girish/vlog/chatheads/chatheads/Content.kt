@@ -104,7 +104,6 @@ class Content(context: Context, val mContentViewModel: ContentViewModel): Linear
             2 -> priority = INFO
             3 -> priority = WARN
             4 -> priority = ERROR
-            5 -> priority = ASSERT
         }
 
         return priority

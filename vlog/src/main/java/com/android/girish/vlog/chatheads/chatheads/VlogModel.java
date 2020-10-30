@@ -12,45 +12,19 @@ import androidx.annotation.NonNull;
 public class VlogModel implements Parcelable {
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({UNKNOWN, VERBOSE, DEBUG, INFO, WARN, ERROR, ASSERT})
+    @IntDef({VERBOSE, DEBUG, INFO, WARN, ERROR})
     public @interface LogPriority {}
 
     /**
-     * Priority constant for the println method.
+     * Priority constants
      */
-    // TODO: @girish do we need unknown? can we set verbose by default?
-    public static final int UNKNOWN = -1;
-    /**
-     * Priority constant for the println method; use Log.v.
-     */
-    public static final int VERBOSE = 2;
+    public static final int VERBOSE = 1;
+    public static final int DEBUG = 2;
+    public static final int INFO = 3;
+    public static final int WARN = 4;
+    public static final int ERROR = 5;
 
-    /**
-     * Priority constant for the println method; use Log.d.
-     */
-    public static final int DEBUG = 3;
-
-    /**
-     * Priority constant for the println method; use Log.i.
-     */
-    public static final int INFO = 4;
-
-    /**
-     * Priority constant for the println method; use Log.w.
-     */
-    public static final int WARN = 5;
-
-    /**
-     * Priority constant for the println method; use Log.e.
-     */
-    public static final int ERROR = 6;
-
-    /**
-     * Priority constant for the println method.
-     */
-    public static final int ASSERT = 7;
-
-    private int mLogPriority = UNKNOWN;
+    private int mLogPriority;
     private String mTag;
     private String mLogMessage;
 
