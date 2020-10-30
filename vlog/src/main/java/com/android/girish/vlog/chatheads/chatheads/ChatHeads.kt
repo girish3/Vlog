@@ -186,8 +186,8 @@ class ChatHeads(context: Context, val mContentViewModel: ContentViewModel) : Vie
 
         motionTrackerParams.gravity = Gravity.START or Gravity.TOP
 
-        OverlayService.instance.windowManager.addView(motionTracker, motionTrackerParams)
-        OverlayService.instance.windowManager.addView(this, params)
+        VlogService.sInstance.windowManager.addView(motionTracker, motionTrackerParams)
+        VlogService.sInstance.windowManager.addView(this, params)
         this.addView(content)
 
         isFocusableInTouchMode = true
@@ -342,7 +342,7 @@ class ChatHeads(context: Context, val mContentViewModel: ContentViewModel) : Vie
             motionTrackerParams.y = chatHead.springY.currentValue.toInt()
             motionTrackerParams.flags = motionTrackerParams.flags and WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE.inv()
 
-            OverlayService.instance.windowManager.updateViewLayout(motionTracker, motionTrackerParams)
+            VlogService.sInstance.windowManager.updateViewLayout(motionTracker, motionTrackerParams)
         } else {
             if (newChatHead) {
                 chatHead.springX.currentValue = metrics.widthPixels.toDouble()
@@ -377,14 +377,14 @@ class ChatHeads(context: Context, val mContentViewModel: ContentViewModel) : Vie
         content.hideContent()
 
         motionTrackerParams.flags = motionTrackerParams.flags and WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE.inv()
-        OverlayService.instance.windowManager.updateViewLayout(motionTracker, motionTrackerParams)
+        VlogService.sInstance.windowManager.updateViewLayout(motionTracker, motionTrackerParams)
 
         params.flags = (params.flags or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE) and
                 WindowManager.LayoutParams.FLAG_DIM_BEHIND.inv() and
                 WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL.inv() or
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
 
-        OverlayService.instance.windowManager.updateViewLayout(this, params)
+        VlogService.sInstance.windowManager.updateViewLayout(this, params)
     }
 
     private fun onClose() {
@@ -537,7 +537,7 @@ class ChatHeads(context: Context, val mContentViewModel: ContentViewModel) : Vie
             if (Math.abs(totalVelocity) % 10 == 0 && !moving && topChatHead != null) {
                 motionTrackerParams.y = topChatHead!!.springY.currentValue.toInt()
 
-                OverlayService.instance.windowManager.updateViewLayout(motionTracker, motionTrackerParams)
+                VlogService.sInstance.windowManager.updateViewLayout(motionTracker, motionTrackerParams)
             }
         }
     }
@@ -600,10 +600,10 @@ class ChatHeads(context: Context, val mContentViewModel: ContentViewModel) : Vie
                         rearrangeExpanded()
 
                         motionTrackerParams.flags = motionTrackerParams.flags or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-                        OverlayService.instance.windowManager.updateViewLayout(motionTracker, motionTrackerParams)
+                        VlogService.sInstance.windowManager.updateViewLayout(motionTracker, motionTrackerParams)
 
                         params.flags = (params.flags and WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE.inv()) or WindowManager.LayoutParams.FLAG_DIM_BEHIND and WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL.inv() and WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE.inv()
-                        OverlayService.instance.windowManager.updateViewLayout(this, params)
+                        VlogService.sInstance.windowManager.updateViewLayout(this, params)
 
                         activeChatHead = topChatHead
 

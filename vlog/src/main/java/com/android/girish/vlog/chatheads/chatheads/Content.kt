@@ -5,13 +5,11 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.*
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.girish.vlog.R
@@ -147,8 +145,8 @@ class Content(context: Context, val mContentViewModel: ContentViewModel): Linear
     }
 
     fun hideContent() {
-        OverlayService.instance.chatHeads.handler.removeCallbacks(
-            OverlayService.instance.chatHeads.showContentRunnable)
+        VlogService.sInstance.chatHeads.handler.removeCallbacks(
+            VlogService.sInstance.chatHeads.showContentRunnable)
 
         scaleSpring.endValue = 0.0
 

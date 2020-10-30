@@ -33,8 +33,8 @@ class Close(var chatHeads: ChatHeads): View(chatHeads.context) {
 
     var hidden = true
 
-    private var bitmapBg = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(OverlayService.instance.resources, R.drawable.close_bg), ChatHeads.CLOSE_SIZE, ChatHeads.CLOSE_SIZE, false)!!
-    private val bitmapClose = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(OverlayService.instance.resources, R.drawable.close), dpToPx(28f), dpToPx(28f), false)!!
+    private var bitmapBg = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(VlogService.sInstance.resources, R.drawable.close_bg), ChatHeads.CLOSE_SIZE, ChatHeads.CLOSE_SIZE, false)!!
+    private val bitmapClose = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(VlogService.sInstance.resources, R.drawable.close), dpToPx(28f), dpToPx(28f), false)!!
 
     fun hide() {
         val metrics = getScreenSize()
@@ -96,7 +96,7 @@ class Close(var chatHeads: ChatHeads): View(chatHeads.context) {
 
         springScale.addListener(object : SimpleSpringListener() {
             override fun onSpringUpdate(spring: Spring) {
-                bitmapBg =  Bitmap.createScaledBitmap(BitmapFactory.decodeResource(OverlayService.instance.resources, R.drawable.close_bg), (spring.currentValue + ChatHeads.CLOSE_SIZE).toInt(), (spring.currentValue + ChatHeads.CLOSE_SIZE).toInt(), false)
+                bitmapBg =  Bitmap.createScaledBitmap(BitmapFactory.decodeResource(VlogService.sInstance.resources, R.drawable.close_bg), (spring.currentValue + ChatHeads.CLOSE_SIZE).toInt(), (spring.currentValue + ChatHeads.CLOSE_SIZE).toInt(), false)
                 invalidate()
             }
         })

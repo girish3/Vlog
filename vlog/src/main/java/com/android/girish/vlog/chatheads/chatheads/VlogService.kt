@@ -17,12 +17,12 @@ import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 
-class OverlayService : Service() {
+class VlogService : Service() {
     companion object {
-        lateinit var instance: OverlayService
+        lateinit var sInstance: VlogService
     }
 
-    private val TAG = OverlayService::class.java.simpleName
+    private val TAG = VlogService::class.java.simpleName
     lateinit var windowManager: WindowManager
     lateinit var chatHeads: ChatHeads
     private lateinit var mContentViewModel: ContentViewModel
@@ -38,7 +38,7 @@ class OverlayService : Service() {
      */
     inner class LocalBinder : Binder() {
         // Return this instance of LocalService so clients can call public methods
-        fun getService(): OverlayService = this@OverlayService
+        fun getService(): VlogService = this@VlogService
     }
 
     fun addChat() {
@@ -53,7 +53,7 @@ class OverlayService : Service() {
 
         Log.d(TAG, "Creating Service");
 
-        instance = this
+        sInstance = this
 
         windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
@@ -133,7 +133,7 @@ internal class InnerReceiver : BroadcastReceiver() {
         if (Intent.ACTION_CLOSE_SYSTEM_DIALOGS == action) {
             val reason = intent.getStringExtra("reason")
             if (reason != null) {
-                OverlayService.instance.chatHeads.collapse()
+                VlogService.sInstance.chatHeads.collapse()
             }
         }
     }

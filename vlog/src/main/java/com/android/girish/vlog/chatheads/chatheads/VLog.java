@@ -23,14 +23,14 @@ public class VLog {
     private Intent mServiceIntent;
     private int total = 0;
     private int MAX = 1000;
-    private OverlayService mService;
+    private VlogService mService;
     private VlogRepository mVlogRepository;
     private AtomicBoolean mBound = new AtomicBoolean(false);
 
     ServiceConnection mServerConn = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder binder) {
-            OverlayService.LocalBinder service = (OverlayService.LocalBinder) binder;
+            VlogService.LocalBinder service = (VlogService.LocalBinder) binder;
             mService = service.getService();
             mBound.set(true);
             Log.d(TAG, "Service connected");
@@ -85,7 +85,7 @@ public class VLog {
     }
 
     private boolean allowLogging() {
-        return isEnabled.get() && OverlayService.instance != null;
+        return isEnabled.get() && VlogService.sInstance != null;
     }
 
     public void feed(VLogModel model) {
@@ -101,8 +101,8 @@ public class VLog {
 
     public void showBubble() {
         isEnabled.set(true);
-        if (OverlayService.instance != null) {
-            OverlayService.instance.addChat();
+        if (VlogService.sInstance != null) {
+            VlogService.sInstance.addChat();
         }
     }
 
@@ -124,7 +124,7 @@ public class VLog {
     }
 
     private void startService() {
-        mServiceIntent = new Intent(mApplicationContext, OverlayService.class);
+        mServiceIntent = new Intent(mApplicationContext, VlogService.class);
         // TODO: is there a need to pass token as an extra?
         mApplicationContext.bindService(mServiceIntent, mServerConn, Context.BIND_AUTO_CREATE);
         mApplicationContext.startService(mServiceIntent);
