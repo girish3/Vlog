@@ -16,7 +16,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class VLog {
 
     private static final String TAG = VLog.class.getSimpleName();
-
     private static VLog vlog;
     private Context mApplicationContext;
     private AtomicBoolean isEnabled = new AtomicBoolean(false);
@@ -26,8 +25,7 @@ public class VLog {
     private VlogService mService;
     private VlogRepository mVlogRepository;
     private AtomicBoolean mBound = new AtomicBoolean(false);
-
-    ServiceConnection mServerConn = new ServiceConnection() {
+    private ServiceConnection mServerConn = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder binder) {
             VlogService.LocalBinder service = (VlogService.LocalBinder) binder;
@@ -48,6 +46,15 @@ public class VLog {
         }
     };
 
+    private void injectFilterManager() {
+        mVlogRepository = new VlogRepository();
+    }
+
+    private VLog() {
+        // TODO: use DI, isolating the dependency for now
+        injectFilterManager();
+    }
+
     public static VLog getInstance() {
         // TODO: make it thread safe.
         if (vlog == null) {
@@ -61,13 +68,20 @@ public class VLog {
         return isEnabled.get();
     }
 
-    private VLog() {
-        // TODO: use DI, isolating the dependency for now
-        injectFilterManager();
+    private boolean allowLogging() {
+        return isEnabled.get() && VlogService.sInstance != null;
     }
 
-    private void injectFilterManager() {
-        mVlogRepository = new VlogRepository();
+    private void startService() {
+        mServiceIntent = new Intent(mApplicationContext, VlogService.class);
+        // TODO: is there a need to pass token as an extra?
+        mApplicationContext.bindService(mServiceIntent, mServerConn, Context.BIND_AUTO_CREATE);
+        mApplicationContext.startService(mServiceIntent);
+    }
+
+    @NotNull
+    VlogRepository getVlogRepository() {
+        return mVlogRepository;
     }
 
     public void start(Context context) {
@@ -82,10 +96,6 @@ public class VLog {
         startService();
 
         // initialize other resources if any
-    }
-
-    private boolean allowLogging() {
-        return isEnabled.get() && VlogService.sInstance != null;
     }
 
     public void feed(VLogModel model) {
@@ -123,15 +133,28 @@ public class VLog {
         }
     }
 
-    private void startService() {
-        mServiceIntent = new Intent(mApplicationContext, VlogService.class);
-        // TODO: is there a need to pass token as an extra?
-        mApplicationContext.bindService(mServiceIntent, mServerConn, Context.BIND_AUTO_CREATE);
-        mApplicationContext.startService(mServiceIntent);
+    public void v(String tag, String msg) {
+        VLogModel model = new VLogModel(VLogModel.VERBOSE, tag, msg);
+        feed(model);
     }
 
-    @NotNull
-    VlogRepository getVlogRepository() {
-        return mVlogRepository;
+    public void d(String tag, String msg) {
+        VLogModel model = new VLogModel(VLogModel.DEBUG, tag, msg);
+        feed(model);
+    }
+
+    public void i(String tag, String msg) {
+        VLogModel model = new VLogModel(VLogModel.INFO, tag, msg);
+        feed(model);
+    }
+
+    public void w(String tag, String msg) {
+        VLogModel model = new VLogModel(VLogModel.WARN, tag, msg);
+        feed(model);
+    }
+
+    public void e(String tag, String msg) {
+        VLogModel model = new VLogModel(VLogModel.ERROR, tag, msg);
+        feed(model);
     }
 }
