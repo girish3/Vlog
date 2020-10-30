@@ -12,7 +12,7 @@ class ContentViewModel: ViewModel(), VlogRepository.ResultListener {
 
     init {
         // TODO: use DI, isolating the dependency for now
-        mVlogRepository = VLog.getInstance().vlogRepository
+        mVlogRepository = Vlog.getInstance().vlogRepository
         mVlogRepository.setResultListener(this)
     }
 
@@ -45,7 +45,7 @@ class ContentViewModel: ViewModel(), VlogRepository.ResultListener {
     }
 
     fun onBubbleRemoved() {
-        VLog.getInstance().stop()
+        Vlog.getInstance().stop()
     }
 
 }

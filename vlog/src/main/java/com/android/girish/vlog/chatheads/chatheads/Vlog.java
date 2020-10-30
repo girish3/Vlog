@@ -13,10 +13,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class VLog {
+public class Vlog {
 
-    private static final String TAG = VLog.class.getSimpleName();
-    private static VLog vlog;
+    private static final String TAG = Vlog.class.getSimpleName();
+    private static Vlog vlog;
     private Context mApplicationContext;
     private AtomicBoolean isEnabled = new AtomicBoolean(false);
     private Intent mServiceIntent;
@@ -50,15 +50,15 @@ public class VLog {
         mVlogRepository = new VlogRepository();
     }
 
-    private VLog() {
+    private Vlog() {
         // TODO: use DI, isolating the dependency for now
         injectFilterManager();
     }
 
-    public static VLog getInstance() {
+    public static Vlog getInstance() {
         // TODO: make it thread safe.
         if (vlog == null) {
-            vlog = new VLog();
+            vlog = new Vlog();
         }
         return vlog;
 

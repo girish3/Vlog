@@ -11,14 +11,14 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.girish.vlog.chatheads.chatheads.GenreDataFactory;
-import com.android.girish.vlog.chatheads.chatheads.VLog;
+import com.android.girish.vlog.chatheads.chatheads.Vlog;
 import com.android.girish.vlog.chatheads.chatheads.VlogModel;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private VLog mVlog;
+    private Vlog mVlog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         manageDrawOverOtherApps();
 
-        mVlog = VLog.getInstance();
+        mVlog = Vlog.getInstance();
         //mVlog.start(getApplicationContext());
 
         Button startButton = findViewById(R.id.start);
