@@ -1,24 +1,28 @@
 package com.android.girish.vlog.chatheads.chatheads
 
-import android.app.*
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.Service
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.IBinder
-import android.view.*
 import android.content.IntentFilter
 import android.graphics.Color
 import android.os.Binder
 import android.os.Build
+import android.os.IBinder
+import android.util.Log
+import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 
 class OverlayService : Service() {
     companion object {
         lateinit var instance: OverlayService
-        var initialized = false
     }
 
+    private val TAG = OverlayService::class.java.simpleName
     lateinit var windowManager: WindowManager
     lateinit var chatHeads: ChatHeads
     private lateinit var mContentViewModel: ContentViewModel
@@ -47,8 +51,9 @@ class OverlayService : Service() {
         // TODO: use DI, isolating dependencies for now
         injectDependencies()
 
+        Log.d(TAG, "Creating Service");
+
         instance = this
-        initialized = true
 
         windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
@@ -56,7 +61,7 @@ class OverlayService : Service() {
 
         innerReceiver = InnerReceiver()
         val intentFilter = IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
-        registerReceiver(innerReceiver, intentFilter)
+        //registerReceiver(innerReceiver, intentFilter)
 
         /* If you wanna keep showing foreground notifications then uncomment the below method */
         createForegroundNotification()
@@ -94,7 +99,7 @@ class OverlayService : Service() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel(channelId: String, channelName: String): String {
         val chan = NotificationChannel(channelId,
-            channelName, NotificationManager.IMPORTANCE_NONE)
+                channelName, NotificationManager.IMPORTANCE_NONE)
         chan.lightColor = Color.BLUE
         chan.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
         val service = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -103,8 +108,8 @@ class OverlayService : Service() {
     }
 
     override fun onDestroy() {
-        initialized = false
-        unregisterReceiver(innerReceiver)
+        Log.d(TAG, "Destroying Service")
+        cleanUp()
         super.onDestroy()
     }
 
@@ -114,6 +119,11 @@ class OverlayService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         return START_STICKY
+    }
+
+    fun cleanUp() {
+        chatHeads.removeAll()
+        //unregisterReceiver(innerReceiver)
     }
 }
 

@@ -44,4 +44,8 @@ class ContentViewModel: ViewModel(), VlogRepository.ResultListener {
         mVlogRepository.clearLogs()
     }
 
+    fun onBubbleRemoved() {
+        VLog.getInstance().stop()
+    }
+
 }

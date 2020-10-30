@@ -5,38 +5,46 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.android.girish.vlog.chatheads.chatheads.filter.VlogRepository;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class VLog {
+
+    private static final String TAG = VLog.class.getSimpleName();
 
     private static VLog vlog;
     private Context mApplicationContext;
-    private boolean isEnabled = false;
+    private AtomicBoolean isEnabled = new AtomicBoolean(false);
     private Intent mServiceIntent;
     private int total = 0;
     private int MAX = 1000;
     private OverlayService mService;
     private VlogRepository mVlogRepository;
-    private boolean mBound;
+    private AtomicBoolean mBound = new AtomicBoolean(false);
 
     ServiceConnection mServerConn = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder binder) {
             OverlayService.LocalBinder service = (OverlayService.LocalBinder) binder;
             mService = service.getService();
-            mBound = true;
-            if (isEnabled) {
+            mBound.set(true);
+            Log.d(TAG, "Service connected");
+            if (isEnabled.get() && mBound.get()) {
+                Log.d(TAG, "Displaying Vlog Bubble");
                 mService.addChat();
             }
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
+            Log.d(TAG, "Service disconnected");
             mService = null;
-            mBound = false;
+            mBound.set(false);
         }
     };
 
@@ -49,6 +57,10 @@ public class VLog {
 
     }
 
+    public boolean isEnabled() {
+        return isEnabled.get();
+    }
+
     private VLog() {
         // TODO: use DI, isolating the dependency for now
         injectFilterManager();
@@ -58,18 +70,22 @@ public class VLog {
         mVlogRepository = new VlogRepository();
     }
 
-    public void initialize(Context context) {
-        mApplicationContext = context;
-        if (mServiceIntent != null) {
-            mApplicationContext.stopService(mServiceIntent);
+    public void start(Context context) {
+        // Ignore if already started
+        if (isEnabled.getAndSet(true)) {
+            Log.d(TAG, "Vlog is already started");
+            return;
         }
+
+        Log.d(TAG, "Initializing Vlog");
+        mApplicationContext = context;
         startService();
 
         // initialize other resources if any
     }
 
     private boolean allowLogging() {
-        return isEnabled && OverlayService.instance != null;
+        return isEnabled.get() && OverlayService.instance != null;
     }
 
     public void feed(VLogModel model) {
@@ -84,18 +100,30 @@ public class VLog {
     }
 
     public void showBubble() {
-        isEnabled = true;
+        isEnabled.set(true);
         if (OverlayService.instance != null) {
             OverlayService.instance.addChat();
         }
     }
 
-    private void hideBubble() {
-        isEnabled = false;
-        // hide bubble
+    public void stop() {
+        if (!isEnabled.get()) {
+            Log.d(TAG, "Vlog is not started");
+            return;
+        }
+
+        Log.d(TAG, "Stopping Vlog");
+
+        isEnabled.set(false);
+        if (mServiceIntent != null) {
+            mService.cleanUp();
+            mApplicationContext.unbindService(mServerConn);
+            mApplicationContext.stopService(mServiceIntent);
+            mServiceIntent = null;
+        }
     }
 
-    void startService() {
+    private void startService() {
         mServiceIntent = new Intent(mApplicationContext, OverlayService.class);
         // TODO: is there a need to pass token as an extra?
         mApplicationContext.bindService(mServiceIntent, mServerConn, Context.BIND_AUTO_CREATE);
@@ -103,7 +131,7 @@ public class VLog {
     }
 
     @NotNull
-    public VlogRepository getVlogRepository() {
+    VlogRepository getVlogRepository() {
         return mVlogRepository;
     }
 }

@@ -388,8 +388,8 @@ class ChatHeads(context: Context, val mContentViewModel: ContentViewModel) : Vie
     }
 
     private fun onClose() {
+        mContentViewModel.onBubbleRemoved()
         removeAll()
-
         closeCaptured = false
         movingOutOfClose = false
     }

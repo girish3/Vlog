@@ -12,7 +12,6 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.girish.vlog.chatheads.chatheads.GenreDataFactory;
-import com.android.girish.vlog.chatheads.chatheads.OverlayService;
 import com.android.girish.vlog.chatheads.chatheads.VLog;
 import com.android.girish.vlog.chatheads.chatheads.VLogModel;
 
@@ -29,16 +28,24 @@ public class MainActivity extends AppCompatActivity {
         manageDrawOverOtherApps();
 
         mVlog = VLog.getInstance();
-        mVlog.initialize(getApplicationContext());
+        //mVlog.start(getApplicationContext());
 
-        Button addBubble = findViewById(R.id.addBubble);
+        Button startButton = findViewById(R.id.start);
+        Button stopButton = findViewById(R.id.stop);
         final Button addFeed = findViewById(R.id.addFeed);
 
-        addBubble.setOnClickListener(new View.OnClickListener() {
+        startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mVlog.showBubble();
+                mVlog.start(getApplicationContext());
                 //startActivity();
+            }
+        });
+
+        stopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mVlog.stop();
             }
         });
 
