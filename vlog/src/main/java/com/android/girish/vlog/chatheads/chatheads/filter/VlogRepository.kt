@@ -128,4 +128,11 @@ class VlogRepository(private val mFilterDelay: Long = 100): Filter() {
         mVlogs.clear()
         initiateFilter()
     }
+
+    fun reset() {
+        mVlogs.clear()
+        for (filter in mFilters) {
+            filter.reset()
+        }
+    }
 }

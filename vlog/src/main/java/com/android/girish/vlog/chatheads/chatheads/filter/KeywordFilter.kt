@@ -29,4 +29,8 @@ class KeywordFilter: Criteria<VlogModel> {
 
         return filteredLogs
     }
+
+    override fun reset() {
+        mKeyword = ""
+    }
 }

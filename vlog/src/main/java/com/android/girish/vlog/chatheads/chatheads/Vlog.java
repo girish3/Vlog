@@ -127,6 +127,7 @@ public class Vlog {
         isEnabled.set(false);
         if (mServiceIntent != null) {
             mService.cleanUp();
+            mVlogRepository.reset();
             mApplicationContext.unbindService(mServerConn);
             mApplicationContext.stopService(mServiceIntent);
             mServiceIntent = null;

@@ -26,4 +26,8 @@ class PriorityFilter: Criteria<VlogModel> {
 
         return filteredList
     }
+
+    override fun reset() {
+        mPriority = VlogModel.VERBOSE
+    }
 }
