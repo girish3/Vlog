@@ -8,7 +8,7 @@ import com.android.girish.vlog.chatheads.chatheads.VLogModel.LogPriority
 class ContentViewModel: ViewModel(), VlogRepository.ResultListener {
 
     val resultObserver = MutableLiveData<List<VLogModel>>()
-    val mVlogRepository: VlogRepository
+    private val mVlogRepository: VlogRepository
 
     init {
         // TODO: use DI, isolating the dependency for now
@@ -27,7 +27,7 @@ class ContentViewModel: ViewModel(), VlogRepository.ResultListener {
      * @param keyword
      */
     fun onKeywordEnter(keyword: String) {
-        mVlogRepository.setKeywordFilter(keyword)
+        mVlogRepository.configureKeywordFilter(keyword)
     }
 
 
@@ -37,7 +37,7 @@ class ContentViewModel: ViewModel(), VlogRepository.ResultListener {
      * @param priority
      */
     fun onPrioritySet(@LogPriority priority: Int) {
-        mVlogRepository.setLogPriority(priority)
+        mVlogRepository.configureLogPriority(priority)
     }
 
     fun onClearLogs() {

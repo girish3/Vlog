@@ -64,6 +64,7 @@ public class VLog {
             mApplicationContext.stopService(mServiceIntent);
         }
         startService();
+
         // initialize other resources if any
     }
 
@@ -89,7 +90,7 @@ public class VLog {
         }
     }
 
-    public void hideBubble() {
+    private void hideBubble() {
         isEnabled = false;
         // hide bubble
     }

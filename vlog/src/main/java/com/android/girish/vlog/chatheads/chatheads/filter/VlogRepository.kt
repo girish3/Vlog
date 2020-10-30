@@ -14,9 +14,9 @@ import com.android.girish.vlog.chatheads.chatheads.VLogModel
  * @property mFilterDelay The amount of delay (in ms) before the filter process starts
  * @constructor Create empty Filter manager
  */
-open class VlogRepository(private val mFilterDelay: Long = 100): Filter() {
+class VlogRepository(private val mFilterDelay: Long = 100): Filter() {
 
-    private val handler: Handler
+    private val handler: Handler = Handler(Looper.getMainLooper())
     private val mKeywordFilter = KeywordFilter()
     private val mPriorityFilter = PriorityFilter()
     private val mFilters: List<Criteria<VLogModel>>
@@ -24,7 +24,6 @@ open class VlogRepository(private val mFilterDelay: Long = 100): Filter() {
     private var mResultListener: ResultListener? = null
 
     init {
-        handler = Handler(Looper.getMainLooper())
         mFilters = ArrayList()
         mFilters.add(mKeywordFilter)
         mFilters.add(mPriorityFilter)
@@ -35,7 +34,7 @@ open class VlogRepository(private val mFilterDelay: Long = 100): Filter() {
      * Initiate filter process
      *
      */
-     fun initiateFilter() {
+     private fun initiateFilter() {
 
         // remove all callbacks and messages
         handler.removeCallbacksAndMessages(null)
@@ -62,7 +61,7 @@ open class VlogRepository(private val mFilterDelay: Long = 100): Filter() {
      *
      * @param keyword
      */
-    fun setKeywordFilter(keyword: String) {
+    fun configureKeywordFilter(keyword: String) {
         mKeywordFilter.setKeyword(keyword)
         initiateFilter()
     }
@@ -72,7 +71,7 @@ open class VlogRepository(private val mFilterDelay: Long = 100): Filter() {
      *
      * @param priority
      */
-    fun setLogPriority(@LogPriority priority: Int) {
+    fun configureLogPriority(@LogPriority priority: Int) {
         mPriorityFilter.setPriority(priority)
         initiateFilter()
     }
