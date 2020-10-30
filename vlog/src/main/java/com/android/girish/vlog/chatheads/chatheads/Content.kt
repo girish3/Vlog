@@ -27,7 +27,7 @@ class Content(context: Context, val mContentViewModel: ContentViewModel): Linear
     var layoutManager = LinearLayoutManager(context)
 
     lateinit var messagesAdapter: ChatAdapter
-    val vLogAdapter: VLogAdapter = VLogAdapter()
+    val mVlogAdapter: VlogAdapter = VlogAdapter()
 
     init {
         inflate(context, R.layout.chat_head_content, this)
@@ -35,11 +35,11 @@ class Content(context: Context, val mContentViewModel: ContentViewModel): Linear
         messagesView = findViewById(R.id.events)
         messagesView.layoutManager = layoutManager
 
-        messagesView.adapter = vLogAdapter
+        messagesView.adapter = mVlogAdapter
 
         val logPriorityTxtVw: TextView = findViewById(R.id.log_priority_txtvw)
         logPriorityTxtVw.setOnClickListener {
-            showPriorityOptions(context, logPriorityTxtVw, vLogAdapter);
+            showPriorityOptions(context, logPriorityTxtVw, mVlogAdapter);
         }
 
         val editText: EditText = findViewById(R.id.editText)
@@ -73,11 +73,11 @@ class Content(context: Context, val mContentViewModel: ContentViewModel): Linear
         }
 
         mContentViewModel.resultObserver.observeForever {
-            vLogAdapter.addLogs(it)
+            mVlogAdapter.addLogs(it)
         }
     }
 
-    private fun showPriorityOptions(context: Context, logPriorityTxtVw: TextView, vLogAdapter: VLogAdapter) {
+    private fun showPriorityOptions(context: Context, logPriorityTxtVw: TextView, vlogAdapter: VlogAdapter) {
 
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
         builder.setTitle("Select Log priority");

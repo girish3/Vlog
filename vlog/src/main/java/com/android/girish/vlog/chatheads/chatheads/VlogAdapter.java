@@ -14,24 +14,24 @@ import com.android.girish.vlog.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder> {
+public class VlogAdapter extends RecyclerView.Adapter<VlogAdapter.VlogViewHolder> {
 
-    private static final String TAG = VLogAdapter.class.getSimpleName();
+    private static final String TAG = VlogAdapter.class.getSimpleName();
     private List<VlogModel> mFilteredLogList;
     private VlogModel mExpandedModel = null;
 
-    public VLogAdapter() {
+    public VlogAdapter() {
         mFilteredLogList = new ArrayList<>();
     }
 
     @Override
-    public VLogViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new VLogViewHolder(LayoutInflater.from(parent.getContext()).inflate(
+    public VlogViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new VlogViewHolder(LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.list_item_log, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(final VLogViewHolder holder, final int position) {
+    public void onBindViewHolder(final VlogViewHolder holder, final int position) {
         final VlogModel model = mFilteredLogList.get(position);
 
         int priority = model.getLogPriority();
@@ -88,14 +88,14 @@ public class VLogAdapter extends RecyclerView.Adapter<VLogAdapter.VLogViewHolder
         return mFilteredLogList != null ? mFilteredLogList.size() : 0;
     }
 
-    public class VLogViewHolder extends RecyclerView.ViewHolder {
+    public class VlogViewHolder extends RecyclerView.ViewHolder {
 
 
         TextView logTag;
         TextView logMessage;
         ImageView expandCollapseArrow;
 
-        public VLogViewHolder(View itemView) {
+        public VlogViewHolder(View itemView) {
             super(itemView);
             logTag = itemView.findViewById(R.id.log_tag);
             logMessage = itemView.findViewById(R.id.log_message);
