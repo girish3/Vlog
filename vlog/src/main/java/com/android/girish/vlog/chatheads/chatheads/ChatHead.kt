@@ -1,6 +1,10 @@
 package com.android.girish.vlog.chatheads.chatheads
 
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.PixelFormat
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
@@ -11,16 +15,22 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import com.android.girish.vlog.R
-import com.android.girish.vlog.chatheads.chatheads.utils.*
+import com.android.girish.vlog.chatheads.chatheads.utils.addBackground
+import com.android.girish.vlog.chatheads.chatheads.utils.addShadow
+import com.android.girish.vlog.chatheads.chatheads.utils.getOverlayFlag
+import com.android.girish.vlog.chatheads.chatheads.utils.getScreenSize
+import com.android.girish.vlog.chatheads.chatheads.utils.makeCircular
+import com.android.girish.vlog.chatheads.chatheads.utils.scaleToSize
 import com.facebook.rebound.SimpleSpringListener
 import com.facebook.rebound.Spring
 import com.facebook.rebound.SpringListener
 import com.facebook.rebound.SpringSystem
 import kotlin.math.pow
 
-
-class ChatHead(var chatHeads: ChatHeads, mContentViewModel: ContentViewModel): FrameLayout(chatHeads.context),
-        View.OnTouchListener, SpringListener {
+class ChatHead(var chatHeads: ChatHeads, mContentViewModel: ContentViewModel) :
+    FrameLayout(chatHeads.context),
+    View.OnTouchListener,
+    SpringListener {
     var params: WindowManager.LayoutParams = WindowManager.LayoutParams(
         WindowManager.LayoutParams.WRAP_CONTENT,
         WindowManager.LayoutParams.WRAP_CONTENT,
@@ -48,16 +58,16 @@ class ChatHead(var chatHeads: ChatHeads, mContentViewModel: ContentViewModel): F
     var notificationsView: LinearLayout
 
     var notifications = 0
-    set(value) {
-        if (value >= 0) field = value
+        set(value) {
+            if (value >= 0) field = value
 
-        if (value == 0) {
-            notificationsView.visibility = GONE
-        } else if (value > 0) {
-            notificationsView.visibility = VISIBLE
-            notificationsTextView.text = "$value"
+            if (value == 0) {
+                notificationsView.visibility = GONE
+            } else if (value > 0) {
+                notificationsView.visibility = VISIBLE
+                notificationsTextView.text = "$value"
+            }
         }
-    }
 
     override fun onSpringEndStateChange(spring: Spring?) = Unit
     override fun onSpringAtRest(spring: Spring?) = Unit
@@ -76,20 +86,24 @@ class ChatHead(var chatHeads: ChatHeads, mContentViewModel: ContentViewModel): F
         notificationsTextView = view.findViewById(R.id.bubble_notifications_text)
         notificationsView = view.findViewById(R.id.bubble_notifications)
 
-        springX.addListener(object : SimpleSpringListener() {
-            override fun onSpringUpdate(spring: Spring) {
-                x = spring.currentValue.toFloat()
+        springX.addListener(
+            object : SimpleSpringListener() {
+                override fun onSpringUpdate(spring: Spring) {
+                    x = spring.currentValue.toFloat()
+                }
             }
-        })
+        )
 
         springX.springConfig = SpringConfigs.NOT_DRAGGING
         springX.addListener(this)
 
-        springY.addListener(object : SimpleSpringListener() {
-            override fun onSpringUpdate(spring: Spring) {
-                y = spring.currentValue.toFloat()
+        springY.addListener(
+            object : SimpleSpringListener() {
+                override fun onSpringUpdate(spring: Spring) {
+                    y = spring.currentValue.toFloat()
+                }
             }
-        })
+        )
         springY.springConfig = SpringConfigs.NOT_DRAGGING
         springY.addListener(this)
 
@@ -116,8 +130,8 @@ class ChatHead(var chatHeads: ChatHeads, mContentViewModel: ContentViewModel): F
 
         val imageBitmap = BitmapFactory.decodeResource(resources, R.drawable.teams_icon3)
         val roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(resources, imageBitmap)
-        roundedBitmapDrawable.setCornerRadius(50.0f);
-        roundedBitmapDrawable.setAntiAlias(true);
+        roundedBitmapDrawable.setCornerRadius(50.0f)
+        roundedBitmapDrawable.setAntiAlias(true)
 
         imageView.setImageDrawable(roundedBitmapDrawable)
 

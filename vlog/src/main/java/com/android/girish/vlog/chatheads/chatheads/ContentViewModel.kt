@@ -2,10 +2,10 @@ package com.android.girish.vlog.chatheads.chatheads
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.android.girish.vlog.chatheads.chatheads.filter.VlogRepository
 import com.android.girish.vlog.chatheads.chatheads.VlogModel.LogPriority
+import com.android.girish.vlog.chatheads.chatheads.filter.VlogRepository
 
-class ContentViewModel: ViewModel(), VlogRepository.ResultListener {
+class ContentViewModel : ViewModel(), VlogRepository.ResultListener {
 
     val resultObserver = MutableLiveData<List<VlogModel>>()
     private val mVlogRepository: VlogRepository
@@ -20,7 +20,6 @@ class ContentViewModel: ViewModel(), VlogRepository.ResultListener {
         resultObserver.setValue(filterResults)
     }
 
-
     /**
      * This method is called by the view when user enters filter keyword
      *
@@ -29,7 +28,6 @@ class ContentViewModel: ViewModel(), VlogRepository.ResultListener {
     fun onKeywordEnter(keyword: String) {
         mVlogRepository.configureKeywordFilter(keyword)
     }
-
 
     /**
      * This method is called by the view when user sets the log priority
@@ -47,5 +45,4 @@ class ContentViewModel: ViewModel(), VlogRepository.ResultListener {
     fun onBubbleRemoved() {
         Vlog.instance.stop()
     }
-
 }

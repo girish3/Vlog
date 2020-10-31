@@ -9,7 +9,10 @@ import android.view.View
 import android.view.WindowManager
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.girish.vlog.R
@@ -23,8 +26,7 @@ import com.facebook.rebound.SimpleSpringListener
 import com.facebook.rebound.Spring
 import com.facebook.rebound.SpringSystem
 
-
-class Content(context: Context, val mContentViewModel: ContentViewModel): LinearLayout(context) {
+class Content(context: Context, val mContentViewModel: ContentViewModel) : LinearLayout(context) {
     private val springSystem = SpringSystem.create()
     private val scaleSpring = springSystem.createSpring()
 
@@ -44,31 +46,34 @@ class Content(context: Context, val mContentViewModel: ContentViewModel): Linear
 
         val logPriorityTxtVw: TextView = findViewById(R.id.log_priority_txtvw)
         logPriorityTxtVw.setOnClickListener {
-            showPriorityOptions(context, logPriorityTxtVw, mVlogAdapter);
+            showPriorityOptions(context, logPriorityTxtVw, mVlogAdapter)
         }
 
         val editText: EditText = findViewById(R.id.editText)
         val clearButton: View = findViewById(R.id.clear_logs)
 
-        editText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-            }
+        editText.addTextChangedListener(
+            object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                }
 
-            override fun onTextChanged(constraint: CharSequence?, start: Int, before: Int, count: Int) {
-                mContentViewModel.onKeywordEnter(constraint.toString())
+                override fun onTextChanged(constraint: CharSequence?, start: Int, before: Int, count: Int) {
+                    mContentViewModel.onKeywordEnter(constraint.toString())
+                }
             }
+        )
 
-        })
-
-        scaleSpring.addListener(object : SimpleSpringListener() {
-            override fun onSpringUpdate(spring: Spring) {
-                scaleX = spring.currentValue.toFloat()
-                scaleY = spring.currentValue.toFloat()
+        scaleSpring.addListener(
+            object : SimpleSpringListener() {
+                override fun onSpringUpdate(spring: Spring) {
+                    scaleX = spring.currentValue.toFloat()
+                    scaleY = spring.currentValue.toFloat()
+                }
             }
-        })
+        )
         scaleSpring.springConfig = SpringConfigs.CONTENT_SCALE
 
         scaleSpring.currentValue = 0.0
@@ -85,15 +90,19 @@ class Content(context: Context, val mContentViewModel: ContentViewModel): Linear
     private fun showPriorityOptions(context: Context, logPriorityTxtVw: TextView, vlogAdapter: VlogAdapter) {
 
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-        builder.setTitle("Select Log priority");
+        builder.setTitle("Select Log priority")
         val priorityList: List<String> = resources.getStringArray(R.array.log_priority_names).toMutableList()
-        val arrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(context,
-                android.R.layout.simple_list_item_1, priorityList);
+        val arrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(
+            context,
+            android.R.layout.simple_list_item_1,
+            priorityList
+        )
         builder.setAdapter(arrayAdapter) { _, selectedIndex ->
             logPriorityTxtVw.text = priorityList[selectedIndex]
             mContentViewModel.onPrioritySet(getLogPriority(selectedIndex))
         }
-        builder.setPositiveButton("Cancel"
+        builder.setPositiveButton(
+            "Cancel"
         ) { dialog, _ -> dialog?.dismiss() }
         val dialog: AlertDialog = builder.create()
         dialog.window?.setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY)
@@ -150,7 +159,8 @@ class Content(context: Context, val mContentViewModel: ContentViewModel): Linear
 
     fun hideContent() {
         VlogService.sInstance.chatHeads.handler.removeCallbacks(
-            VlogService.sInstance.chatHeads.showContentRunnable)
+            VlogService.sInstance.chatHeads.showContentRunnable
+        )
 
         scaleSpring.endValue = 0.0
 

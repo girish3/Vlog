@@ -1,17 +1,24 @@
 package com.android.girish.vlog.chatheads.chatheads
 
 import android.content.Context
-import android.graphics.*
-import android.view.*
+import android.graphics.PixelFormat
+import android.view.Gravity
+import android.view.KeyEvent
+import android.view.MotionEvent
+import android.view.VelocityTracker
+import android.view.View
+import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.LinearLayout
-import android.view.VelocityTracker
-import com.facebook.rebound.Spring
+import com.android.girish.vlog.chatheads.chatheads.utils.dpToPx
+import com.android.girish.vlog.chatheads.chatheads.utils.getOverlayFlag
+import com.android.girish.vlog.chatheads.chatheads.utils.getScreenSize
 import com.facebook.rebound.SimpleSpringListener
+import com.facebook.rebound.Spring
 import com.facebook.rebound.SpringChain
-import com.android.girish.vlog.chatheads.chatheads.utils.*
-import java.util.*
-import kotlin.math.*
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.pow
 
 class Rectangle(val x: Double, val y: Double, val w: Double, val h: Double) {
     private val OUT_LEFT = 1
@@ -104,7 +111,7 @@ class ChatHeads(context: Context, val mContentViewModel: ContentViewModel) : Vie
         const val CHAT_HEAD_DRAG_TOLERANCE: Float = 20f
 
         fun distance(x1: Float, x2: Float, y1: Float, y2: Float): Float {
-            return ((x1 - x2).pow(2) + (y1-y2).pow(2))
+            return ((x1 - x2).pow(2) + (y1 - y2).pow(2))
         }
     }
 
@@ -123,8 +130,8 @@ class ChatHeads(context: Context, val mContentViewModel: ContentViewModel) : Vie
     private var initialTouchX = 0.0f
     private var initialTouchY = 0.0f
 
-     var initialVelocityX = 0.0
-     var initialVelocityY = 0.0
+    var initialVelocityX = 0.0
+    var initialVelocityY = 0.0
 
     private var lastY = 0.0
 
@@ -138,15 +145,15 @@ class ChatHeads(context: Context, val mContentViewModel: ContentViewModel) : Vie
     private var verticalSpringChain: SpringChain? = null
 
     private var isOnRight = true
-    set(value) {
-        field = value
+        set(value) {
+            field = value
 
-        chatHeads.forEach{
-            val lp = it.notificationsView.layoutParams as LayoutParams
-            lp.gravity = if (value) Gravity.LEFT else Gravity.RIGHT
-            it.notificationsView.layoutParams = lp
+            chatHeads.forEach {
+                val lp = it.notificationsView.layoutParams as LayoutParams
+                lp.gravity = if (value) Gravity.LEFT else Gravity.RIGHT
+                it.notificationsView.layoutParams = lp
+            }
         }
-    }
 
     private var velocityTracker: VelocityTracker? = null
 
@@ -194,7 +201,7 @@ class ChatHeads(context: Context, val mContentViewModel: ContentViewModel) : Vie
 
         motionTracker.setOnTouchListener(this)
 
-        setOnTouchListener{ v, event ->
+        setOnTouchListener { v, event ->
             v.performClick()
 
             when (event.action) {
@@ -249,7 +256,6 @@ class ChatHeads(context: Context, val mContentViewModel: ContentViewModel) : Vie
         horizontalSpringChain = null
     }
 
-
     private fun resetSpringChains() {
         destroySpringChains()
 
@@ -266,28 +272,32 @@ class ChatHeads(context: Context, val mContentViewModel: ContentViewModel) : Vie
                 horizontalSpringChain!!.setControlSpringIndex(index)
                 verticalSpringChain!!.setControlSpringIndex(index)
             } else {
-                horizontalSpringChain!!.addSpring(object : SimpleSpringListener() {
-                    override fun onSpringUpdate(spring: Spring?) {
-                        if (!toggled && !blockAnim) {
-                            if (collapsing) {
-                                element.springX.endValue = spring!!.endValue + index * CHAT_HEAD_PADDING * if (isOnRight) 1 else -1
-                            } else {
-                                element.springX.currentValue = spring!!.currentValue + index * CHAT_HEAD_PADDING * if (isOnRight) 1 else -1
+                horizontalSpringChain!!.addSpring(
+                    object : SimpleSpringListener() {
+                        override fun onSpringUpdate(spring: Spring?) {
+                            if (!toggled && !blockAnim) {
+                                if (collapsing) {
+                                    element.springX.endValue = spring!!.endValue + index * CHAT_HEAD_PADDING * if (isOnRight) 1 else -1
+                                } else {
+                                    element.springX.currentValue = spring!!.currentValue + index * CHAT_HEAD_PADDING * if (isOnRight) 1 else -1
+                                }
+                            }
+
+                            if (spring?.currentValue == spring?.endValue) {
+                                animatingChatHeadInExpandedView = false
                             }
                         }
-
-                        if (spring?.currentValue == spring?.endValue) {
-                            animatingChatHeadInExpandedView = false
+                    }
+                )
+                verticalSpringChain!!.addSpring(
+                    object : SimpleSpringListener() {
+                        override fun onSpringUpdate(spring: Spring?) {
+                            if (!toggled && !blockAnim) {
+                                element.springY.currentValue = spring!!.currentValue
+                            }
                         }
                     }
-                })
-                verticalSpringChain!!.addSpring(object : SimpleSpringListener() {
-                    override fun onSpringUpdate(spring: Spring?) {
-                        if (!toggled && !blockAnim) {
-                            element.springY.currentValue = spring!!.currentValue
-                        }
-                    }
-                })
+                )
             }
         }
     }
@@ -365,7 +375,7 @@ class ChatHeads(context: Context, val mContentViewModel: ContentViewModel) : Vie
         val metrics = getScreenSize()
 
         if (topChatHead != null) {
-            val newX =  if (isOnRight) metrics.widthPixels - topChatHead!!.width + CHAT_HEAD_OUT_OF_SCREEN_X.toDouble() else -CHAT_HEAD_OUT_OF_SCREEN_X.toDouble()
+            val newX = if (isOnRight) metrics.widthPixels - topChatHead!!.width + CHAT_HEAD_OUT_OF_SCREEN_X.toDouble() else -CHAT_HEAD_OUT_OF_SCREEN_X.toDouble()
             val newY = initialY.toDouble()
 
             topChatHead!!.springX.endValue = newX
@@ -380,9 +390,9 @@ class ChatHeads(context: Context, val mContentViewModel: ContentViewModel) : Vie
         VlogService.sInstance.windowManager.updateViewLayout(motionTracker, motionTrackerParams)
 
         params.flags = (params.flags or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE) and
-                WindowManager.LayoutParams.FLAG_DIM_BEHIND.inv() and
-                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL.inv() or
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+            WindowManager.LayoutParams.FLAG_DIM_BEHIND.inv() and
+            WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL.inv() or
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
 
         VlogService.sInstance.windowManager.updateViewLayout(this, params)
     }
@@ -488,9 +498,12 @@ class ChatHeads(context: Context, val mContentViewModel: ContentViewModel) : Vie
 
                 close.enlarge()
 
-                postDelayed({
-                    onClose()
-                }, 100)
+                postDelayed(
+                    {
+                        onClose()
+                    },
+                    100
+                )
             }
         }
 
@@ -584,9 +597,12 @@ class ChatHeads(context: Context, val mContentViewModel: ContentViewModel) : Vie
             MotionEvent.ACTION_UP -> {
                 if (moving) wasMoving = true
 
-                postDelayed({
-                    close.hide()
-                }, 100)
+                postDelayed(
+                    {
+                        close.hide()
+                    },
+                    100
+                )
 
                 if (closeCaptured) {
                     onClose()
@@ -626,7 +642,7 @@ class ChatHeads(context: Context, val mContentViewModel: ContentViewModel) : Vie
                     velocityTracker = null
 
                     if (xVelocity < -3500) {
-                        val newVelocity = ((-topChatHead!!.springX.currentValue -  CHAT_HEAD_OUT_OF_SCREEN_X) * SpringConfigs.DRAGGING.friction)
+                        val newVelocity = ((-topChatHead!!.springX.currentValue - CHAT_HEAD_OUT_OF_SCREEN_X) * SpringConfigs.DRAGGING.friction)
                         maxVelocityX = newVelocity - 5000
                         if (xVelocity > maxVelocityX)
                             xVelocity = newVelocity - 500
@@ -652,7 +668,7 @@ class ChatHeads(context: Context, val mContentViewModel: ContentViewModel) : Vie
 
                         if (topChatHead!!.x >= metrics.widthPixels / 2) {
                             topChatHead!!.springX.endValue = metrics.widthPixels - topChatHead!!.width +
-                                    CHAT_HEAD_OUT_OF_SCREEN_X.toDouble()
+                                CHAT_HEAD_OUT_OF_SCREEN_X.toDouble()
                             topChatHead!!.springY.endValue = topChatHead!!.y.toDouble()
 
                             isOnRight = true
@@ -711,9 +727,12 @@ class ChatHeads(context: Context, val mContentViewModel: ContentViewModel) : Vie
 
                         movingOutOfClose = true
 
-                        postDelayed({
-                            movingOutOfClose = false
-                        }, 100)
+                        postDelayed(
+                            {
+                                movingOutOfClose = false
+                            },
+                            100
+                        )
                     } else if (!movingOutOfClose) {
                         topChatHead!!.springX.springConfig = SpringConfigs.DRAGGING
                         topChatHead!!.springY.springConfig = SpringConfigs.DRAGGING

@@ -5,8 +5,8 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.util.DisplayMetrics
-import android.view.WindowManager
 import android.util.TypedValue
+import android.view.WindowManager
 
 fun getOverlayFlag(): Int {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

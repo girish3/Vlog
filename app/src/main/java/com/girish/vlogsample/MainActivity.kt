@@ -18,13 +18,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         manageDrawOverOtherApps()
         mVlog = instance
-        //mVlog.start(getApplicationContext());
+        // mVlog.start(getApplicationContext());
         val startButton = findViewById<Button>(R.id.start)
         val stopButton = findViewById<Button>(R.id.stop)
         val addFeed = findViewById<Button>(R.id.addFeed)
         startButton.setOnClickListener {
             mVlog!!.start(applicationContext)
-            //startActivity();
+            // startActivity();
         }
         stopButton.setOnClickListener { mVlog!!.stop() }
         addFeed.setOnClickListener {

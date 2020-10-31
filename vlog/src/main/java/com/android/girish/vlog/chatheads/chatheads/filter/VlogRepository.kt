@@ -5,8 +5,8 @@ import android.os.Looper
 import android.widget.Filter
 import androidx.annotation.UiThread
 import androidx.annotation.WorkerThread
-import com.android.girish.vlog.chatheads.chatheads.VlogModel.LogPriority
 import com.android.girish.vlog.chatheads.chatheads.VlogModel
+import com.android.girish.vlog.chatheads.chatheads.VlogModel.LogPriority
 
 /**
  * Filter manager
@@ -14,7 +14,7 @@ import com.android.girish.vlog.chatheads.chatheads.VlogModel
  * @property mFilterDelay The amount of delay (in ms) before the filter process starts
  * @constructor Create empty Filter manager
  */
-class VlogRepository(private val mFilterDelay: Long = 100): Filter() {
+class VlogRepository(private val mFilterDelay: Long = 100) : Filter() {
 
     private val handler: Handler = Handler(Looper.getMainLooper())
     private val mKeywordFilter = KeywordFilter()
@@ -34,17 +34,19 @@ class VlogRepository(private val mFilterDelay: Long = 100): Filter() {
      * Initiate filter process
      *
      */
-     private fun initiateFilter() {
+    private fun initiateFilter() {
 
         // remove all callbacks and messages
         handler.removeCallbacksAndMessages(null)
-        handler.postDelayed(object : Runnable {
-            override fun run() {
-                this@VlogRepository.filter(null)
-            }
-        }, mFilterDelay)
+        handler.postDelayed(
+            object : Runnable {
+                override fun run() {
+                    this@VlogRepository.filter(null)
+                }
+            },
+            mFilterDelay
+        )
     }
-
 
     /**
      * For listening the filtered results
@@ -108,7 +110,6 @@ class VlogRepository(private val mFilterDelay: Long = 100): Filter() {
         mResultListener?.onFilterResults(results?.values as List<VlogModel>)
     }
 
-
     /**
      * Add log to the existing log repository
      *
@@ -118,7 +119,6 @@ class VlogRepository(private val mFilterDelay: Long = 100): Filter() {
         mVlogs.add(model)
         initiateFilter()
     }
-
 
     /**
      * Clear logs

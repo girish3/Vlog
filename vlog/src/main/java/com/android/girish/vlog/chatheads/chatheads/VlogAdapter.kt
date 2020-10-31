@@ -9,14 +9,18 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.android.girish.vlog.R
 import com.android.girish.vlog.chatheads.chatheads.VlogAdapter.VlogViewHolder
-import java.util.*
 
 class VlogAdapter : RecyclerView.Adapter<VlogViewHolder>() {
     private var mFilteredLogList: List<VlogModel>?
     private var mExpandedModel: VlogModel? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VlogViewHolder {
-        return VlogViewHolder(LayoutInflater.from(parent.context).inflate(
-                R.layout.list_item_log, parent, false))
+        return VlogViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.list_item_log,
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: VlogViewHolder, position: Int) {

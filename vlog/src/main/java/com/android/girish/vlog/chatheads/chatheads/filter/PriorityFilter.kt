@@ -1,13 +1,13 @@
 package com.android.girish.vlog.chatheads.chatheads.filter
-import com.android.girish.vlog.chatheads.chatheads.VlogModel.LogPriority
 import com.android.girish.vlog.chatheads.chatheads.VlogModel
+import com.android.girish.vlog.chatheads.chatheads.VlogModel.LogPriority
 
 /**
  * Priority filter
  *
  * @constructor Create empty Priority filter
  */
-class PriorityFilter: Criteria<VlogModel> {
+class PriorityFilter : Criteria<VlogModel> {
 
     @LogPriority private var mPriority: Int = VlogModel.VERBOSE
 

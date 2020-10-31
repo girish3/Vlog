@@ -51,7 +51,7 @@ class VlogService : Service() {
         // TODO: use DI, isolating dependencies for now
         injectDependencies()
 
-        Log.d(TAG, "Creating Service");
+        Log.d(TAG, "Creating Service")
 
         sInstance = this
 
@@ -61,7 +61,7 @@ class VlogService : Service() {
 
         innerReceiver = InnerReceiver()
         val intentFilter = IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
-        //registerReceiver(innerReceiver, intentFilter)
+        // registerReceiver(innerReceiver, intentFilter)
 
         /* If you wanna keep showing foreground notifications then uncomment the below method */
         createForegroundNotification()
@@ -86,20 +86,23 @@ class VlogService : Service() {
         )*/
 
         val notification = NotificationCompat.Builder(this, channelId)
-            //.setOngoing(true)
+            // .setOngoing(true)
             .setContentTitle("Vlog bubble is active")
-            //.setSmallIcon(R.mipmap.ic_launcher)
+            // .setSmallIcon(R.mipmap.ic_launcher)
             .setCategory(Notification.CATEGORY_SERVICE)
             .build()
-            //.setContentIntent(pendingIntent).build()
+        // .setContentIntent(pendingIntent).build()
 
         startForeground(101, notification)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel(channelId: String, channelName: String): String {
-        val chan = NotificationChannel(channelId,
-                channelName, NotificationManager.IMPORTANCE_NONE)
+        val chan = NotificationChannel(
+            channelId,
+            channelName,
+            NotificationManager.IMPORTANCE_NONE
+        )
         chan.lightColor = Color.BLUE
         chan.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
         val service = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -123,7 +126,7 @@ class VlogService : Service() {
 
     fun cleanUp() {
         chatHeads.removeAll()
-        //unregisterReceiver(innerReceiver)
+        // unregisterReceiver(innerReceiver)
     }
 }
 

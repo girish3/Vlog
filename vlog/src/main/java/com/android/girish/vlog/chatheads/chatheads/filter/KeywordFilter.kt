@@ -1,7 +1,7 @@
 package com.android.girish.vlog.chatheads.chatheads.filter
 import com.android.girish.vlog.chatheads.chatheads.VlogModel
 
-class KeywordFilter: Criteria<VlogModel> {
+class KeywordFilter : Criteria<VlogModel> {
 
     var mKeyword: String = ""
 

@@ -1,9 +1,14 @@
 package com.android.girish.vlog.chatheads.chatheads.utils
 
-import android.graphics.*
 import android.graphics.Bitmap
-import android.graphics.PorterDuffXfermode
+import android.graphics.BitmapFactory
 import android.graphics.BlurMaskFilter
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
+import android.graphics.Rect
 import java.io.IOException
 import java.net.HttpURLConnection
 
@@ -50,14 +55,14 @@ fun Bitmap.addShadow(): Bitmap {
     val bmAlpha = extractAlpha(ptBlur, offsetXY)
     val ptAlphaColor = Paint()
     ptAlphaColor.color = Color.argb(80, 0, 0, 0)
-    canvas.drawBitmap(bmAlpha, centerX + offsetXY[0], centerY  + offsetXY[1] + 4f, ptAlphaColor)
+    canvas.drawBitmap(bmAlpha, centerX + offsetXY[0], centerY + offsetXY[1] + 4f, ptAlphaColor)
     bmAlpha.recycle()
-    canvas.drawBitmap(this, centerX, centerY,null)
+    canvas.drawBitmap(this, centerX, centerY, null)
     return bmOut
 }
 
 fun Bitmap.scaleToSize(size: Int): Bitmap {
-    return Bitmap.createScaledBitmap(this, size, size, true);
+    return Bitmap.createScaledBitmap(this, size, size, true)
 }
 
 fun fetchBitmap(urlStr: String): Bitmap? {

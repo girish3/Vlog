@@ -1,15 +1,25 @@
 package com.android.girish.vlog.chatheads.chatheads
 
-import android.graphics.*
-import androidx.core.content.ContextCompat
-import android.view.*
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.PixelFormat
+import android.view.Gravity
+import android.view.View
+import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
+import androidx.core.content.ContextCompat
 import com.android.girish.vlog.R
-import com.facebook.rebound.*
-import com.android.girish.vlog.chatheads.chatheads.utils.*
+import com.android.girish.vlog.chatheads.chatheads.utils.dpToPx
+import com.android.girish.vlog.chatheads.chatheads.utils.getOverlayFlag
+import com.android.girish.vlog.chatheads.chatheads.utils.getScreenSize
+import com.facebook.rebound.SimpleSpringListener
+import com.facebook.rebound.Spring
+import com.facebook.rebound.SpringSystem
 
-class Close(var chatHeads: ChatHeads): View(chatHeads.context) {
+class Close(var chatHeads: ChatHeads) : View(chatHeads.context) {
     private var params = WindowManager.LayoutParams(
         ChatHeads.CLOSE_SIZE + ChatHeads.CLOSE_ADDITIONAL_SIZE,
         ChatHeads.CLOSE_SIZE + ChatHeads.CLOSE_ADDITIONAL_SIZE,
@@ -74,38 +84,46 @@ class Close(var chatHeads: ChatHeads): View(chatHeads.context) {
         visibility = View.INVISIBLE
         hide()
 
-        springY.addListener(object : SimpleSpringListener() {
-            override fun onSpringUpdate(spring: Spring) {
-                y = spring.currentValue.toFloat()
+        springY.addListener(
+            object : SimpleSpringListener() {
+                override fun onSpringUpdate(spring: Spring) {
+                    y = spring.currentValue.toFloat()
 
-                if (chatHeads.closeCaptured && chatHeads.wasMoving && chatHeads.topChatHead != null) {
-                    chatHeads.topChatHead!!.springY.currentValue = spring.currentValue
+                    if (chatHeads.closeCaptured && chatHeads.wasMoving && chatHeads.topChatHead != null) {
+                        chatHeads.topChatHead!!.springY.currentValue = spring.currentValue
+                    }
+
+                    onPositionUpdate()
                 }
-
-                onPositionUpdate()
             }
-        })
+        )
 
-        springX.addListener(object : SimpleSpringListener() {
-            override fun onSpringUpdate(spring: Spring) {
-                x = spring.currentValue.toFloat()
+        springX.addListener(
+            object : SimpleSpringListener() {
+                override fun onSpringUpdate(spring: Spring) {
+                    x = spring.currentValue.toFloat()
 
-                onPositionUpdate()
+                    onPositionUpdate()
+                }
             }
-        })
+        )
 
-        springScale.addListener(object : SimpleSpringListener() {
-            override fun onSpringUpdate(spring: Spring) {
-                bitmapBg =  Bitmap.createScaledBitmap(BitmapFactory.decodeResource(VlogService.sInstance.resources, R.drawable.close_bg), (spring.currentValue + ChatHeads.CLOSE_SIZE).toInt(), (spring.currentValue + ChatHeads.CLOSE_SIZE).toInt(), false)
-                invalidate()
+        springScale.addListener(
+            object : SimpleSpringListener() {
+                override fun onSpringUpdate(spring: Spring) {
+                    bitmapBg = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(VlogService.sInstance.resources, R.drawable.close_bg), (spring.currentValue + ChatHeads.CLOSE_SIZE).toInt(), (spring.currentValue + ChatHeads.CLOSE_SIZE).toInt(), false)
+                    invalidate()
+                }
             }
-        })
+        )
 
-        springAlpha.addListener(object : SimpleSpringListener() {
-            override fun onSpringUpdate(spring: Spring) {
-                gradient.alpha = spring.currentValue.toFloat()
+        springAlpha.addListener(
+            object : SimpleSpringListener() {
+                override fun onSpringUpdate(spring: Spring) {
+                    gradient.alpha = spring.currentValue.toFloat()
+                }
             }
-        })
+        )
 
         springScale.springConfig = SpringConfigs.CLOSE_SCALE
         springY.springConfig = SpringConfigs.CLOSE_Y
@@ -121,7 +139,6 @@ class Close(var chatHeads: ChatHeads): View(chatHeads.context) {
         chatHeads.addView(this, params)
         chatHeads.addView(gradient, gradientParams)
     }
-
 
     override fun onDraw(canvas: Canvas?) {
         canvas?.drawBitmap(bitmapBg, width / 2 - bitmapBg.width.toFloat() / 2, height / 2 - bitmapBg.height.toFloat() / 2, paint)
