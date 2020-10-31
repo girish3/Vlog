@@ -1,15 +1,11 @@
 package com.android.girish.vlog.chatheads.chatheads;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 
-public class VlogModel implements Parcelable {
+public class VlogModel {
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({VERBOSE, DEBUG, INFO, WARN, ERROR})
@@ -33,12 +29,6 @@ public class VlogModel implements Parcelable {
         mLogPriority = priority;
         mTag = tag;
         mLogMessage = logMessage;
-    }
-
-    protected VlogModel(Parcel in) {
-        mLogPriority = in.readInt();
-        mTag = in.readString();
-        mLogMessage = in.readString();
     }
 
     public int getLogPriority() {
@@ -65,29 +55,5 @@ public class VlogModel implements Parcelable {
 
     public void setLogMessage(String mLogMessage) {
         this.mLogMessage = mLogMessage;
-    }
-
-    public static final Creator<VlogModel> CREATOR = new Creator<VlogModel>() {
-        @Override
-        public VlogModel createFromParcel(Parcel in) {
-            return new VlogModel(in);
-        }
-
-        @Override
-        public VlogModel[] newArray(int size) {
-            return new VlogModel[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(mLogPriority);
-        dest.writeString(mTag);
-        dest.writeString(mLogMessage);
     }
 }
