@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.provider.Settings
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.android.girish.vlog.chatheads.chatheads.GenreDataFactory.generateLogs
 import com.android.girish.vlog.chatheads.chatheads.Vlog
 import com.android.girish.vlog.chatheads.chatheads.Vlog.Companion.instance
 import com.android.girish.vlog.chatheads.chatheads.VlogModel
@@ -39,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val randomLogs: List<VlogModel>
-        private get() = generateLogs()
+        private get() = VlogDataFactory.generateLogs()
 
     private fun manageDrawOverOtherApps() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {

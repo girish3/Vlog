@@ -1,8 +1,9 @@
-package com.android.girish.vlog.chatheads.chatheads
+package com.girish.vlogsample
 
+import com.android.girish.vlog.chatheads.chatheads.VlogModel
 import java.util.*
 
-object GenreDataFactory {
+object VlogDataFactory {
     @JvmStatic
     fun generateLogs(): List<VlogModel> {
         val logDataList = ArrayList<VlogModel>()
