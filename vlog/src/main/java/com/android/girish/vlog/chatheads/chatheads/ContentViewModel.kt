@@ -11,8 +11,8 @@ class ContentViewModel: ViewModel(), VlogRepository.ResultListener {
     private val mVlogRepository: VlogRepository
 
     init {
-        // TODO: use DI, isolating the dependency for now
-        mVlogRepository = Vlog.getInstance().vlogRepository
+        // TODO: use DI or service locator, isolating the dependency for now
+        mVlogRepository = Vlog.instance.vlogRepository
         mVlogRepository.setResultListener(this)
     }
 
@@ -45,7 +45,7 @@ class ContentViewModel: ViewModel(), VlogRepository.ResultListener {
     }
 
     fun onBubbleRemoved() {
-        Vlog.getInstance().stop()
+        Vlog.instance.stop()
     }
 
 }
