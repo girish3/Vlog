@@ -3,16 +3,12 @@ package com.android.girish.vlog
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.android.girish.vlog.VlogModel.LogPriority
-import com.android.girish.vlog.filter.VlogRepository
 
-class ContentViewModel : ViewModel(), VlogRepository.ResultListener {
+class ContentViewModel(private val mVlogRepository: VlogRepository) : ViewModel(), VlogRepository.ResultListener {
 
     val resultObserver = MutableLiveData<List<VlogModel>>()
-    private val mVlogRepository: VlogRepository
 
     init {
-        // TODO: use DI or service locator, isolating the dependency for now
-        mVlogRepository = Vlog.instance.vlogRepository
         mVlogRepository.setResultListener(this)
     }
 

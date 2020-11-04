@@ -1,12 +1,14 @@
-package com.android.girish.vlog.filter
+package com.android.girish.vlog
 
 import android.os.Handler
 import android.os.Looper
 import android.widget.Filter
 import androidx.annotation.UiThread
 import androidx.annotation.WorkerThread
-import com.android.girish.vlog.VlogModel
 import com.android.girish.vlog.VlogModel.LogPriority
+import com.android.girish.vlog.filter.Criteria
+import com.android.girish.vlog.filter.KeywordFilter
+import com.android.girish.vlog.filter.PriorityFilter
 
 /**
  * Filter manager

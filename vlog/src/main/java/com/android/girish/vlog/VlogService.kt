@@ -23,9 +23,9 @@ class VlogService : Service() {
     }
 
     private val TAG = VlogService::class.java.simpleName
+    private val mContentViewModel: ContentViewModel = ServiceLocator.provideContentViewModel()
     lateinit var windowManager: WindowManager
     lateinit var chatHeads: ChatHeads
-    private lateinit var mContentViewModel: ContentViewModel
 
     private lateinit var innerReceiver: InnerReceiver
 
@@ -48,9 +48,6 @@ class VlogService : Service() {
     override fun onCreate() {
         super.onCreate()
 
-        // TODO: use DI, isolating dependencies for now
-        injectDependencies()
-
         Log.d(TAG, "Creating Service")
 
         sInstance = this
@@ -65,10 +62,6 @@ class VlogService : Service() {
 
         /* If you wanna keep showing foreground notifications then uncomment the below method */
         createForegroundNotification()
-    }
-
-    private fun injectDependencies() {
-        mContentViewModel = ContentViewModel()
     }
 
     private fun createForegroundNotification() {

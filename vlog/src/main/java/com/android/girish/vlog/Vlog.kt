@@ -11,7 +11,6 @@ import android.os.IBinder
 import android.provider.Settings
 import android.util.Log
 import com.android.girish.vlog.VlogService.LocalBinder
-import com.android.girish.vlog.filter.VlogRepository
 import java.util.concurrent.atomic.AtomicBoolean
 
 class Vlog private constructor() {
@@ -21,7 +20,7 @@ class Vlog private constructor() {
     private var total = 0
     private val MAX = 1000
     private var mService: VlogService? = null
-    private var mVlogRepository: VlogRepository? = null
+    private val mVlogRepository = ServiceLocator.provideVlogRepository()
     private val mBound = AtomicBoolean(false)
     private val mServerConn: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName, binder: IBinder) {
@@ -42,10 +41,6 @@ class Vlog private constructor() {
         }
     }
 
-    private fun injectFilterManager() {
-        mVlogRepository = VlogRepository()
-    }
-
     fun isEnabled(): Boolean {
         return isEnabled.get()
     }
@@ -60,9 +55,6 @@ class Vlog private constructor() {
         mApplicationContext.bindService(mServiceIntent, mServerConn, Context.BIND_AUTO_CREATE)
         mApplicationContext.startService(mServiceIntent)
     }
-
-    val vlogRepository: VlogRepository
-        get() = mVlogRepository!!
 
     // TODO: pass the context once, introduce an initializer or use builder pattern.
     fun start(context: Context) {
@@ -104,7 +96,7 @@ class Vlog private constructor() {
             return
         }
         total++
-        mVlogRepository!!.feedLog(model!!)
+        mVlogRepository.feedLog(model!!)
     }
 
     fun showBubble() {
@@ -123,7 +115,7 @@ class Vlog private constructor() {
         isEnabled.set(false)
         if (mServiceIntent != null) {
             mService!!.cleanUp()
-            mVlogRepository!!.reset()
+            mVlogRepository.reset()
             mApplicationContext.unbindService(mServerConn)
             mApplicationContext.stopService(mServiceIntent)
             mServiceIntent = null
@@ -169,10 +161,5 @@ class Vlog private constructor() {
                 }
                 return vlog!!
             }
-    }
-
-    init {
-        // TODO: use DI, isolating the dependency for now
-        injectFilterManager()
     }
 }
