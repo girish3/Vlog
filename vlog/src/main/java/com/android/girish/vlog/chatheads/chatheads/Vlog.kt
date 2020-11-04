@@ -3,15 +3,19 @@ package com.android.girish.vlog.chatheads.chatheads
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.ServiceConnection
+import android.net.Uri
+import android.os.Build
 import android.os.IBinder
+import android.provider.Settings
 import android.util.Log
 import com.android.girish.vlog.chatheads.chatheads.VlogService.LocalBinder
 import com.android.girish.vlog.chatheads.chatheads.filter.VlogRepository
 import java.util.concurrent.atomic.AtomicBoolean
 
 class Vlog private constructor() {
-    private var mApplicationContext: Context? = null
+    private lateinit var mApplicationContext: Context
     private val isEnabled = AtomicBoolean(false)
     private var mServiceIntent: Intent? = null
     private var total = 0
@@ -53,24 +57,45 @@ class Vlog private constructor() {
     private fun startService() {
         mServiceIntent = Intent(mApplicationContext, VlogService::class.java)
         // TODO: is there a need to pass token as an extra?
-        mApplicationContext!!.bindService(mServiceIntent, mServerConn, Context.BIND_AUTO_CREATE)
-        mApplicationContext!!.startService(mServiceIntent)
+        mApplicationContext.bindService(mServiceIntent, mServerConn, Context.BIND_AUTO_CREATE)
+        mApplicationContext.startService(mServiceIntent)
     }
 
     val vlogRepository: VlogRepository
         get() = mVlogRepository!!
 
-    fun start(context: Context?) {
+    // TODO: pass the context once, introduce an initializer or use builder pattern.
+    fun start(context: Context) {
+        mApplicationContext = context
+        if (!canDrawOverOtherApp()) {
+            requestDrawOverPermission()
+            Log.d(TAG, "Please grant Vlog permission to draw over other apps")
+            return
+        }
+
         // Ignore if already started
         if (isEnabled.getAndSet(true)) {
             Log.d(TAG, "Vlog is already started")
             return
         }
         Log.d(TAG, "Initializing Vlog")
-        mApplicationContext = context
         startService()
 
         // initialize other resources if any
+    }
+
+    private fun requestDrawOverPermission() {
+        val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:${mApplicationContext.packageName}"))
+        intent.setFlags(FLAG_ACTIVITY_NEW_TASK)
+        mApplicationContext.startActivity(intent)
+    }
+
+    private fun canDrawOverOtherApp(): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return true
+        }
+
+        return Settings.canDrawOverlays(mApplicationContext)
     }
 
     fun feed(model: VlogModel?) {
@@ -99,8 +124,8 @@ class Vlog private constructor() {
         if (mServiceIntent != null) {
             mService!!.cleanUp()
             mVlogRepository!!.reset()
-            mApplicationContext!!.unbindService(mServerConn)
-            mApplicationContext!!.stopService(mServiceIntent)
+            mApplicationContext.unbindService(mServerConn)
+            mApplicationContext.stopService(mServiceIntent)
             mServiceIntent = null
         }
     }
