@@ -1,4 +1,4 @@
-package com.android.girish.vlog.chatheads.chatheads
+package com.android.girish.vlog
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.android.girish.vlog.R
-import com.android.girish.vlog.chatheads.chatheads.VlogAdapter.VlogViewHolder
+import com.android.girish.vlog.VlogAdapter.VlogViewHolder
 
 class VlogAdapter : RecyclerView.Adapter<VlogViewHolder>() {
     private var mFilteredLogList: List<VlogModel>?

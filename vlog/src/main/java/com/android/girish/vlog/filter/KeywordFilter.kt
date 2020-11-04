@@ -1,5 +1,5 @@
-package com.android.girish.vlog.chatheads.chatheads.filter
-import com.android.girish.vlog.chatheads.chatheads.VlogModel
+package com.android.girish.vlog.filter
+import com.android.girish.vlog.VlogModel
 
 class KeywordFilter : Criteria<VlogModel> {
 

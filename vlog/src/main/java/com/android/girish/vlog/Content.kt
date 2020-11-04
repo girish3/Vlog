@@ -1,4 +1,4 @@
-package com.android.girish.vlog.chatheads.chatheads
+package com.android.girish.vlog
 
 import android.app.AlertDialog
 import android.content.Context
@@ -15,13 +15,12 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.android.girish.vlog.R
-import com.android.girish.vlog.chatheads.chatheads.VlogModel.Companion.DEBUG
-import com.android.girish.vlog.chatheads.chatheads.VlogModel.Companion.ERROR
-import com.android.girish.vlog.chatheads.chatheads.VlogModel.Companion.INFO
-import com.android.girish.vlog.chatheads.chatheads.VlogModel.Companion.VERBOSE
-import com.android.girish.vlog.chatheads.chatheads.VlogModel.Companion.WARN
-import com.android.girish.vlog.chatheads.chatheads.VlogModel.LogPriority
+import com.android.girish.vlog.VlogModel.Companion.DEBUG
+import com.android.girish.vlog.VlogModel.Companion.ERROR
+import com.android.girish.vlog.VlogModel.Companion.INFO
+import com.android.girish.vlog.VlogModel.Companion.VERBOSE
+import com.android.girish.vlog.VlogModel.Companion.WARN
+import com.android.girish.vlog.VlogModel.LogPriority
 import com.facebook.rebound.SimpleSpringListener
 import com.facebook.rebound.Spring
 import com.facebook.rebound.SpringSystem

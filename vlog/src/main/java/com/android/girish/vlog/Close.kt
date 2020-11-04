@@ -1,4 +1,4 @@
-package com.android.girish.vlog.chatheads.chatheads
+package com.android.girish.vlog
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -11,10 +11,9 @@ import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
-import com.android.girish.vlog.R
-import com.android.girish.vlog.chatheads.chatheads.utils.dpToPx
-import com.android.girish.vlog.chatheads.chatheads.utils.getOverlayFlag
-import com.android.girish.vlog.chatheads.chatheads.utils.getScreenSize
+import com.android.girish.vlog.utils.dpToPx
+import com.android.girish.vlog.utils.getOverlayFlag
+import com.android.girish.vlog.utils.getScreenSize
 import com.facebook.rebound.SimpleSpringListener
 import com.facebook.rebound.Spring
 import com.facebook.rebound.SpringSystem

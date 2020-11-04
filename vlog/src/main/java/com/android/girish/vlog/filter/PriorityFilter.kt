@@ -1,6 +1,6 @@
-package com.android.girish.vlog.chatheads.chatheads.filter
-import com.android.girish.vlog.chatheads.chatheads.VlogModel
-import com.android.girish.vlog.chatheads.chatheads.VlogModel.LogPriority
+package com.android.girish.vlog.filter
+import com.android.girish.vlog.VlogModel
+import com.android.girish.vlog.VlogModel.LogPriority
 
 /**
  * Priority filter

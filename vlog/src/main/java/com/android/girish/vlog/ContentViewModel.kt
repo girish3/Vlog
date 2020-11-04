@@ -1,9 +1,9 @@
-package com.android.girish.vlog.chatheads.chatheads
+package com.android.girish.vlog
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.android.girish.vlog.chatheads.chatheads.VlogModel.LogPriority
-import com.android.girish.vlog.chatheads.chatheads.filter.VlogRepository
+import com.android.girish.vlog.VlogModel.LogPriority
+import com.android.girish.vlog.filter.VlogRepository
 
 class ContentViewModel : ViewModel(), VlogRepository.ResultListener {
 

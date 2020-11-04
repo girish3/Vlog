@@ -1,4 +1,4 @@
-package com.android.girish.vlog.chatheads.chatheads.utils
+package com.android.girish.vlog.utils
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

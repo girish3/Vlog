@@ -1,4 +1,4 @@
-package com.android.girish.vlog.chatheads.chatheads.filter
+package com.android.girish.vlog.filter
 
 interface Criteria<T> {
     fun meetCriteria(input: List<T>): List<T>

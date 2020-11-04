@@ -1,4 +1,4 @@
-package com.android.girish.vlog.chatheads.chatheads
+package com.android.girish.vlog
 
 import androidx.annotation.IntDef
 import java.lang.annotation.Retention

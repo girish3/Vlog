@@ -1,12 +1,12 @@
-package com.android.girish.vlog.chatheads.chatheads.filter
+package com.android.girish.vlog.filter
 
 import android.os.Handler
 import android.os.Looper
 import android.widget.Filter
 import androidx.annotation.UiThread
 import androidx.annotation.WorkerThread
-import com.android.girish.vlog.chatheads.chatheads.VlogModel
-import com.android.girish.vlog.chatheads.chatheads.VlogModel.LogPriority
+import com.android.girish.vlog.VlogModel
+import com.android.girish.vlog.VlogModel.LogPriority
 
 /**
  * Filter manager

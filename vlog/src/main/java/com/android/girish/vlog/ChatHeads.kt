@@ -1,4 +1,4 @@
-package com.android.girish.vlog.chatheads.chatheads
+package com.android.girish.vlog
 
 import android.content.Context
 import android.graphics.PixelFormat
@@ -10,9 +10,9 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.LinearLayout
-import com.android.girish.vlog.chatheads.chatheads.utils.dpToPx
-import com.android.girish.vlog.chatheads.chatheads.utils.getOverlayFlag
-import com.android.girish.vlog.chatheads.chatheads.utils.getScreenSize
+import com.android.girish.vlog.utils.dpToPx
+import com.android.girish.vlog.utils.getOverlayFlag
+import com.android.girish.vlog.utils.getScreenSize
 import com.facebook.rebound.SimpleSpringListener
 import com.facebook.rebound.Spring
 import com.facebook.rebound.SpringChain

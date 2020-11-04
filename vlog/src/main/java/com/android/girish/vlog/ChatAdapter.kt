@@ -1,11 +1,10 @@
-package com.android.girish.vlog.chatheads.chatheads
+package com.android.girish.vlog
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.android.girish.vlog.R
 
 class ChatAdapter(
     private val context: Context,

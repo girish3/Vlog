@@ -1,6 +1,6 @@
 package com.girish.vlogsample
 
-import com.android.girish.vlog.chatheads.chatheads.VlogModel
+import com.android.girish.vlog.VlogModel
 
 object VlogDataFactory {
     @JvmStatic

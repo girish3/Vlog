@@ -7,9 +7,9 @@ import android.os.Bundle
 import android.provider.Settings
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.android.girish.vlog.chatheads.chatheads.Vlog
-import com.android.girish.vlog.chatheads.chatheads.Vlog.Companion.instance
-import com.android.girish.vlog.chatheads.chatheads.VlogModel
+import com.android.girish.vlog.Vlog
+import com.android.girish.vlog.Vlog.Companion.instance
+import com.android.girish.vlog.VlogModel
 
 class MainActivity : AppCompatActivity() {
     private var mVlog: Vlog? = null

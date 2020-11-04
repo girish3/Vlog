@@ -1,4 +1,4 @@
-package com.android.girish.vlog.chatheads.chatheads
+package com.android.girish.vlog
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -14,13 +14,12 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
-import com.android.girish.vlog.R
-import com.android.girish.vlog.chatheads.chatheads.utils.addBackground
-import com.android.girish.vlog.chatheads.chatheads.utils.addShadow
-import com.android.girish.vlog.chatheads.chatheads.utils.getOverlayFlag
-import com.android.girish.vlog.chatheads.chatheads.utils.getScreenSize
-import com.android.girish.vlog.chatheads.chatheads.utils.makeCircular
-import com.android.girish.vlog.chatheads.chatheads.utils.scaleToSize
+import com.android.girish.vlog.utils.addBackground
+import com.android.girish.vlog.utils.addShadow
+import com.android.girish.vlog.utils.getOverlayFlag
+import com.android.girish.vlog.utils.getScreenSize
+import com.android.girish.vlog.utils.makeCircular
+import com.android.girish.vlog.utils.scaleToSize
 import com.facebook.rebound.SimpleSpringListener
 import com.facebook.rebound.Spring
 import com.facebook.rebound.SpringListener

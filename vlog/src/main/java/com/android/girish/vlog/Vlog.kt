@@ -1,4 +1,4 @@
-package com.android.girish.vlog.chatheads.chatheads
+package com.android.girish.vlog
 
 import android.content.ComponentName
 import android.content.Context
@@ -10,8 +10,8 @@ import android.os.Build
 import android.os.IBinder
 import android.provider.Settings
 import android.util.Log
-import com.android.girish.vlog.chatheads.chatheads.VlogService.LocalBinder
-import com.android.girish.vlog.chatheads.chatheads.filter.VlogRepository
+import com.android.girish.vlog.VlogService.LocalBinder
+import com.android.girish.vlog.filter.VlogRepository
 import java.util.concurrent.atomic.AtomicBoolean
 
 class Vlog private constructor() {
