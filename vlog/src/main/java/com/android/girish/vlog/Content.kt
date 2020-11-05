@@ -31,12 +31,10 @@ class Content(context: Context, val mContentViewModel: ContentViewModel) : Linea
 
     var messagesView: RecyclerView
     var layoutManager = LinearLayoutManager(context)
-
-    lateinit var messagesAdapter: ChatAdapter
     val mVlogAdapter: VlogAdapter = VlogAdapter()
 
     init {
-        inflate(context, R.layout.chat_head_content, this)
+        inflate(context, R.layout.log_content_view, this)
 
         messagesView = findViewById(R.id.events)
         messagesView.layoutManager = layoutManager
@@ -145,15 +143,6 @@ class Content(context: Context, val mContentViewModel: ContentViewModel) : Linea
         }
 
         return appStatus
-    }
-
-    fun setInfo(chatHead: ChatHead) {
-        val list = ArrayList<String>()
-        list.add("new list")
-        list.add("girish")
-        messagesAdapter.messages = list
-        messagesAdapter.notifyDataSetChanged()
-        messagesView.scrollToPosition(messagesAdapter.messages.lastIndex)
     }
 
     fun hideContent() {
