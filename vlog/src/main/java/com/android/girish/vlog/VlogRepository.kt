@@ -136,5 +136,6 @@ class VlogRepository(private val mFilterDelay: Long = 100) : Filter() {
         for (filter in mFilters) {
             filter.reset()
         }
+        initiateFilter()
     }
 }
