@@ -1,8 +1,8 @@
 package com.android.girish.vlog
 
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PixelFormat
 import android.view.Gravity
@@ -14,12 +14,9 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
-import com.android.girish.vlog.utils.addBackground
-import com.android.girish.vlog.utils.addShadow
+import com.android.girish.vlog.utils.drawableToBitmap
 import com.android.girish.vlog.utils.getOverlayFlag
 import com.android.girish.vlog.utils.getScreenSize
-import com.android.girish.vlog.utils.makeCircular
-import com.android.girish.vlog.utils.scaleToSize
 import com.facebook.rebound.SimpleSpringListener
 import com.facebook.rebound.Spring
 import com.facebook.rebound.SpringListener
@@ -113,26 +110,35 @@ class ChatHead(var chatHeads: ChatHeads, mContentViewModel: ContentViewModel) :
         this.setOnTouchListener(this)
 
         // placeholder (appropriate bitmap for chat head)
-        var chatHeadBitmap: Bitmap = Bitmap.createBitmap(ChatHeads.CHAT_HEAD_SIZE, ChatHeads.CHAT_HEAD_SIZE, Bitmap.Config.ARGB_8888)
+        /*var chatHeadBitmap: Bitmap = Bitmap.createBitmap(ChatHeads.CHAT_HEAD_SIZE, ChatHeads.CHAT_HEAD_SIZE, Bitmap.Config.ARGB_8888)
             .addBackground(R.drawable.teams_icon)
             .makeCircular()
             .scaleToSize(ChatHeads.CHAT_HEAD_SIZE)
-            .addShadow()
+            .addShadow()*/
 
         // TODO: @girish unable to add background color for the custom png bitmap (figure it out!)
-        val localBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.teams_icon2)
+        /*val localBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.teams_icon2)
         localBitmap
             .addBackground(Color.BLACK)
             .makeCircular()
             .scaleToSize(ChatHeads.CHAT_HEAD_SIZE)
-            .addShadow()
+            .addShadow()*/
 
-        val imageBitmap = BitmapFactory.decodeResource(resources, R.drawable.teams_icon3)
+        // getting the application icon to display on the bubble
+        var imageBitmap: Bitmap
+        try {
+            val drawableIcon = context.packageManager.getApplicationIcon(context.applicationContext.packageName)
+            imageBitmap = drawableToBitmap(drawableIcon)
+        } catch (e: PackageManager.NameNotFoundException) {
+            imageBitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_launcher)
+        }
+
+        // Rendering the icon
         val roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(resources, imageBitmap)
         roundedBitmapDrawable.setCornerRadius(50.0f)
         roundedBitmapDrawable.setAntiAlias(true)
-
         imageView.setImageDrawable(roundedBitmapDrawable)
+
 
         mContentViewModel.resultObserver.observeForever {
             updateNotifications(it.count())
