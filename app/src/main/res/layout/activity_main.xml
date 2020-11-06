@@ -1,40 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
     <Button
         android:id="@+id/start"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@android:color/darker_gray"
         android:layout_margin="10dp"
-        android:padding="20dp"
-        android:text="Start Vlogging"/>
+        android:textAllCaps="false"
+        android:text="Start Vlog"/>
 
     <Button
         android:id="@+id/addFeed"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@android:color/darker_gray"
         android:layout_margin="10dp"
-        android:padding="20dp"
-        android:text="Add random feed"/>
+        android:textAllCaps="false"
+        android:padding="10dp"
+        android:text="Add random logs"/>
+
+
 
     <Button
         android:id="@+id/stop"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@android:color/darker_gray"
         android:layout_margin="10dp"
-        android:padding="20dp"
-        android:text="Stop Vlogging"/>
+        android:textAllCaps="false"
+        android:padding="10dp"
+        android:text="Stop Vlog"/>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/openLoginPage"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@android:color/darker_gray"
+        android:layout_margin="10dp"
+        android:textAllCaps="false"
+        android:padding="10dp"
+        android:text="Test Login Page"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

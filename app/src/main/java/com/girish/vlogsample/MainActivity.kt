@@ -8,30 +8,39 @@ import android.provider.Settings
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.android.girish.vlog.Vlog
-import com.android.girish.vlog.Vlog.Companion.instance
 import com.android.girish.vlog.VlogModel
+import com.girish.vlogsample.logger.AbstractLogger
 
 class MainActivity : AppCompatActivity() {
-    private var mVlog: Vlog? = null
+
+    private var mVlog: Vlog = ServiceLocator.provideVlog()
+    private var mLogger: AbstractLogger = ServiceLocator.provideLogger()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //manageDrawOverOtherApps()
-        mVlog = instance
         val startButton = findViewById<Button>(R.id.start)
         val stopButton = findViewById<Button>(R.id.stop)
         val addFeed = findViewById<Button>(R.id.addFeed)
+        val openLoginPage = findViewById<Button>(R.id.openLoginPage)
+
         startButton.setOnClickListener {
-            mVlog!!.start(applicationContext)
+            mVlog.start(applicationContext)
         }
-        stopButton.setOnClickListener { mVlog!!.stop() }
+        stopButton.setOnClickListener { mVlog.stop() }
         addFeed.setOnClickListener {
             val vlogModels = randomLogs
             for (model in vlogModels) {
-                if (mVlog!!.isEnabled()) {
-                    mVlog!!.feed(model)
+                if (mVlog.isEnabled()) {
+                    mVlog.feed(model)
                 }
             }
+        }
+
+        openLoginPage.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
         }
     }
 
