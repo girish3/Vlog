@@ -17,7 +17,7 @@ import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 
-class VlogService : Service() {
+internal class VlogService : Service() {
     companion object {
         lateinit var sInstance: VlogService
     }

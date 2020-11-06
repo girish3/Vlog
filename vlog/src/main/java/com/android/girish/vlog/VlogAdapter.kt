@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.android.girish.vlog.VlogAdapter.VlogViewHolder
 
-class VlogAdapter : RecyclerView.Adapter<VlogViewHolder>() {
+internal class VlogAdapter : RecyclerView.Adapter<VlogViewHolder>() {
     private var mFilteredLogList: List<VlogModel>?
     private var mExpandedModel: VlogModel? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VlogViewHolder {

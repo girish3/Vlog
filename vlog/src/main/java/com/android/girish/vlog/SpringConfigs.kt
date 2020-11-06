@@ -2,7 +2,7 @@ package com.android.girish.vlog
 
 import com.facebook.rebound.SpringConfig
 
-object SpringConfigs {
+internal object SpringConfigs {
     var NOT_DRAGGING: SpringConfig = SpringConfig.fromOrigamiTensionAndFriction(60.0, 8.0)
     var CAPTURING: SpringConfig = SpringConfig.fromBouncinessAndSpeed(8.0, 40.0)
     var CLOSE_SCALE: SpringConfig = SpringConfig.fromBouncinessAndSpeed(7.0, 25.0)

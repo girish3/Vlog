@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.android.girish.vlog.VlogModel.LogPriority
 
-class ContentViewModel(private val mVlogRepository: VlogRepository) : ViewModel(), VlogRepository.ResultListener {
+internal class ContentViewModel(private val mVlogRepository: VlogRepository) : ViewModel(), VlogRepository.ResultListener {
 
     val resultObserver = MutableLiveData<List<VlogModel>>()
 

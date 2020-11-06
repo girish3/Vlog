@@ -3,7 +3,7 @@ package com.android.girish.vlog
 /*
 *  A service locator to provide dependencies.
 * */
-object ServiceLocator {
+internal object ServiceLocator {
 
     private var mVlogRepository: VlogRepository? = null
     private var mContentViewModel: ContentViewModel? = null

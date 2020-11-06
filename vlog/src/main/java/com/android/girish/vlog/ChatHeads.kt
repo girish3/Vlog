@@ -20,7 +20,7 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.pow
 
-class Rectangle(val x: Double, val y: Double, val w: Double, val h: Double) {
+internal class Rectangle(val x: Double, val y: Double, val w: Double, val h: Double) {
     private val OUT_LEFT = 1
     private val OUT_TOP = 2
     private val OUT_RIGHT = 4
@@ -79,7 +79,7 @@ class Rectangle(val x: Double, val y: Double, val w: Double, val h: Double) {
     }
 }
 
-class Line(val x1: Double, val y1: Double, var x2: Double, var y2: Double) {
+internal class Line(val x1: Double, val y1: Double, var x2: Double, var y2: Double) {
     fun intersects(r: Rectangle): Boolean {
         return r.intersectsLine(x1, y1, x2, y2)
     }
@@ -96,7 +96,7 @@ class Line(val x1: Double, val y1: Double, var x2: Double, var y2: Double) {
     }
 }
 
-class ChatHeads(context: Context, val mContentViewModel: ContentViewModel) : View.OnTouchListener, FrameLayout(context) {
+internal class ChatHeads(context: Context, val mContentViewModel: ContentViewModel) : View.OnTouchListener, FrameLayout(context) {
     companion object {
         val CHAT_HEAD_OUT_OF_SCREEN_X: Int = dpToPx(10f)
         val CHAT_HEAD_SIZE: Int = dpToPx(62f)

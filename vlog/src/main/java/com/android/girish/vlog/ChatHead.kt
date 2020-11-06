@@ -23,7 +23,7 @@ import com.facebook.rebound.SpringListener
 import com.facebook.rebound.SpringSystem
 import kotlin.math.pow
 
-class ChatHead(var chatHeads: ChatHeads, mContentViewModel: ContentViewModel) :
+internal class ChatHead(var chatHeads: ChatHeads, mContentViewModel: ContentViewModel) :
     FrameLayout(chatHeads.context),
     View.OnTouchListener,
     SpringListener {

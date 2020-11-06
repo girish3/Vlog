@@ -18,7 +18,7 @@ import com.facebook.rebound.SimpleSpringListener
 import com.facebook.rebound.Spring
 import com.facebook.rebound.SpringSystem
 
-class Close(var chatHeads: ChatHeads) : View(chatHeads.context) {
+internal class Close(var chatHeads: ChatHeads) : View(chatHeads.context) {
     private var params = WindowManager.LayoutParams(
         ChatHeads.CLOSE_SIZE + ChatHeads.CLOSE_ADDITIONAL_SIZE,
         ChatHeads.CLOSE_SIZE + ChatHeads.CLOSE_ADDITIONAL_SIZE,

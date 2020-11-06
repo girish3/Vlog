@@ -25,7 +25,7 @@ import com.facebook.rebound.SimpleSpringListener
 import com.facebook.rebound.Spring
 import com.facebook.rebound.SpringSystem
 
-class Content(context: Context, val mContentViewModel: ContentViewModel) : LinearLayout(context) {
+internal class Content(context: Context, val mContentViewModel: ContentViewModel) : LinearLayout(context) {
     private val springSystem = SpringSystem.create()
     private val scaleSpring = springSystem.createSpring()
 

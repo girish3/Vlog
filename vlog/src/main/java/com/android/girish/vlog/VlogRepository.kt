@@ -16,7 +16,7 @@ import com.android.girish.vlog.filter.PriorityFilter
  * @property mFilterDelay The amount of delay (in ms) before the filter process starts
  * @constructor Create empty Filter manager
  */
-class VlogRepository(private val mFilterDelay: Long = 100) : Filter() {
+internal class VlogRepository(private val mFilterDelay: Long = 100) : Filter() {
 
     private val handler: Handler = Handler(Looper.getMainLooper())
     private val mKeywordFilter = KeywordFilter()
