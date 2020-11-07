@@ -25,25 +25,36 @@ internal class VlogAdapter : RecyclerView.Adapter<VlogViewHolder>() {
     override fun onBindViewHolder(holder: VlogViewHolder, position: Int) {
         val model = mFilteredLogList!![position]
         val priority = model.logPriority
+        val errorColor = Color.parseColor("#990000") // red
+        val warnColor = Color.parseColor("#000099") // blue
+        val defaultColor = Color.BLACK // black
+
         when (priority) {
             VlogModel.ERROR -> {
-                holder.logTag.setTextColor(Color.RED)
-                holder.logMessage.setTextColor(Color.RED)
+                holder.logTag.setTextColor(errorColor)
+                holder.logMessage.setTextColor(errorColor)
             }
             VlogModel.WARN -> {
-                holder.logTag.setTextColor(Color.parseColor("#ff9966"))
-                holder.logMessage.setTextColor(Color.parseColor("#ff9966"))
+                holder.logTag.setTextColor(warnColor)
+                holder.logMessage.setTextColor(warnColor)
             }
             else -> {
-                holder.logTag.setTextColor(Color.BLACK)
-                holder.logMessage.setTextColor(Color.BLACK)
+                holder.logTag.setTextColor(defaultColor)
+                holder.logMessage.setTextColor(defaultColor)
             }
         }
         holder.logTag.text = getLogPriorityInitials(model.logPriority) + "/" + model.tag + ": "
         val isExpanded = model == mExpandedModel
-        holder.logMessage.text = if (isExpanded) model.logMessage else if (model.logMessage.length > 30) model.logMessage.substring(0, 28) else model.logMessage
+        holder.logMessage.text =
+            if (isExpanded)
+                model.logMessage
+            else if (model.logMessage.length > 50)
+                model.logMessage.substring(0, 49) + "..."
+            else
+                model.logMessage
+
         holder.expandCollapseArrow.setImageResource(if (isExpanded) R.drawable.ic_arrow_up else R.drawable.ic_arrow_down)
-        holder.expandCollapseArrow.setOnClickListener {
+        holder.itemView.setOnClickListener {
             mExpandedModel = if (isExpanded) null else model
             // TODO: @girish optimize if required -> update the item rather than the whole list.
             notifyDataSetChanged()

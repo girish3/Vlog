@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="80dp"
-        android:padding="5dp"
         android:background="@drawable/layout_bg"
         android:orientation="vertical">
 
@@ -18,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/layout_bg"
+            android:padding="5dp"
             android:clipToPadding="false"
             android:orientation="horizontal">
 
@@ -59,6 +59,7 @@
             android:id="@+id/events"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="0dp"
             android:layout_weight="1"/>
 
     </LinearLayout>

@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.girish.vlog.VlogModel.Companion.DEBUG
@@ -38,6 +39,7 @@ internal class Content(context: Context, val mContentViewModel: ContentViewModel
 
         messagesView = findViewById(R.id.events)
         messagesView.layoutManager = layoutManager
+        messagesView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
         messagesView.adapter = mVlogAdapter
 

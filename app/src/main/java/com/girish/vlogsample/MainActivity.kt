@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         openLoginPage.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, TestLoginActivity::class.java)
             startActivity(intent)
         }
     }
