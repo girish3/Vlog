@@ -1,6 +1,6 @@
 package com.android.girish.vlog.filter
 
-interface Criteria<T> {
+internal interface Criteria<T> {
     fun meetCriteria(input: List<T>): List<T>
     fun reset()
 }

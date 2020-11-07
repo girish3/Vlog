@@ -4,7 +4,7 @@ import androidx.annotation.IntDef
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
 
-class VlogModel(@param:LogPriority val logPriority: Int, val tag: String, val logMessage: String) {
+internal class VlogModel(@param:LogPriority val logPriority: Int, val tag: String, val logMessage: String) {
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef(VERBOSE, DEBUG, INFO, WARN, ERROR)

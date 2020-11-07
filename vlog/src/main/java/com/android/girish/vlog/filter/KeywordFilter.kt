@@ -1,7 +1,7 @@
 package com.android.girish.vlog.filter
 import com.android.girish.vlog.VlogModel
 
-class KeywordFilter : Criteria<VlogModel> {
+internal class KeywordFilter : Criteria<VlogModel> {
 
     var mKeyword: String = ""
 

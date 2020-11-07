@@ -7,7 +7,7 @@ import com.android.girish.vlog.VlogModel.LogPriority
  *
  * @constructor Create empty Priority filter
  */
-class PriorityFilter : Criteria<VlogModel> {
+internal class PriorityFilter : Criteria<VlogModel> {
 
     @LogPriority private var mPriority: Int = VlogModel.VERBOSE
 

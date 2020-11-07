@@ -42,10 +42,6 @@ class Vlog private constructor(val mApplicationContext: Context) {
         return isEnabled.get()
     }
 
-    private fun allowLogging(): Boolean {
-        return isEnabled.get() && VlogService.sInstance != null
-    }
-
     private fun startService() {
         mServiceIntent = Intent(mApplicationContext, VlogService::class.java)
         // TODO: is there a need to pass token as an extra?
@@ -86,7 +82,7 @@ class Vlog private constructor(val mApplicationContext: Context) {
         return Settings.canDrawOverlays(mApplicationContext)
     }
 
-    fun feed(model: VlogModel) {
+    private fun feed(model: VlogModel) {
         if (!isEnabled.get()) {
             Log.d(TAG, "Vlog is not started, cannot log")
             return
