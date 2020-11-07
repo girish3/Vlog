@@ -31,5 +31,5 @@ abstract class AbstractLogger {
         _nextLogger?.log(priority, tag, message)
     }
 
-    abstract protected fun write(@LogPriority priority: Int, tag: String, message: String)
+    protected abstract fun write(@LogPriority priority: Int, tag: String, message: String)
 }

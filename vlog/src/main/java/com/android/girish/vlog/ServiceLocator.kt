@@ -9,7 +9,7 @@ internal object ServiceLocator {
     private var mContentViewModel: ContentViewModel? = null
 
     fun provideContentViewModel(): ContentViewModel {
-        synchronized (this) {
+        synchronized(this) {
             if (mContentViewModel == null) {
                 mContentViewModel = ContentViewModel(provideVlogRepository())
             }
@@ -18,7 +18,7 @@ internal object ServiceLocator {
     }
 
     fun provideVlogRepository(): VlogRepository {
-        synchronized (this) {
+        synchronized(this) {
             if (mVlogRepository == null) {
                 mVlogRepository = VlogRepository()
             }

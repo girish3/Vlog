@@ -13,8 +13,7 @@ import android.util.Log
 import com.android.girish.vlog.VlogService.LocalBinder
 import java.util.concurrent.atomic.AtomicBoolean
 
-class Vlog private constructor() {
-    private lateinit var mApplicationContext: Context
+class Vlog private constructor(val mApplicationContext: Context) {
     private val isEnabled = AtomicBoolean(false)
     private var mServiceIntent: Intent? = null
     private var mService: VlogService? = null
@@ -55,8 +54,7 @@ class Vlog private constructor() {
     }
 
     // TODO: pass the context once, introduce an initializer or use builder pattern.
-    fun start(context: Context) {
-        mApplicationContext = context
+    fun start() {
         if (!canDrawOverOtherApp()) {
             requestDrawOverPermission()
             Log.d(TAG, "Please grant Vlog permission to draw over other apps")
@@ -146,17 +144,17 @@ class Vlog private constructor() {
 
     companion object {
         private val TAG = Vlog::class.java.simpleName
-        private var vlog: Vlog? = null
+        private var instance: Vlog? = null
 
-        // TODO: make it thread safe.
         @JvmStatic
-        val instance: Vlog
-            get() {
-                // TODO: make it thread safe.
-                if (vlog == null) {
-                    vlog = Vlog()
+        fun getInstance(context: Context): Vlog {
+            synchronized(this) {
+                if (instance == null) {
+                    instance = Vlog(context)
                 }
-                return vlog!!
+
+                return instance!!
             }
+        }
     }
 }

@@ -2,7 +2,7 @@ package com.girish.vlogsample.logger
 
 import android.util.Log
 
-class LogcatLogger: AbstractLogger() {
+class LogcatLogger : AbstractLogger() {
 
     override fun write(@LogPriority priority: Int, tag: String, message: String) {
         when (priority) {
@@ -13,5 +13,4 @@ class LogcatLogger: AbstractLogger() {
             ERROR -> Log.e(tag, message)
         }
     }
-
 }

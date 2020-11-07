@@ -1,5 +1,6 @@
 package com.android.girish.vlog
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.android.girish.vlog.VlogModel.LogPriority
@@ -38,7 +39,7 @@ internal class ContentViewModel(private val mVlogRepository: VlogRepository) : V
         mVlogRepository.clearLogs()
     }
 
-    fun onBubbleRemoved() {
-        Vlog.instance.stop()
+    fun onBubbleRemoved(context: Context) {
+        Vlog.getInstance(context).stop()
     }
 }

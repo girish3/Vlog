@@ -398,7 +398,7 @@ internal class ChatHeads(context: Context, val mContentViewModel: ContentViewMod
     }
 
     private fun onClose() {
-        mContentViewModel.onBubbleRemoved()
+        mContentViewModel.onBubbleRemoved(context)
         removeAll()
         closeCaptured = false
         movingOutOfClose = false

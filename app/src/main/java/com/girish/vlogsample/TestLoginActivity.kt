@@ -1,8 +1,8 @@
 package com.girish.vlogsample
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.girish.vlogsample.logger.AbstractLogger.Companion.DEBUG
 import com.girish.vlogsample.logger.AbstractLogger.Companion.ERROR
 import com.girish.vlogsample.logger.AbstractLogger.Companion.VERBOSE
@@ -10,7 +10,7 @@ import com.google.android.material.snackbar.Snackbar
 
 class TestLoginActivity : AppCompatActivity() {
 
-    val mLogger = ServiceLocator.provideLogger()
+    val mLogger = ServiceLocator.provideLogger(this)
     val TAG = "LoginActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +42,7 @@ class TestLoginActivity : AppCompatActivity() {
         }
 
         loginButton.setOnClickListener {
-            val isSuccessful = initiateLogin();
+            val isSuccessful = initiateLogin()
             if (!isSuccessful) {
                 Snackbar.make(loginButton, "Something went wrong. Please try again", Snackbar.LENGTH_LONG).show()
             }

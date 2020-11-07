@@ -93,8 +93,11 @@ fun drawableToBitmap(drawable: Drawable): Bitmap {
     val height = if (!drawable.bounds.isEmpty) drawable.bounds.height() else drawable.intrinsicHeight
 
     // Now we check we are > 0
-    val bitmap = Bitmap.createBitmap(if (width <= 0) 1 else width, if (height <= 0) 1 else height,
-            Bitmap.Config.ARGB_8888)
+    val bitmap = Bitmap.createBitmap(
+        if (width <= 0) 1 else width,
+        if (height <= 0) 1 else height,
+        Bitmap.Config.ARGB_8888
+    )
     val canvas = Canvas(bitmap)
     drawable.setBounds(0, 0, canvas.width, canvas.height)
     drawable.draw(canvas)

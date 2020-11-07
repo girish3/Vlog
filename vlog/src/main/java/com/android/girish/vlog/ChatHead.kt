@@ -139,7 +139,6 @@ internal class ChatHead(var chatHeads: ChatHeads, mContentViewModel: ContentView
         roundedBitmapDrawable.setAntiAlias(true)
         imageView.setImageDrawable(roundedBitmapDrawable)
 
-
         mContentViewModel.resultObserver.observeForever {
             updateNotifications(it.count())
         }

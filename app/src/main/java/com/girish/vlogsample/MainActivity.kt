@@ -13,20 +13,20 @@ import com.girish.vlogsample.logger.AbstractLogger
 
 class MainActivity : AppCompatActivity() {
 
-    private var mVlog: Vlog = ServiceLocator.provideVlog()
-    private var mLogger: AbstractLogger = ServiceLocator.provideLogger()
+    private var mVlog: Vlog = ServiceLocator.provideVlog(this)
+    private var mLogger: AbstractLogger = ServiceLocator.provideLogger(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //manageDrawOverOtherApps()
+        // manageDrawOverOtherApps()
         val startButton = findViewById<Button>(R.id.start)
         val stopButton = findViewById<Button>(R.id.stop)
         val addFeed = findViewById<Button>(R.id.addFeed)
         val openLoginPage = findViewById<Button>(R.id.openLoginPage)
 
         startButton.setOnClickListener {
-            mVlog.start(applicationContext)
+            mVlog.start()
         }
         stopButton.setOnClickListener { mVlog.stop() }
         addFeed.setOnClickListener {
