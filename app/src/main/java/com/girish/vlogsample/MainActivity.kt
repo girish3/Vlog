@@ -8,8 +8,12 @@ import android.provider.Settings
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.android.girish.vlog.Vlog
-import com.android.girish.vlog.VlogModel
 import com.girish.vlogsample.logger.AbstractLogger
+import com.girish.vlogsample.logger.AbstractLogger.Companion.DEBUG
+import com.girish.vlogsample.logger.AbstractLogger.Companion.ERROR
+import com.girish.vlogsample.logger.AbstractLogger.Companion.INFO
+import com.girish.vlogsample.logger.AbstractLogger.Companion.VERBOSE
+import com.girish.vlogsample.logger.AbstractLogger.Companion.WARN
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,12 +34,7 @@ class MainActivity : AppCompatActivity() {
         }
         stopButton.setOnClickListener { mVlog.stop() }
         addFeed.setOnClickListener {
-            val vlogModels = randomLogs
-            for (model in vlogModels) {
-                if (mVlog.isEnabled()) {
-                    mVlog.feed(model)
-                }
-            }
+            logRandomMessages()
         }
 
         openLoginPage.setOnClickListener {
@@ -44,8 +43,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val randomLogs: List<VlogModel>
-        private get() = VlogDataFactory.generateLogs()
+    private fun logRandomMessages() {
+        val sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor "
+
+        for (i in 0..29) {
+            when (i % 5) {
+                0 -> mLogger.log(VERBOSE, "Surface", "Test log with verbose priority for ${i}th index $sampleText")
+                1 -> mLogger.log(DEBUG, "DecorView", "Test log with Debug priority for ${i}th index $sampleText")
+                2 -> mLogger.log(INFO, "Surface", "Test log with Info priority for ${i}th index $sampleText")
+                3 -> mLogger.log(WARN, "DecorView", "Test log with Warn priority for ${i}th index $sampleText")
+                4 -> mLogger.log(ERROR, "Choreographer", "Test log with Error priority for ${i}th index $sampleText")
+            }
+        }
+    }
 
     private fun manageDrawOverOtherApps() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
