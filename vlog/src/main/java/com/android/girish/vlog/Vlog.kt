@@ -17,8 +17,6 @@ class Vlog private constructor() {
     private lateinit var mApplicationContext: Context
     private val isEnabled = AtomicBoolean(false)
     private var mServiceIntent: Intent? = null
-    private var total = 0
-    private val MAX = 1000
     private var mService: VlogService? = null
     private val mVlogRepository = ServiceLocator.provideVlogRepository()
     private val mBound = AtomicBoolean(false)
@@ -90,13 +88,12 @@ class Vlog private constructor() {
         return Settings.canDrawOverlays(mApplicationContext)
     }
 
-    fun feed(model: VlogModel?) {
-        if (!allowLogging()) return
-        if (total > MAX) {
+    fun feed(model: VlogModel) {
+        if (!isEnabled.get()) {
+            Log.d(TAG, "Vlog is not started, cannot log")
             return
         }
-        total++
-        mVlogRepository.feedLog(model!!)
+        mVlogRepository.feedLog(model)
     }
 
     fun showBubble() {
@@ -108,7 +105,7 @@ class Vlog private constructor() {
 
     fun stop() {
         if (!isEnabled.get()) {
-            Log.d(TAG, "Vlog is not started")
+            Log.d(TAG, "Vlog is not started, cannot stop")
             return
         }
         Log.d(TAG, "Stopping Vlog")
