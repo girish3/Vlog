@@ -3,19 +3,23 @@ package com.girish.vlogsample
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.girish.vlogsample.logger.AbstractLogger
 import com.girish.vlogsample.logger.AbstractLogger.Companion.DEBUG
 import com.girish.vlogsample.logger.AbstractLogger.Companion.ERROR
 import com.girish.vlogsample.logger.AbstractLogger.Companion.VERBOSE
+import com.girish.vlogsample.logger.LogService
 import com.google.android.material.snackbar.Snackbar
 
 class TestLoginActivity : AppCompatActivity() {
 
-    val mLogger = ServiceLocator.provideLogger(this)
-    val TAG = "LoginActivity"
+    private lateinit var mLogger: AbstractLogger
+    private val TAG = "LoginActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        mLogger = LogService.provideLogger(this.applicationContext)
 
         val userIdField = findViewById<View>(R.id.userId)
         val pwdField = findViewById<View>(R.id.passwordField)

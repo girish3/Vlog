@@ -14,15 +14,20 @@ import com.girish.vlogsample.logger.AbstractLogger.Companion.ERROR
 import com.girish.vlogsample.logger.AbstractLogger.Companion.INFO
 import com.girish.vlogsample.logger.AbstractLogger.Companion.VERBOSE
 import com.girish.vlogsample.logger.AbstractLogger.Companion.WARN
+import com.girish.vlogsample.logger.LogService
 
 class MainActivity : AppCompatActivity() {
 
-    private var mVlog: Vlog = ServiceLocator.provideVlog(this)
-    private var mLogger: AbstractLogger = ServiceLocator.provideLogger(this)
+    private lateinit var mVlog: Vlog
+    private lateinit var mLogger: AbstractLogger
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        mVlog = LogService.provideVlog(this.applicationContext)
+        mLogger = LogService.provideLogger(this.applicationContext)
+
         // manageDrawOverOtherApps()
         val startButton = findViewById<Button>(R.id.start)
         val stopButton = findViewById<Button>(R.id.stop)

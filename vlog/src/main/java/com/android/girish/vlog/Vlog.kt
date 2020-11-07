@@ -90,13 +90,6 @@ class Vlog private constructor(val mApplicationContext: Context) {
         mVlogRepository.feedLog(model)
     }
 
-    fun showBubble() {
-        isEnabled.set(true)
-        if (VlogService.sInstance != null) {
-            VlogService.sInstance.addChat()
-        }
-    }
-
     fun stop() {
         if (!isEnabled.get()) {
             Log.d(TAG, "Vlog is not started, cannot stop")
