@@ -2,7 +2,7 @@
 
 <p align="center"> 
 An In-Display logging Library for Android. <br> 
-Vlog provides an easy and convenient way to access logs, that too, without needing a Mac or a PC.
+Vlog provides an easy and convenient way to access logs right on your phone.
 </p>
 
 <img src="/demo_resources/vlog_demo.gif" width="32%"/>
