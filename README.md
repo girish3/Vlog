@@ -4,12 +4,16 @@ Vlog provides an easy and convenient way to access logs right on your phone.
 
 [![](https://jitpack.io/v/girish3/Vlog.svg)](https://jitpack.io/#girish3/Vlog)
 <img src="https://img.shields.io/github/license/girish3/vlog"/>
-<img src="https://img.shields.io/badge/API-19%2B-brightgreen"/>
+<img src="https://img.shields.io/badge/API-19%2B-blue"/>
+<img src="https://img.shields.io/badge/Kotlin-100%25-green"/>
 
-## <!--- line separater -->
+## Screenshots
 
-<img src="/demo_resources/vlog_demo.gif" width="32%"/>
-
+<p align="center">
+<img src="/demo_resources/demo1.1.gif" width="32%"/>
+<img src="/demo_resources/demo1.2.gif" width="32%"/>
+<img src="/demo_resources/demo1.3.gif" width="32%"/>
+</p>
  
 ## Integration Steps
 
