@@ -1,9 +1,11 @@
-<h1 align="center">Vlog</h1></br>
-
-<p align="center"> 
+## Vlog
 An In-Display logging Library for Android. <br> 
 Vlog provides an easy and convenient way to access logs right on your phone.
-</p>
+
+[![](https://jitpack.io/v/girish3/Vlog.svg)](https://jitpack.io/#girish3/Vlog)
+<img src="https://img.shields.io/github/license/girish3/vlog"/>
+<img src="https://img.shields.io/badge/API-19%2B-brightgreen"/>
+
 
 <img src="/demo_resources/vlog_demo.gif" width="32%"/>
 
