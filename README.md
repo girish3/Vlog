@@ -23,7 +23,7 @@ All investigation starts from logs. Whether its an app crash, server error or a 
 - Verify user analytics logs (useful for product team)
 - Debug on the go
  
-## Integration Steps
+## Getting Started
 
 ### Gradle Dependency
 [![](https://jitpack.io/v/girish3/Vlog.svg)](https://jitpack.io/#girish3/Vlog)  
@@ -68,3 +68,6 @@ vlog.isEnabled() // returns true if vlog.start() was called
 Often, there is a need to not just print logs but also either to save them in a local file or upload it to a server. The [Chain of responsibility pattern](https://www.tutorialspoint.com/design_pattern/chain_of_responsibility_pattern.htm) is a recommended pattern for such needs. In this pattern, each object in the chain receives the log data and can therefore be responsible to print the log statement (logcat), save in a file, or, in our use-case, pass the data to **Vlog** library. Refer [sample app](https://github.com/girish3/Vlog/tree/master/app/src/main/java/com/girish/vlogsample) in this repo for more details. For a quick setup, the app's [logger folder](https://github.com/girish3/Vlog/tree/master/app/src/main/java/com/girish/vlogsample/logger) can directly be copy-pasted in any Android project.
 
 <img src="/demo_resources/vlog_chain_of_responsibility.png" width = 60%/>
+
+### Contribute
+Feel free to raise issues, suggest changes and you are more than welcomed to fork and submt the Pull request.
