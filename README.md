@@ -6,16 +6,31 @@ Vlog provides an easy and convenient way to access logs right on your phone.
 <img src="https://img.shields.io/github/license/girish3/vlog"/>
 <img src="https://img.shields.io/badge/API-19%2B-brightgreen"/>
 
+## <!--- line separater -->
 
 <img src="/demo_resources/vlog_demo.gif" width="32%"/>
 
  
 ## Integration Steps
 
-### Download
-Add, as shown below, the library dependency in your `build.gradle` file,
+### Gradle Dependency
+[![](https://jitpack.io/v/girish3/Vlog.svg)](https://jitpack.io/#girish3/Vlog)  
+
+Add maven source in root `build.gradle`:
+
 ```groovy
-implementation 'com.girish.vlog:0.1.0'
+allprojects {
+ repositories {
+  ...
+  maven { url 'https://jitpack.io' }
+ }
+}
+```
+Add the library dependency in module `build.gradle`:
+```groovy
+dependencies {
+ implementation 'com.github.girish3:Vlog:v0.1.1'
+}
 ```
 
 ### Basic
