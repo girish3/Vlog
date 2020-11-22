@@ -402,6 +402,7 @@ internal class ChatHeads(context: Context, val mContentViewModel: ContentViewMod
         removeAll()
         closeCaptured = false
         movingOutOfClose = false
+        VlogService.sInstance.windowManager.removeView(motionTracker)
     }
 
     fun removeAll() {
