@@ -38,10 +38,11 @@ allprojects {
  }
 }
 ```
-Add the library dependency in module `build.gradle`:
+Add the library dependency in `build.gradle` file. Notice the `no-op` version, an empty implementation, which ensures library is not added to the release builds:
 ```groovy
 dependencies {
- implementation 'com.github.girish3:Vlog:v0.1.1'
+ debugImplementation 'com.github.girish3.Vlog:library:v0.3'
+ releaseImplementation 'com.github.girish3.Vlog:library-no-op:v0.3'
 }
 ```
 
