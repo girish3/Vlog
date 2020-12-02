@@ -1,2 +1,3 @@
-include ':app', ':vlog'
+include ':library-no-op'
+include ':app', ':library'
 rootProject.name='VlogSample'

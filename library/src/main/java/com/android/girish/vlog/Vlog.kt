@@ -1,3 +1,26 @@
+/*
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2020 Girish Budhwani
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package com.android.girish.vlog
 
 import android.content.ComponentName
@@ -38,10 +61,6 @@ class Vlog private constructor(val mApplicationContext: Context) {
         }
     }
 
-    fun isEnabled(): Boolean {
-        return isEnabled.get()
-    }
-
     private fun startService() {
         mServiceIntent = Intent(mApplicationContext, VlogService::class.java)
         // TODO: is there a need to pass token as an extra?
@@ -49,23 +68,8 @@ class Vlog private constructor(val mApplicationContext: Context) {
         mApplicationContext.startService(mServiceIntent)
     }
 
-    // TODO: pass the context once, introduce an initializer or use builder pattern.
-    fun start() {
-        if (!canDrawOverOtherApp()) {
-            requestDrawOverPermission()
-            Log.d(TAG, "Please grant Vlog permission to draw over other apps")
-            return
-        }
-
-        // Ignore if already started
-        if (isEnabled.getAndSet(true)) {
-            Log.d(TAG, "Vlog is already started")
-            return
-        }
-        Log.d(TAG, "Initializing Vlog")
-        startService()
-
-        // initialize other resources if any
+    fun isEnabled(): Boolean {
+        return isEnabled.get()
     }
 
     private fun requestDrawOverPermission() {
@@ -88,6 +92,25 @@ class Vlog private constructor(val mApplicationContext: Context) {
             return
         }
         mVlogRepository.feedLog(model)
+    }
+
+    // TODO: pass the context once, introduce an initializer or use builder pattern.
+    fun start() {
+        if (!canDrawOverOtherApp()) {
+            requestDrawOverPermission()
+            Log.d(TAG, "Please grant Vlog permission to draw over other apps")
+            return
+        }
+
+        // Ignore if already started
+        if (isEnabled.getAndSet(true)) {
+            Log.d(TAG, "Vlog is already started")
+            return
+        }
+        Log.d(TAG, "Initializing Vlog")
+        startService()
+
+        // initialize other resources if any
     }
 
     fun stop() {
