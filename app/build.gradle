@@ -32,8 +32,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
 
     // Vlog library
-    implementation 'com.github.girish3.Vlog:library:v0.3'
-    // implementation 'com.github.girish3.Vlog:library-no-op:v0.3'
+    debugImplementation 'com.github.girish3.Vlog:library:v0.3'
+    releaseImplementation 'com.github.girish3.Vlog:library-no-op:v0.3'
     // implementation project(path: ':library-no-op')
     // implementation project(path: ':library')
 }
