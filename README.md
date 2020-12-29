@@ -1,4 +1,7 @@
 ## Vlog
+
+> Vlog was featured in [Android Weekly](https://androidweekly.net/issues/issue-442)
+
 An In-Display real-time logging Library for Android. <br> 
 Vlog provides an easy and convenient way to access logs right on your phone.
 
@@ -7,13 +10,11 @@ Vlog provides an easy and convenient way to access logs right on your phone.
 <img src="https://img.shields.io/badge/API-19%2B-blue"/>
 <img src="https://img.shields.io/badge/Kotlin-100%25-green"/>
 
-> Vlog was featured in [Android Weekly](https://androidweekly.net/issues/issue-442)
-
 <img src="/demo_resources/demo1.1.gif" width="32%"/>
 
 Messenger chat like bubble is introduced to display logs in a non-intrusive manner. The bubble also shows the count badge to indicate the presence of logs. Along with that, basic filtering capability helps with finding specific logs,
 
-<p align="center">
+<p>
 <img src="/demo_resources/demo1.2.gif" width="32%"/>
 <img src="/demo_resources/demo1.3.gif" width="32%"/>
 </p>
