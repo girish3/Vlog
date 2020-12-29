@@ -1,3 +1,4 @@
+include ':timber-sample'
 include ':library-no-op'
 include ':app', ':library'
 rootProject.name='VlogSample'
