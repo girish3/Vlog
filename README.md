@@ -7,15 +7,16 @@ Vlog provides an easy and convenient way to access logs right on your phone.
 <img src="https://img.shields.io/badge/API-19%2B-blue"/>
 <img src="https://img.shields.io/badge/Kotlin-100%25-green"/>
 
-## Screenshots
+> Vlog was featured in [Android Weekly](https://androidweekly.net/issues/issue-442)
+
+<img src="/demo_resources/demo1.1.gif" width="32%"/>
+
+Messenger chat like bubble is introduced to display logs in a non-intrusive manner. The bubble also shows the count badge to indicate the presence of logs. Along with that, basic filtering capability helps with finding specific logs,
 
 <p align="center">
-<img src="/demo_resources/demo1.1.gif" width="32%"/>
 <img src="/demo_resources/demo1.2.gif" width="32%"/>
 <img src="/demo_resources/demo1.3.gif" width="32%"/>
 </p>
-
-As can be seen in above screenshots, messenger-like bubble is introduced to display logs in a non-intrusive manner. The bubble also shows the count badge to indicate the presence of logs. Along with that, basic filtering capability helps with finding specific logs.
 
 ## Philosophy
 All investigation starts from logs. Whether its an app crash, server error or a login issues, we always check logs to understand the root cause. Quite often, we need to reproduce the issue ourselves and parallely look for logs on our Mac or a PC.  If only, we could conveniently look into the logs right on our phones. Well, wait no more, Vlog makes it possible to display logs real time while you interact with your app. There are plenty of other use cases where Vlog can prove to be very convenient,
@@ -46,7 +47,7 @@ dependencies {
 }
 ```
 
-### Basic
+### Basic Usage
 The Vlog exposes easy-to-use APIs and has same logging methods as Android's Log utility ( `Log.v`, `Log.d`...)
 ```kotlin
 val vlog = Vlog.getInstance(context) 
@@ -65,10 +66,13 @@ vlog.stop()
 vlog.isEnabled() // returns true if vlog.start() was called
 ```
 
-### Advanced
+### Integrate with Timber
+[Timber](https://github.com/JakeWharton/timber) is a popular logging library. Timber is extensible therefore Vlog can be seamlessly integrated alongside Timber. Add a behavior through `Tree` instance and plant the instance by calling `Timber.plant`. For more details, check the [timber sample module](https://github.com/girish3/Vlog/tree/master/timber-sample/src/main/java/com/example/timber) in this repo.
+
+### Advance Usage
 Often, there is a need to not just print logs but also either to save them in a local file or upload it to a server. The [Chain of responsibility pattern](https://www.tutorialspoint.com/design_pattern/chain_of_responsibility_pattern.htm) is a recommended pattern for such needs. In this pattern, each object in the chain receives the log data and can therefore be responsible to print the log statement (logcat), save in a file, or, in our use-case, pass the data to **Vlog** library. Refer [sample app](https://github.com/girish3/Vlog/tree/master/app/src/main/java/com/girish/vlogsample) in this repo for more details. For a quick setup, the app's [logger folder](https://github.com/girish3/Vlog/tree/master/app/src/main/java/com/girish/vlogsample/logger) can directly be copy-pasted in any Android project.
 
 <img src="/demo_resources/vlog_chain_of_responsibility.png" width = 60%/>
 
 ### Contribute
-Feel free to raise issues, suggest changes and you are more than welcomed to fork and submt the Pull request.
+All types of contribution is accepted. Raise issues, suggest changes or submit a pull request.
