@@ -20,10 +20,7 @@ Messenger chat like bubble is introduced to display logs in a non-intrusive mann
 </p>
 
 ## Philosophy
-All investigation starts from logs. Whether its an app crash, server error or a login issues, we always check logs to understand the root cause. Quite often, we need to reproduce the issue ourselves and parallely look for logs on our Mac or a PC.  If only, we could conveniently look into the logs right on our phones. Well, wait no more, Vlog makes it possible to display logs real time while you interact with your app. There are plenty of other use cases where Vlog can prove to be very convenient,
-- Every now and then, the issue is on the server side. In that case, quickly checking logs and reporting the issue directly to the concerned back-end team can save a lot of time.
-- Verify user analytics logs (useful for product team)
-- Debug on the go
+Logs play a crucial part in diagnosing issues. Without proper logging, developers may have to spend countless hours debugging the root cause. When the codebase becomes huge, logs can also prove to be useful in understanding complex execution flows. Although one can argue to follow execution from one breakpoint to another, the whole process can be time-consuming. But for the most part, logs are an indispensable tool in any developer’s arsenal. More so for an android developer where there can be network failures, device permission denials, SQL errors, background thread issues, telemetry data inaccuracies, and innumerable other concerns. And Vlog takes it a step forward and helps in conveniently check logs right on your phone.
  
 ## Getting Started
 
