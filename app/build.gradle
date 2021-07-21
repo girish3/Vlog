@@ -27,15 +27,15 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation "androidx.core:core-ktx:+"
+    implementation "androidx.core:core-ktx:1.3.2"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.google.android.material:material:1.2.1'
 
     // Vlog library
-    debugImplementation 'com.github.girish3.Vlog:library:v0.3'
-    releaseImplementation 'com.github.girish3.Vlog:library-no-op:v0.3'
+    //debugImplementation 'com.github.girish3.Vlog:library:v0.3'
+    //releaseImplementation 'com.github.girish3.Vlog:library-no-op:v0.3'
     // implementation project(path: ':library-no-op')
-    // implementation project(path: ':library')
+    implementation project(path: ':library')
 }
 repositories {
     mavenCentral()
