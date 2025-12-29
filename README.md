@@ -65,7 +65,7 @@ vlog.isEnabled() // returns true if vlog.start() was called
 ```
 
 ### Integrate with Timber
-[Timber](https://github.com/JakeWharton/timber) is a popular logging library. Timber is extensible therefore Vlog can be seamlessly integrated alongside Timber. Add a behavior through `Tree` instance and plant the instance by calling `Timber.plant`. For more details, check the [timber sample module](https://github.com/girish3/Vlog/tree/master/timber-sample/src/main/java/com/example/timber) in this repo.
+[Timber](https://github.com/JakeWharton/timber) is a popular logging library. Timber is extensible therefore Vlog can be seamlessly integrated alongside Timber. Add a behavior through `Tree` instance and plant the instance by calling `Timber.plant`. For more details, check the [timber sample module](https://github.com/girish3/Vlog/tree/master/timber-sample/src/main/java/com/example/timber) in this repository.
 
 ### Advance Usage
 Often, there is a need to not just print logs but also either to save them in a local file or upload it to a server. The [Chain of responsibility pattern](https://www.tutorialspoint.com/design_pattern/chain_of_responsibility_pattern.htm) is a recommended pattern for such needs. In this pattern, each object in the chain receives the log data and can therefore be responsible to print the log statement (logcat), save in a file, or, in our use-case, pass the data to **Vlog** library. Refer [sample app](https://github.com/girish3/Vlog/tree/master/app/src/main/java/com/girish/vlogsample) in this repo for more details. For a quick setup, the app's [logger folder](https://github.com/girish3/Vlog/tree/master/app/src/main/java/com/girish/vlogsample/logger) can directly be copy-pasted in any Android project.
